@@ -79,3 +79,89 @@
     });
   }
 })();
+
+// My javascript code
+// IIFE concept from https://addyosmani.com/blog/essential-js-namespacing/
+(function(googleMap, undefined) {
+  'use strict';
+
+  var map;
+  var placesApi;
+  var okay;
+  googleMap.places = ko.observableArray();
+
+  googleMap.init = function() {
+    var home = {lat: 39.927677, lng: -75.171909};
+    var el = document.getElementById('map-container');
+
+    map = new google.maps.Map(el, {
+      center: home,
+      zoom: 15,
+      minZoom: 13,
+      maxZoom: 18
+    });
+
+    placesApi = new google.maps.places.PlacesService(map);
+    okay = google.maps.places.PlacesServiceStatus.OK;
+
+    // // When 'bounds' are avaialable, call 'getPlaces()'
+    google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+      getPlaces(map.getBounds());
+      console.log('bounds changed');
+    });
+  };
+
+  googleMap.getPlaceDetails = function() {
+
+  };
+
+  // Fill the places array that will be filtered with knockout
+  function getPlaces(bounds) {
+    var request = {
+      bounds: bounds,
+      types: ['restaurant']
+    }
+    placesApi.nearbySearch(request, function(array, status, page) {
+      if (status === okay) {
+        array.forEach(function(place) {
+          googleMap.places.push(place);
+        });
+      } else {
+        alert('There seems to be a problem with Google Maps, ' +
+              'please try again later');
+      }
+    });
+  };
+
+  // Does this need to be public for knockout?
+  function createMarkers() {
+
+  };
+
+  ko.applyBindings(googleMap);
+})(window.googleMap = window.googleMap || {});
+
+//   var Map = {
+
+
+//     getPlaceDetails: function() {
+
+//     },
+
+//     createMarker: function(place) {
+//       // var marker = new google.maps.Marker({
+//       //   map: map,
+//       //   position: ,
+//       //   place: ,
+//       //   icon: ,
+//       //   animation: 'drop',
+//       //   attribution: 'Mark\'s Udacity Project',
+//       //   label: ,
+//       //   title:  // Rollover Text
+//       // });
+
+//     }
+//   };
+
+//   // ko.applyBindings(Map);
+// })();
