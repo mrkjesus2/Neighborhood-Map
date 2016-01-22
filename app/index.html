@@ -39,11 +39,17 @@
   <body>
     <div id="container">
       <div id="nav-container">
-        <ul id="nav-list" data-bind='foreach: places'>
+        <h4>From the Map namespace</h4>
+        <ul id="nav-list" data-bind='foreach: app.Map.places'>
           <li class="nav-list-item" data-bind='text: name'></li>
-        <ul>
+        </ul>
+        <h4>From the ViewModel namespace</h4>
+        <ul id="nav-list" data-bind='foreach: app.ViewModel.places'>
+          <li class="nav-list-item" data-bind='text: name'></li>
+        </ul>
       </div>
       <div id="map-container">
+        <h1 id="error">There appears to be a problem with Google Maps</h1>
       </div>
     </div>
 
@@ -51,11 +57,13 @@
   </body>
     <!-- My Scripts -->
     <script src="scripts/vendor/knockout-3.4.0.js"></script>
-    <!-- <script type="text/javascript" src="scripts/maps.js"></script> -->
     <script type="text/javascript" src="scripts/main.js"></script>
+    <script type="text/javascript" src="scripts/map.js"></script>
+    <script type="text/javascript" src="scripts/viewModel.js"></script>
+
     <!-- Google Maps API -->
     <script async
-      src="https://maps.googleapis.com/maps/api/js?v=3&callback=googleMap.init&libraries=places">
+      src="https://maps.googleapis.com/maps/api/js?v=3&callback=app.Map.init&libraries=places">
     </script>
 
     <!-- Built with love using Web Starter Kit -->
