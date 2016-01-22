@@ -6,4 +6,4 @@ app.ViewModel = {
 };
 
 ko.applyBindings(app.ViewModel);
-ko.applyBindings(app.Map);
+
