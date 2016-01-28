@@ -77,16 +77,19 @@ app.Map = {
       title: place.name
     });
 
+    app.ViewModel.markers.push(marker);
     // TODO: Set the content for infoWindow
     var info = place.name;
 
+    // TODO: Should this be handled through knockout
     // Add click event to the Marker
-    google.maps.event.addListener(marker, 'click', function() {
-      app.FourSquare.findPlace(place.name, lat, lng);
-      app.Wiki.getWiki(place.name);
-      app.Map.infoWindow.setContent(info);
-      app.Map.infoWindow.open(this.map, marker);
-    });
+    // google.maps.event.addListener(marker, 'click', function() {
+        // app.ViewModel.markerClick()  Is this the solution
+    //   // app.FourSquare.findPlace(place.name, lat, lng);
+    //   // app.Wiki.getWiki(place.name);
+    //   // app.Map.infoWindow.setContent(info);
+    //   // app.Map.infoWindow.open(this.map, marker);
+    // });
 
   }
 };
