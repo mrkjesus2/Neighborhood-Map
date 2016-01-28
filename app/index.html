@@ -39,10 +39,11 @@
   <body>
     <div id="container">
       <div id="nav-container">
-        <h4>From the ViewModel namespace</h4>
         <ul id="nav-list" data-bind='foreach: app.ViewModel.places'>
           <li class="nav-list-item" data-bind='text: name'></li>
         </ul>
+        <div id="wiki-container">
+        </div>
       </div>
       <div id="map-container">
         <h1 id="error">There appears to be a problem with Google Maps</h1>
@@ -57,6 +58,7 @@
     <script type="text/javascript" src="scripts/main.js"></script>
     <script type="text/javascript" src="scripts/map.js"></script>
     <script type="text/javascript" src="scripts/foursquare.js"></script>
+    <script type="text/javascript" src="scripts/wiki.js"></script>
     <script type="text/javascript" src="scripts/viewModel.js"></script>
 
     <!-- Google Maps API -->

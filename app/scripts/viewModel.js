@@ -1,8 +1,7 @@
 app.ViewModel = app.ViewModel || {};
 
 app.ViewModel = {
-  places: ko.observableArray(),
-  placesArr: [] // REMOVE
+  places: ko.observableArray()
 };
 
 ko.applyBindings(app.ViewModel);
