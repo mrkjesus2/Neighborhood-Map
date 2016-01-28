@@ -40,7 +40,7 @@
     <div id="container">
       <div id="nav-container">
         <ul id="nav-list" data-bind='foreach: app.ViewModel.places'>
-          <li class="nav-list-item" data-bind='text: name'></li>
+          <li class="nav-list-item" data-bind='text: name, click: $parent.listClick'></li>
         </ul>
         <div id="wiki-container">
         </div>

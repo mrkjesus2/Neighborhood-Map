@@ -82,5 +82,11 @@
 
 // My javascript code
 // IIFE concept from https://addyosmani.com/blog/essential-js-namespacing/
+/* global $ */
 var app = app || {};
 
+$(function() {
+  'use strict';
+
+  // new app.ViewModel;
+});

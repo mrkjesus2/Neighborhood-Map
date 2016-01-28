@@ -1,11 +1,35 @@
+// TODO: Get rid of 'REMOVE' lines
+/* global app ko */
+
 app.ViewModel = app.ViewModel || {};
 
 app.ViewModel = {
-  places: ko.observableArray(),
-  markers: ko.observableArray(),
+  places: ko.observableArray(), // {place: {obj},
+                                //  marker: {obj},
+                                //  wiki: {obj}
+                                //  foursquare: {obj}
+                                // }
 
+  Place: function(place, marker) {
+    this.name = ko.observable(place.name);
+    this.data = place;
+    this.marker = marker;
+
+    // console.log('New place');
+  },
+
+  // Select the marker for the place that was clicked
   listClick: function() {
-    // Select the marker for the place that was clicked
+    // this.frSqrInfo = app.FourSquare.findPlace(
+    //     this.name,
+    //     place.geometry.location.lat(),
+    //     place.geometry.location.lng()
+    //   );
+    this.wikiInfo = app.Wiki.getWiki(this.name);
+
+    app.Map.infoWindow.setContent(this.name());
+    app.Map.infoWindow.open(app.Map.map, this.marker);
+    console.log(this);
   },
 
   markerClick: function() {
@@ -18,8 +42,10 @@ app.ViewModel = {
 
   markerfilter: function() {
     // Remove markers that don't fit the input box text
+    this.markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
   }
 };
 
 ko.applyBindings(app.ViewModel);
-
