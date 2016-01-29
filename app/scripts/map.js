@@ -78,11 +78,12 @@ app.map = app.map || {};
         title: place.name
       });
 
-      //
-      app.viewmodel.places.push(new app.viewmodel.Place(place, marker));
+      // Create the array of places
+      var newPlace = new app.viewmodel.Place(place, marker);
+      app.viewmodel.places.push(newPlace);
 
       google.maps.event.addListener(marker, 'click', function() {
-          app.viewmodel.markerClick();
+          app.viewmodel.markerClick(newPlace);
       });
 
     }

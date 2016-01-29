@@ -12,17 +12,18 @@ app.viewmodel = {
     this.marker = marker;
     this.wikiInfo = ko.observable(app.wiki.getWiki(this));
     this.frSqrInfo = ko.observable(app.foursquare.findPlace(this));
-    // console.log('New place');  // REMOVE
+    // console.log(this);  // REMOVE
   },
 
   // Select the marker for the place that was clicked
   listClick: function() {
-    app.map.infoWindow.setContent(this.name());
-    app.map.infoWindow.open(app.map.map, this.marker);
+    app.viewmodel.setInfoWindow(this);
+
   },
 
-  markerClick: function() {
+  markerClick: function(place) {
     // Highlight the name in the list for the marker that was clicked
+    app.viewmodel.setInfoWindow(place);
     console.log('Marker clicked');
   },
 
@@ -35,6 +36,12 @@ app.viewmodel = {
     this.markers.forEach(function(marker) {
       marker.setMap(null);
     });
+  },
+
+  setInfoWindow: function(place) {
+    // console.log(place);
+    app.map.infoWindow.setContent(place.wikiInfo());
+    app.map.infoWindow.open(app.map.map, place.marker);
   }
 };
 
