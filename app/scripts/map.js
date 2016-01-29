@@ -85,9 +85,25 @@ app.map = app.map || {};
       google.maps.event.addListener(marker, 'click', function() {
           app.viewmodel.markerClick(newPlace);
       });
+    },
 
+    curMarkerCheck: function() {
+      if (app.viewmodel.curMarker) {
+        return true;
+      }
+      return false;
+    },
+
+    toggleBounce: function() {
+
+      if (app.viewmodel.curMarker.getAnimation()) {
+        app.viewmodel.curMarker.setAnimation(null);
+      } else {
+        app.viewmodel.curMarker.setAnimation(google.maps.Animation.BOUNCE);
+      }
     }
   };
+
 
 })();
 // // TODO: Add powered by google logo
