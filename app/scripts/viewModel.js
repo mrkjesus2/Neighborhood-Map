@@ -4,11 +4,7 @@
 app.ViewModel = app.ViewModel || {};
 
 app.ViewModel = {
-  places: ko.observableArray(), // {place: {obj},
-                                //  marker: {obj},
-                                //  wiki: {obj}
-                                //  foursquare: {obj}
-                                // }
+  places: ko.observableArray(),
 
   Place: function(place, marker) {
     this.name = ko.observable(place.name);
@@ -23,13 +19,11 @@ app.ViewModel = {
   listClick: function() {
     app.Map.infoWindow.setContent(this.name());
     app.Map.infoWindow.open(app.Map.map, this.marker);
-
-    console.log(this.wikiInfo());
-    console.log(this.frSqrInfo());
   },
 
   markerClick: function() {
     // Highlight the name in the list for the marker that was clicked
+    console.log('Marker clicked');
   },
 
   listfilter: function() {
