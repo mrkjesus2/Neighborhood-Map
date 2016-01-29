@@ -1,12 +1,12 @@
 /* global app jQuery */
-app.FourSquare = app.FourSquare || {};
+app.foursquare = app.foursquare || {};
 
 (function() {
   // TODO: Move this to a config file (keep out of git)
   var CLIENTID = 'ZBGAM3NOJCK4P345ELK2JIB232FMDENJ05GXYQRSAHOHURJR';
   var CLIENTSECRET = 'RGEF2DNONIR0AN2GHSIIMGZWLT0IH5JSJCJ5AGFAJ2WZDGLH';
 
-  app.FourSquare = {
+  app.foursquare = {
     findPlace: function(place) {
       var loc = place.data.geometry.location;
       // Call the foursquare API

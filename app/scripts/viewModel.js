@@ -1,24 +1,24 @@
 // TODO: Get rid of 'REMOVE' lines
 /* global app ko */
 
-app.ViewModel = app.ViewModel || {};
+app.viewmodel = app.viewmodel || {};
 
-app.ViewModel = {
+app.viewmodel = {
   places: ko.observableArray(),
 
   Place: function(place, marker) {
     this.name = ko.observable(place.name);
     this.data = place;
     this.marker = marker;
-    this.wikiInfo = ko.observable(app.Wiki.getWiki(this));
-    this.frSqrInfo = ko.observable(app.FourSquare.findPlace(this));
-    // console.log('New place');
+    this.wikiInfo = ko.observable(app.wiki.getWiki(this));
+    this.frSqrInfo = ko.observable(app.foursquare.findPlace(this));
+    // console.log('New place');  // REMOVE
   },
 
   // Select the marker for the place that was clicked
   listClick: function() {
-    app.Map.infoWindow.setContent(this.name());
-    app.Map.infoWindow.open(app.Map.map, this.marker);
+    app.map.infoWindow.setContent(this.name());
+    app.map.infoWindow.open(app.map.map, this.marker);
   },
 
   markerClick: function() {
@@ -38,4 +38,4 @@ app.ViewModel = {
   }
 };
 
-ko.applyBindings(app.ViewModel);
+ko.applyBindings(app.viewmodel);

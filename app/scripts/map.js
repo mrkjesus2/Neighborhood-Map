@@ -1,8 +1,8 @@
-app.Map = app.Map || {};
+app.map = app.map || {};
 
 (function() {
 
-  app.Map = {
+  app.map = {
     // Callback function for Google Maps - Initialize the Map
     // Calls getPlaces and createMarker to fill ViewModel places array
     init: function() {
@@ -24,16 +24,16 @@ app.Map = app.Map || {};
     getPlaces: function() {
       console.log('Getting Places'); // REMOVE
       // Variables for the request
-      var placesApi = new google.maps.places.PlacesService(app.Map.map);
+      var placesApi = new google.maps.places.PlacesService(app.map.map);
       var request = {
-        bounds: app.Map.map.getBounds(),
+        bounds: app.map.map.getBounds(),
         types: ['art_gallery', 'museum', 'park']
       };
       // Call the Places API
       placesApi.nearbySearch(request, function(results, status) {
         if (status === 'OK') {
           results.forEach(function(result, idx) {
-            app.Map.createMarker(result);
+            app.map.createMarker(result);
           });
         } else {
           // TODO: Add UI error handling
@@ -46,7 +46,7 @@ app.Map = app.Map || {};
     getPlaceDetails: function(place) {
       // console.log('Getting Place Details'); // REMOVE
       // Variables for the request
-      var placesApi = new google.maps.places.PlacesService(app.Map.map);
+      var placesApi = new google.maps.places.PlacesService(app.map.map);
       var request = {
         placeId: place.place_id
       };
@@ -69,7 +69,7 @@ app.Map = app.Map || {};
         animation: google.maps.Animation.DROP,
         attribution: {source: 'mrkjesus2.github.io/Neighborhood-Map'},
         icon: place.icon,
-        map: app.Map.map,
+        map: app.map.map,
         // optimized: false,  // If problems with animation, uncomment //REMOVE
         place: {
           location: {lat: plcloc.lat(), lng: plcloc.lng()},
@@ -79,10 +79,10 @@ app.Map = app.Map || {};
       });
 
       //
-      app.ViewModel.places.push(new app.ViewModel.Place(place, marker));
+      app.viewmodel.places.push(new app.viewmodel.Place(place, marker));
 
       google.maps.event.addListener(marker, 'click', function() {
-          app.ViewModel.markerClick();
+          app.viewmodel.markerClick();
       });
 
     }

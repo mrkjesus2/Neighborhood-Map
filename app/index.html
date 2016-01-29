@@ -2,6 +2,7 @@
 <!-- All head code from Google's Web Starter Kit -->
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,11 +40,9 @@
   <body>
     <div id="container">
       <div id="nav-container">
-        <ul id="nav-list" data-bind='foreach: app.ViewModel.places'>
+        <ul id="nav-list" data-bind='foreach: app.viewmodel.places'>
           <li class="nav-list-item" data-bind='text: name, click: $parent.listClick'></li>
         </ul>
-        <div id="wiki-container">
-        </div>
       </div>
       <div id="map-container">
         <h1 id="error">There appears to be a problem with Google Maps</h1>
@@ -52,18 +51,20 @@
 
 
   </body>
-    <!-- My Scripts -->
+    <!-- Vendor Scripts -->
     <script src="scripts/vendor/jquery-2.2.0.js"></script>
     <script src="scripts/vendor/knockout-3.4.0.js"></script>
+    <!-- My Scripts -->
     <script type="text/javascript" src="scripts/main.js"></script>
     <script type="text/javascript" src="scripts/map.js"></script>
     <script type="text/javascript" src="scripts/foursquare.js"></script>
     <script type="text/javascript" src="scripts/wiki.js"></script>
     <script type="text/javascript" src="scripts/viewModel.js"></script>
+    <script type="text/javascript" src="scripts/view.js"></script>
 
     <!-- Google Maps API -->
     <script async
-      src="https://maps.googleapis.com/maps/api/js?v=3&callback=app.Map.init&libraries=places">
+      src="https://maps.googleapis.com/maps/api/js?v=3&callback=app.map.init&libraries=places">
     </script>
 
     <!-- Built with love using Web Starter Kit -->

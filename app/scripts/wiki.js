@@ -1,8 +1,8 @@
 /* global app jQuery */
-app.Wiki = app.Wiki || {};
+app.wiki = app.wiki || {};
 
 (function() {
-  app.Wiki = {
+  app.wiki = {
     getWiki: function(place) {
       // console.log(place);
       jQuery.ajax({
@@ -23,7 +23,7 @@ app.Wiki = app.Wiki || {};
           var firstId = Object.keys(data.query.pages)['0'];
           var pageContent = data.query.pages[firstId].extract;
 
-          if (pageContent !== undefined && !app.Wiki.ambiguityChk(data, firstId)) {
+          if (pageContent !== undefined && !app.wiki.ambiguityChk(data, firstId)) {
             place.wikiInfo(pageContent);
           }
           // console.log('Finished getWiki'); // REMOVE
