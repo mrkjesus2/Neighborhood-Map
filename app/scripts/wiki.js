@@ -1,9 +1,10 @@
-/* global app jQuery document */
+/* global app jQuery */
 app.Wiki = app.Wiki || {};
 
 (function() {
   app.Wiki = {
     getWiki: function(place) {
+      // console.log(place);
       jQuery.ajax({
         url: 'https://en.wikipedia.org/w/api.php',
         data: {
@@ -13,29 +14,33 @@ app.Wiki = app.Wiki || {};
           format: 'json',
           redirects: '',
           converttitles: '',
-          titles: place
+          titles: place.name()
         },
         dataType: 'jsonp',
         headers: {'Api-User-Agent': 'Mark\'s Udacity Project'},
 
         success: function(data) {
-          // console.log(data);
           var firstId = Object.keys(data.query.pages)['0'];
           var pageContent = data.query.pages[firstId].extract;
-          var container = document.getElementById('wiki-container');
 
-          // TODO: Change to the appropriate container
-          if (pageContent === undefined ||
-              app.Wiki.ambiguityChk(data, firstId)) {
-            container.innerHTML = '';
-          } else {
-            container.innerHTML = pageContent;
+          if (pageContent !== undefined && !app.Wiki.ambiguityChk(data, firstId)) {
+            place.wikiInfo(pageContent);
           }
-          console.log('Finished getWiki');
+          // console.log('Finished getWiki'); // REMOVE
+        },
+
+        fail: function() {
+          // TODO: Write this function
+        },
+
+        error: function() {
+          // TODO: Write this function
         }
+
       });
     },
 
+    // Check for a disambiguity page (no info - only links)
     ambiguityChk: function(data, id) {
       var categories = data.query.pages[id].categories;
 

@@ -7,24 +7,33 @@ app.FourSquare = app.FourSquare || {};
   var CLIENTSECRET = 'RGEF2DNONIR0AN2GHSIIMGZWLT0IH5JSJCJ5AGFAJ2WZDGLH';
 
   app.FourSquare = {
-    // Paramaters needed for the query
-    base: 'https://api.foursquare.com/v2/venues/search?',
-    client: '&client_id=' + CLIENTID + '&client_secret=' + CLIENTSECRET,
-    vers: '&v=20140806',
-    limit: '&limit=2',
-
-    findPlace: function(query, lat, lng) {
-      // More Parameters needed for the query
-      var search = '&query=' + query;
-      var loc = 'll=' + lat + ',' + lng;
-      var url = this.base + loc + this.client + this.vers + this.limit + search;
+    findPlace: function(place) {
+      var loc = place.data.geometry.location;
       // Call the foursquare API
-      jQuery.get(url, function(data) {
-        var venue = data.response.venues[0];
-        // TDOD: Handle the Foursquare data
-        console.log(venue);
+      jQuery.ajax({
+        url: 'https://api.foursquare.com/v2/venues/search',
+        data: {
+          query: place.name(),
+          ll: loc.lat() + ',' + loc.lng(),
+          client_id: CLIENTID,
+          client_secret: CLIENTSECRET,
+          v: '20140806',
+          limit: '1'
+        },
+        dataType: 'json',
+
+        success: function(data) {
+          place.frSqrInfo(data.response.venues[0]);
+        },
+
+        fail: function() {
+          // TODO: Write this function
+        },
+
+        error: function() {
+          // TODO: Write this function
+        }
       });
     }
-
   };
 })();

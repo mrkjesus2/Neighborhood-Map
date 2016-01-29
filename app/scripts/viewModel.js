@@ -14,22 +14,18 @@ app.ViewModel = {
     this.name = ko.observable(place.name);
     this.data = place;
     this.marker = marker;
-
+    this.wikiInfo = ko.observable(app.Wiki.getWiki(this));
+    this.frSqrInfo = ko.observable(app.FourSquare.findPlace(this));
     // console.log('New place');
   },
 
   // Select the marker for the place that was clicked
   listClick: function() {
-    // this.frSqrInfo = app.FourSquare.findPlace(
-    //     this.name,
-    //     place.geometry.location.lat(),
-    //     place.geometry.location.lng()
-    //   );
-    this.wikiInfo = app.Wiki.getWiki(this.name);
-
     app.Map.infoWindow.setContent(this.name());
     app.Map.infoWindow.open(app.Map.map, this.marker);
-    console.log(this);
+
+    console.log(this.wikiInfo());
+    console.log(this.frSqrInfo());
   },
 
   markerClick: function() {
