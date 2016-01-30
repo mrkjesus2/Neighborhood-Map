@@ -33,8 +33,9 @@ app.viewmodel = {
       // Get the matching places
       if (self.inputText()) {
         var matches = self.places().filter(function(place) {
-          var input = self.inputText();
-          return place.name().indexOf(input) !== -1;
+          var name = place.name().toLowerCase();
+          var input = self.inputText().toLowerCase();
+          return name.indexOf(input) !== -1;
         });
 
         // Set markers and list items to hidden
