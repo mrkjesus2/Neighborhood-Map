@@ -40,8 +40,13 @@
   <body>
     <div id="container">
       <div id="nav-container">
-        <ul id="nav-list" data-bind='foreach: app.viewmodel.places'>
-          <li class="nav-list-item" data-bind='text: name, click: $parent.listClick'></li>
+        <p>Filter: <input data-bind="
+            textInput: inputText,
+            event: {keydown: placeFilter}"></p>
+        <ul id="nav-list" data-bind="foreach: app.viewmodel.places">
+          <li class="nav-list-item" data-bind="
+            text: name,
+            click: $parent.clickHandler"></li>
         </ul>
       </div>
       <div id="map-container">

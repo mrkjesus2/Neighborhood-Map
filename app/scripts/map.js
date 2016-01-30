@@ -83,15 +83,8 @@ app.map = app.map || {};
       app.viewmodel.places.push(newPlace);
 
       google.maps.event.addListener(marker, 'click', function() {
-          app.viewmodel.markerClick(newPlace);
+          app.viewmodel.clickHandler(newPlace);
       });
-    },
-
-    curMarkerCheck: function() {
-      if (app.viewmodel.curMarker) {
-        return true;
-      }
-      return false;
     },
 
     toggleBounce: function() {

@@ -6,37 +6,58 @@ app.viewmodel = app.viewmodel || {};
 app.viewmodel = {
   places: ko.observableArray(),
   curMarker: null,
+  inputText: ko.observable(''),
 
   Place: function(place, marker) {
     this.name = ko.observable(place.name);
     this.data = place;
     this.marker = marker;
+    this.show = ko.observable(true);
     this.wikiInfo = ko.observable(app.wiki.getWiki(this));
     this.frSqrInfo = ko.observable(app.foursquare.findPlace(this));
     // console.log(this);  // REMOVE
   },
 
-  // Select the marker for the place that was clicked
-  listClick: function() {
-    app.viewmodel.markerSetup(this);
-
+  // Called when the marker or list item is clicked
+  clickHandler: function(place) {
+    var plc = place || this;
+    app.viewmodel.markerSetup(plc);
   },
 
-  markerClick: function(place) {
-    // Highlight the name in the list for the marker that was clicked
-    app.viewmodel.markerSetup(place);
+  placeFilter: function(data, event) {
+    var self = this;
+    console.log(self);
+    // A cushion to allow inputText to change
+    setTimeout(function() {;
 
-  },
+      // Get the matching places
+      if (self.inputText()) {
+        var matches = self.places().filter(function(place) {
+          var input = self.inputText();
+          return place.name().indexOf(input) !== -1;
+        });
 
-  listfilter: function() {
-    // Filter the list based on what is type in input box
-  },
+        // Set markers and list items to hidden
+        self.places().forEach(function(place) {
+          place.marker.setMap(null);
+          place.show(false);
+        });
 
-  markerfilter: function() {
-    // Remove markers that don't fit the input box text
-    this.markers.forEach(function(marker) {
-      marker.setMap(null);
-    });
+        // Add remaining places to the map and list
+        matches.forEach(function(place) {
+          place.marker.setMap(app.map.map);
+          place.show(true);
+        });
+      } else {
+        self.places().forEach(function(place) {
+          place.marker.setMap(app.map.map);
+          place.show(true);
+        });
+      }
+    }, 100);
+
+    // Must return true to allow default behavior(Filling the input box)
+    return true;
   },
 
   markerSetup: function(place) {
@@ -50,5 +71,5 @@ app.viewmodel = {
     app.map.infoWindow.open(app.map.map, place.marker);
   },
 };
-
 ko.applyBindings(app.viewmodel);
+
