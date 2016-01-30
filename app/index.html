@@ -40,9 +40,13 @@
   <body>
     <div id="container">
       <div id="nav-container">
-        <p>Filter: <input data-bind="
+        <p>Filter: <input list="places" data-bind="
             textInput: inputText,
             event: {keydown: placeFilter}"></p>
+        <datalist id="places" data-bind="foreach: app.viewmodel.places">
+            <option data-bind="value: name">
+        </datalist>
+
         <ul id="nav-list" data-bind="foreach: app.viewmodel.places">
           <li class="nav-list-item" data-bind="
             visible: show,
