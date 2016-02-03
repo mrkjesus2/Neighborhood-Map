@@ -34,24 +34,35 @@
     <!-- Color the status bar on mobile devices -->
     <meta name="theme-color" content="#2F3BA2">
 
+    <link rel="stylesheet" href="styles/normalize.css">
     <link rel="stylesheet" href="styles/main.css">
   </head>
 
   <body>
     <div id="container">
-      <div id="nav-container">
+      <div id="drawer-container" class="closed">
+        <!-- Filter input box -->
         <p>Filter: <input list="places" data-bind="
             textInput: inputText,
-            event: {keydown: placeFilter}"></p>
+            event: {keydown: placeFilter}">
+        </p>
+
         <datalist id="places" data-bind="foreach: app.viewmodel.places">
             <option data-bind="value: name">
         </datalist>
 
-        <ul id="nav-list" data-bind="foreach: app.viewmodel.places">
+        <!-- Probably should be a div for the container -->
+        <a id="drawer-btn" class="closed" href="#">
+          <span id="btn-icon" class="btn-icon closed"></span>
+        </a>
+
+        <!-- List of the places on the map -->
+        <ul id="drawer-list" data-bind="foreach: app.viewmodel.places">
           <li class="nav-list-item" data-bind="
             visible: show,
             text: name,
-            click: $parent.clickHandler"></li>
+            click: $parent.clickHandler">
+          </li>
         </ul>
       </div>
       <div id="map-container">

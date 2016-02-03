@@ -13,7 +13,8 @@ app.map = app.map || {};
         center: home,
         zoom: 14,
         minZoom: 12,
-        maxZoom: 18
+        maxZoom: 18,
+        mapTypeControl: false
       });
       console.log('Map Initialized'); // REMOVE
       // Load places once the maps bounds are set

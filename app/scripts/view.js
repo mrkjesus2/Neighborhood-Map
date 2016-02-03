@@ -2,8 +2,21 @@
 app.view = app.view || {};
 
 app.view = {
-  openDrawer: function() {
-    // TODO: Write this function
+  toggleDrawer: function() {
+    if (drawer.className === 'closed'){
+      // drawer.style.transform = 'translateX(75%)';
+      drawer.className = 'open';
+      button.className = 'open';
+      for (var i = 0; i < icon.length; i++) {
+        icon[i].className = 'btn-icon open';
+      };
+    } else {
+      drawer.className = 'closed';
+      button.className = 'closed'
+      for (var i = 0; i < icon.length; i++) {
+        icon[i].className = 'btn-icon closed';
+      };
+    }
   },
 
   closeDrawer: function() {
@@ -14,3 +27,9 @@ app.view = {
     // TODO: Write this function
   }
 };
+
+
+var drawer = document.getElementById('drawer-container');
+var button = document.getElementById('drawer-btn');
+var icon = document.getElementsByClassName('btn-icon');
+button.addEventListener('click', app.view.toggleDrawer);

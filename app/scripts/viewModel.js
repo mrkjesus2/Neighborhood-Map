@@ -26,7 +26,6 @@ app.viewmodel = {
 
   placeFilter: function(data, event) {
     var self = this;
-    console.log(self);
     // A cushion to allow inputText to change
     setTimeout(function() {;
 
