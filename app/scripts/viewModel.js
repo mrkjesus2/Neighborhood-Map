@@ -25,11 +25,10 @@ app.viewmodel = {
     app.viewmodel.markerSetup(plc);
   },
 
-  placeFilter: function(data, event) {
+  placeFilter: function() {
     var self = this;
     // A cushion to allow inputText to change
     setTimeout(function() {
-
       // Get the matching places
       if (self.inputText()) {
         var matches = self.places().filter(function(place) {
@@ -63,14 +62,16 @@ app.viewmodel = {
 
   markerSetup: function(place) {
     // Bounce the marker when selected
-    if (this.curMarker) {app.map.toggleBounce()};
+    if (this.curMarker) {
+      app.map.toggleBounce();
+    }
     this.curMarker = place.marker;
     app.map.toggleBounce();
 
     // Fill the info window
     app.map.infoWindow.setContent(place.wikiInfo());
     app.map.infoWindow.open(app.map.map, place.marker);
-  },
+  }
 };
 ko.applyBindings(app.viewmodel);
 
