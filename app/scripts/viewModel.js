@@ -21,7 +21,7 @@ app.viewmodel = {
   // Called when the marker or list item is clicked
   clickHandler: function(place) {
     var plc = place || this;
-    app.view.closeDrawer();
+    app.viewmodel.closeDrawer();
     app.viewmodel.markerSetup(plc);
   },
 
@@ -71,7 +71,35 @@ app.viewmodel = {
     // Fill the info window
     app.map.infoWindow.setContent(place.wikiInfo());
     app.map.infoWindow.open(app.map.map, place.marker);
-  }
-};
-ko.applyBindings(app.viewmodel);
+  },
 
+  toggleDrawer: function() {
+    $(app.viewmodel.init().els).toggleClass('closed open');
+  },
+
+  closeDrawer: function() {
+    if ($(app.viewmodel.init().els).hasClass('open')) {
+      this.toggleDrawer();
+    }
+  },
+
+  init: function() {
+    var els = document.getElementsByClassName('drawer');
+
+    var button = document.getElementById('drawer-btn');
+    var mapButton = document.getElementById('map-btn');
+
+    button.addEventListener('click', app.viewmodel.toggleDrawer);
+    mapButton.addEventListener('click', app.viewmodel.toggleDrawer);
+
+    return {
+      els: els,
+      button: button,
+      mapButton: mapButton
+    }
+  }
+
+};
+
+ko.applyBindings(app.viewmodel);
+app.viewmodel.init();
