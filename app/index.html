@@ -40,22 +40,29 @@
 
   <body>
     <div id="container">
-      <div id="drawer-container" class="closed">
-        <!-- Filter input box -->
-        <p>Filter: <input list="places" data-bind="
-            textInput: inputText,
-            event: {keydown: placeFilter}">
-        </p>
+      <!-- Button to open the drawer -->
+      <a id="map-btn" class="drawer closed" href="#">
+        <span class="btn-icon drawer closed"></span>
+      </a>
 
-        <datalist id="places" data-bind="foreach: app.viewmodel.places">
-            <option data-bind="value: name">
-        </datalist>
+      <!-- <div id="drawer-content"> -->
+      <div id="drawer-top" class="drawer closed">
+          <!-- Filter input box -->
+          <p>Filter: <input list="places" data-bind="
+              textInput: inputText,
+              event: {keydown: placeFilter}">
+          </p>
+          <!-- List for autocomplete -->
+          <datalist id="places" data-bind="foreach: app.viewmodel.places">
+              <option data-bind="value: name">
+          </datalist>
+          <!-- Button to close the drawer -->
+          <a id="drawer-btn" class="drawer closed" href="#">
+            <span class="btn-icon drawer closed"></span>
+          </a>
+        </div>
 
-        <!-- Probably should be a div for the container -->
-        <a id="drawer-btn" class="closed" href="#">
-          <span id="btn-icon" class="btn-icon closed"></span>
-        </a>
-
+      <div id="drawer-content" class="drawer closed">
         <!-- List of the places on the map -->
         <ul id="drawer-list" data-bind="foreach: app.viewmodel.places">
           <li class="nav-list-item" data-bind="
@@ -65,6 +72,7 @@
           </li>
         </ul>
       </div>
+      <!-- </div> -->
       <div id="map-container">
         <h1 id="error">There appears to be a problem with Google Maps</h1>
       </div>

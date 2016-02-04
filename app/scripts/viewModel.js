@@ -21,13 +21,14 @@ app.viewmodel = {
   // Called when the marker or list item is clicked
   clickHandler: function(place) {
     var plc = place || this;
+    app.view.closeDrawer();
     app.viewmodel.markerSetup(plc);
   },
 
   placeFilter: function(data, event) {
     var self = this;
     // A cushion to allow inputText to change
-    setTimeout(function() {;
+    setTimeout(function() {
 
       // Get the matching places
       if (self.inputText()) {

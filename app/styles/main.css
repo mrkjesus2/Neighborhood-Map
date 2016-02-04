@@ -5,58 +5,84 @@ html, body {
   box-sizing: content-box;
 }
 
+li {
+  list-style-type: disc;
+  font-size: 1.25em;
+  color: white;
+  margin: .2em 0;
+}
+
 #container {
   width: 100vw;
   height: 100vh;
-  display: flex;
+  /*display: flex;*/
 }
 
 /********************/
 /* Drawer Container */
 /********************/
-#drawer-container {
-  width: 75%;
-  /*left: 0;*/
+#drawer-top, #drawer-content {
+  width: 75vw;
+  left: 0;
   z-index: 1;
   background-color: #3833bd;
+}
+
+#drawer-top {
+  height: 10vh;
   position: fixed;
-  height: 100%;
 }
 
-#drawer-container.closed {
-  transform: translateX(-100%);
-  transition: transform .75s ease;
-}
-
-#drawer-container.open {
-  transform: translateX(0);
-  transition: transform .75s ease .4s;
-}
-
-/*****************/
-/* Hamburger Menu*/
-/*****************/
-#drawer-btn {
+#drawer-content {
   position: absolute;
+  top: 10vh;
+  overflow-y: scroll;
+  height: 90vh;
+}
+
+#drawer-top.closed, #drawer-content.closed {
+  transform: translateX(-100%);
+  transition: transform .2s ease;
+}
+
+#drawer-top.open, #drawer-content.open {
+  transform: translateX(0);
+  transition: transform .75s ease .1s;
+}
+
+/************************/
+/* Drawer Icon Container*/
+/************************/
+/* Separate button for map due to overflow-y: scroll*/
+#map-btn {
+  z-index: 1;
+}
+
+#drawer-btn {
   top: 0;
   right: -12vw;
+}
+
+#drawer-btn, #map-btn {
+  position: absolute;
   width: 12vw;
   height: 8vh;
   background-color: #3833bd;
-  /*box-shadow: inset 0 0 2vh white;*/
 }
 
-#drawer-btn.closed {
+#drawer-btn.closed, #map-btn.closed {
   transform: translateX(12vs);
-  transition: transform .3s ease .5s;
+  transition: transform .3s ease .4s;
 }
 
-#drawer-btn.open {
+#drawer-btn.open, #map-btn.open {
   transform: translateX(-12vw);
-  transition: transform .3s ease-in;
+  transition: transform .3s ease;
 }
 
-/* Create and position icon */
+/***************/
+/* Drawer Icon */
+/***************/
 .btn-icon, .btn-icon:before, .btn-icon:after {
   position: absolute;
   background-color: white;
@@ -86,7 +112,10 @@ html, body {
   top: 185%;
 }
 
-/* When the drawer is closed */
+/**************************/
+/* Drawer Icon Animations */
+/**************************/
+/* Closing */
 .btn-icon.closed {
   background-color: white;
   transition: background-color 1s ease;
@@ -97,14 +126,13 @@ html, body {
   transition: transform 1s ease;
 }
 
-/* When the drawer is open */
+/* Opening */
 .btn-icon.open {
   background-color: transparent;
   transition: background-color .7s ease;
 }
 
 .btn-icon.open:before {
-  /*transform: matrix(0.586,0.8,-0.8,0.586,40,40);*/
   transform: translateY(185%) rotate(45deg);
   transition: transform ease .7s;
 }
@@ -119,8 +147,8 @@ html, body {
 /* Map Stuff */
 /*************/
 #map-container {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 #info-window {
