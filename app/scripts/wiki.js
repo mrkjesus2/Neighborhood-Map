@@ -9,8 +9,10 @@ app.wiki = app.wiki || {};
         url: 'https://en.wikipedia.org/w/api.php',
         data: {
           action: 'query',
-          prop: 'categories|extracts',
+          prop: 'categories|extracts|info',
           exintro: '',
+          exchars: 1000,
+          inprop: 'url',
           format: 'json',
           redirects: '',
           converttitles: '',
@@ -20,12 +22,11 @@ app.wiki = app.wiki || {};
         headers: {'Api-User-Agent': 'Mark\'s Udacity Project'},
 
         success: function(data) {
-          console.log(data);
           var firstId = Object.keys(data.query.pages)['0'];
-          var pageContent = data.query.pages[firstId].extract;
+          var page = new app.viewmodel.WikiPage(data.query.pages[firstId]);
 
-          if (pageContent !== undefined && !app.wiki.ambiguityChk(data, firstId)) {
-            place.wikiInfo(pageContent);
+          if (page.content() !== undefined && !app.wiki.ambiguityChk(data, firstId)) {
+            place.wikiInfo(page);
           }
           console.log('Finished getWiki'); // REMOVE
         },

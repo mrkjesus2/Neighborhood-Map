@@ -20,6 +20,11 @@ app.viewmodel = {
     console.log('Place Constructor');  // REMOVE
   },
 
+  WikiPage: function(page) {
+    this.content = ko.observable(page.extract);
+    this.url = ko.observable(page.fullurl);
+    // return this;
+  },
 
   setCurrentPlace: function(place) {
     console.log('setCurrentPlace'); // REMOVE

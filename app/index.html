@@ -83,8 +83,10 @@
             <!-- Hidden div used to set infoWindow content-->
     <div id="infowindow" data-bind="with: curPlace">
       <h3 data-bind="text: name"></h3>
-      <p data-bind="html: wikiInfo"></p>
-
+      <div data-bind="with: wikiInfo">
+        <p data-bind="html: content"></p>
+        <a data-bind="attr {href: url}, text: url">Read More</a>
+      </div>
       <!-- ko with: frSqrInfo -->
         <p data-bind="text: id"></p>
         <div data-bind="with: hereNow">
