@@ -36,7 +36,7 @@ li {
 #drawer-content {
   position: absolute;
   top: 10vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 90vh;
 }
 
@@ -151,6 +151,6 @@ li {
   height: 100vh;
 }
 
-#info-window {
-
+#infowindow {
+  display: none;
 }

@@ -6,6 +6,7 @@ app.viewmodel = app.viewmodel || {};
 app.viewmodel = {
   places: ko.observableArray(),
   curMarker: null,
+  curPlace: ko.observable(),
   inputText: ko.observable(''),
 
   Place: function(place, marker) {
@@ -18,9 +19,14 @@ app.viewmodel = {
     // console.log(this);  // REMOVE
   },
 
+  setCurrentPlace: function(place) {
+    app.viewmodel.curPlace(place);
+  },
+
   // Called when the marker or list item is clicked
   clickHandler: function(place) {
     var plc = place || this;
+    app.viewmodel.setCurrentPlace(plc);
     app.viewmodel.closeDrawer();
     app.viewmodel.markerSetup(plc);
   },
@@ -61,6 +67,8 @@ app.viewmodel = {
   },
 
   markerSetup: function(place) {
+    var content = $('#infowindow').html();
+    console.log(content);
     // Bounce the marker when selected
     if (this.curMarker) {
       app.map.toggleBounce();
@@ -69,8 +77,12 @@ app.viewmodel = {
     app.map.toggleBounce();
 
     // Fill the info window
-    app.map.infoWindow.setContent(place.wikiInfo());
+    app.map.infoWindow.setContent(content);
     app.map.infoWindow.open(app.map.map, place.marker);
+  },
+
+  test: function() {
+    console.log('Holy Shit');
   },
 
   toggleDrawer: function() {
@@ -87,15 +99,15 @@ app.viewmodel = {
     var els = document.getElementsByClassName('drawer');
 
     var button = document.getElementById('drawer-btn');
-    var mapButton = document.getElementById('map-btn');
+    // var mapButton = document.getElementById('map-btn');
 
     button.addEventListener('click', app.viewmodel.toggleDrawer);
-    mapButton.addEventListener('click', app.viewmodel.toggleDrawer);
+    // mapButton.addEventListener('click', app.viewmodel.toggleDrawer);
 
     return {
       els: els,
       button: button,
-      mapButton: mapButton
+      // mapButton: mapButton
     }
   }
 

@@ -41,9 +41,9 @@
   <body>
     <div id="container">
       <!-- Button to open the drawer -->
-      <a id="map-btn" class="drawer closed" href="#">
+     <!--  <a id="map-btn" class="drawer closed" href="#">
         <span class="btn-icon drawer closed"></span>
-      </a>
+      </a> -->
 
       <!-- <div id="drawer-content"> -->
       <div id="drawer-top" class="drawer closed">
@@ -53,7 +53,7 @@
               event: {keydown: placeFilter}">
           </p>
           <!-- List for autocomplete -->
-          <datalist id="places" data-bind="foreach: app.viewmodel.places">
+          <datalist id="places" data-bind="foreach: places">
               <option data-bind="value: name">
           </datalist>
           <!-- Button to close the drawer -->
@@ -64,11 +64,12 @@
 
       <div id="drawer-content" class="drawer closed">
         <!-- List of the places on the map -->
-        <ul id="drawer-list" data-bind="foreach: app.viewmodel.places">
-          <li class="nav-list-item" data-bind="
-            visible: show,
-            text: name,
-            click: $parent.clickHandler">
+        <ul id="drawer-list"
+          data-bind="foreach: places">
+          <li class="nav-list-item"
+            data-bind="visible: show,
+              text: name,
+              click: $parent.clickHandler">
           </li>
         </ul>
       </div>
@@ -77,12 +78,19 @@
         <h1 id="error">There appears to be a problem with Google Maps</h1>
       </div>
     </div>
-
-
   </body>
+
+  <!-- Hidden div used to set infoWindow content-->
+    <div id="infowindow" data-bind="with: curPlace">
+      <h3 data-bind="text: name"></h3>
+      <p data-bind="html: wikiInfo"></p>
+      <!-- <p data-bind="text: frSqrInfo.id"></p> -->
+    </div>
+
     <!-- Vendor Scripts -->
     <script src="scripts/vendor/jquery-2.2.0.js"></script>
     <script src="scripts/vendor/knockout-3.4.0.js"></script>
+    <script src="scripts/vendor/knockout-mapping-2.4.1.js"></script>
     <!-- My Scripts -->
     <script type="text/javascript" src="scripts/main.js"></script>
     <script type="text/javascript" src="scripts/map.js"></script>

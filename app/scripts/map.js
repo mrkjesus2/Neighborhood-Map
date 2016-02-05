@@ -82,6 +82,7 @@ app.map = app.map || {};
       // Create the array of places
       var newPlace = new app.viewmodel.Place(place, marker);
       app.viewmodel.places.push(newPlace);
+      app.viewmodel.curPlace(newPlace);
 
       google.maps.event.addListener(marker, 'click', function() {
           app.viewmodel.clickHandler(newPlace);
@@ -89,7 +90,6 @@ app.map = app.map || {};
     },
 
     toggleBounce: function() {
-
       if (app.viewmodel.curMarker.getAnimation()) {
         app.viewmodel.curMarker.setAnimation(null);
       } else {
@@ -97,7 +97,5 @@ app.map = app.map || {};
       }
     }
   };
-
-
 })();
 // // TODO: Add powered by google logo
