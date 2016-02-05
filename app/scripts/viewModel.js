@@ -8,6 +8,7 @@ app.viewmodel = {
   curMarker: null,
   curPlace: ko.observable(),
   inputText: ko.observable(''),
+  frsqr: null,
 
   Place: function(place, marker) {
     this.name = ko.observable(place.name);
@@ -16,8 +17,10 @@ app.viewmodel = {
     this.show = ko.observable(true);
     this.wikiInfo = ko.observable(app.wiki.getWiki(this));
     this.frSqrInfo = ko.observable(app.foursquare.findPlace(this));
+    // this.frSqrInfo = new this.FourSquare()
     // console.log(this);  // REMOVE
   },
+
 
   setCurrentPlace: function(place) {
     app.viewmodel.curPlace(place);
@@ -68,7 +71,7 @@ app.viewmodel = {
 
   markerSetup: function(place) {
     var content = $('#infowindow').html();
-    console.log(content);
+    // console.log(place.frSqrInfo());
     // Bounce the marker when selected
     if (this.curMarker) {
       app.map.toggleBounce();
