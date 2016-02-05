@@ -17,17 +17,18 @@ app.viewmodel = {
     this.show = ko.observable(true);
     this.wikiInfo = ko.observable(app.wiki.getWiki(this));
     this.frSqrInfo = ko.observable(app.foursquare.findPlace(this));
-    // this.frSqrInfo = new this.FourSquare()
-    // console.log(this);  // REMOVE
+    console.log('Place Constructor');  // REMOVE
   },
 
 
   setCurrentPlace: function(place) {
+    console.log('setCurrentPlace'); // REMOVE
     app.viewmodel.curPlace(place);
   },
 
   // Called when the marker or list item is clicked
   clickHandler: function(place) {
+    console.log('clickHandler'); // REMOVE
     var plc = place || this;
     app.viewmodel.setCurrentPlace(plc);
     app.viewmodel.closeDrawer();
@@ -35,6 +36,7 @@ app.viewmodel = {
   },
 
   placeFilter: function() {
+    console.log('placeFilter'); // REMOVE
     var self = this;
     // A cushion to allow inputText to change
     setTimeout(function() {
@@ -70,8 +72,9 @@ app.viewmodel = {
   },
 
   markerSetup: function(place) {
+    console.log('markerSetup'); // REMOVE
     var content = $('#infowindow').html();
-    // console.log(place.frSqrInfo());
+    console.log(content);
     // Bounce the marker when selected
     if (this.curMarker) {
       app.map.toggleBounce();
@@ -84,37 +87,33 @@ app.viewmodel = {
     app.map.infoWindow.open(app.map.map, place.marker);
   },
 
-  test: function() {
-    console.log('Holy Shit');
-  },
-
   toggleDrawer: function() {
-    $(app.viewmodel.init().els).toggleClass('closed open');
+    console.log('toggleDrawer'); // REMOVE
+    var els = document.getElementsByClassName('drawer');
+    $(els).toggleClass('closed open');
   },
 
   closeDrawer: function() {
-    if ($(app.viewmodel.init().els).hasClass('open')) {
-      this.toggleDrawer();
+    console.log('closeDrawer'); // REMOVE
+    var els = document.getElementsByClassName('drawer');
+    if ($(els).hasClass('open')) {
+      app.viewmodel.toggleDrawer();
     }
   },
 
   init: function() {
-    var els = document.getElementsByClassName('drawer');
+    console.log('init'); // REMOVE
 
     var button = document.getElementById('drawer-btn');
-    // var mapButton = document.getElementById('map-btn');
 
     button.addEventListener('click', app.viewmodel.toggleDrawer);
-    // mapButton.addEventListener('click', app.viewmodel.toggleDrawer);
 
     return {
-      els: els,
       button: button,
-      // mapButton: mapButton
     }
   }
 
 };
 
-ko.applyBindings(app.viewmodel);
 app.viewmodel.init();
+ko.applyBindings(app.viewmodel);

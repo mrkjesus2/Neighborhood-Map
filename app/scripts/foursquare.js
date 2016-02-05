@@ -8,6 +8,7 @@ app.foursquare = app.foursquare || {};
 
   app.foursquare = {
     findPlace: function(place) {
+      console.log('FourSquare findPlace'); // REMOVE
       var loc = place.data.geometry.location;
       // Call the foursquare API
       jQuery.ajax({
@@ -26,6 +27,7 @@ app.foursquare = app.foursquare || {};
           var venue = data.response.venues[0];
           var info = ko.mapping.fromJS(venue, app.foursquare.FourSquare);
           place.frSqrInfo(info);
+          console.log('Finished FourSquare'); // REMOVE
         },
 
         fail: function() {
@@ -39,6 +41,7 @@ app.foursquare = app.foursquare || {};
     },
 
     FourSquare: function(info) {
+      console.log('FourSquare Constructor'); // REMOVE
       ko.mapping.fromJS(info, {}, this);
     }
 

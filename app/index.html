@@ -72,20 +72,38 @@
               click: $parent.clickHandler">
           </li>
         </ul>
+        <!-- <span data-bind="text: curPlace().name()"></span> -->
       </div>
       <!-- </div> -->
       <div id="map-container">
         <h1 id="error">There appears to be a problem with Google Maps</h1>
       </div>
     </div>
-  </body>
 
-  <!-- Hidden div used to set infoWindow content-->
+            <!-- Hidden div used to set infoWindow content-->
     <div id="infowindow" data-bind="with: curPlace">
       <h3 data-bind="text: name"></h3>
-      <!-- <p data-bind="html: wikiInfo"></p> -->
-      <p data-bind="text: frSqrInfo.id"></p>
+      <p data-bind="html: wikiInfo"></p>
+
+      <!-- ko with: frSqrInfo -->
+        <p data-bind="text: id"></p>
+        <div data-bind="with: hereNow">
+          <p data-bind="text: count"></p>
+          <p data-bind="text: groups"></p>
+          <p data-bind="text: summary"></p>
+        </div>
+        <div data-bind="with: specials">
+          <p data-bind="text: count"></p>
+          <p data-bind="text: items"></p>
+        </div>
+        <div data-bind="with: stats">
+          <p data-bind="text: checkinsCount"></p>
+          <p data-bind="text: tipCount"></p>
+          <p data-bind="text: usersCount"></p>
+        </div>
+      <!-- /ko -->
     </div>
+  </body>
 
     <!-- Vendor Scripts -->
     <script src="scripts/vendor/jquery-2.2.0.js"></script>

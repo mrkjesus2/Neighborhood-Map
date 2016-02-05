@@ -16,14 +16,14 @@ app.map = app.map || {};
         maxZoom: 18,
         mapTypeControl: false
       });
-      console.log('Map Initialized'); // REMOVE
+      console.log('Map init'); // REMOVE
       // Load places once the maps bounds are set
       google.maps.event.addListenerOnce(this.map, 'bounds_changed', this.getPlaces);
     },
 
     // Get a list of places from Google Maps
     getPlaces: function() {
-      console.log('Getting Places'); // REMOVE
+      console.log('Map getPlaces'); // REMOVE
       // Variables for the request
       var placesApi = new google.maps.places.PlacesService(app.map.map);
       var request = {
@@ -45,7 +45,7 @@ app.map = app.map || {};
 
     // TODO: implement this on click or REMOVE
     getPlaceDetails: function(place) {
-      // console.log('Getting Place Details'); // REMOVE
+      console.log('Map getPlaceDetails'); // REMOVE
       // Variables for the request
       var placesApi = new google.maps.places.PlacesService(app.map.map);
       var request = {
@@ -63,6 +63,7 @@ app.map = app.map || {};
     },
 
     createMarker: function(place) {
+      console.log('Map createMarker'); // REMOVE
       // Location for the Marker
       var plcloc = place.geometry.location
       // Create the marker
@@ -90,6 +91,7 @@ app.map = app.map || {};
     },
 
     toggleBounce: function() {
+      console.log('Map toggleBounce'); // REMOVE
       if (app.viewmodel.curMarker.getAnimation()) {
         app.viewmodel.curMarker.setAnimation(null);
       } else {
