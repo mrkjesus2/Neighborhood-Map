@@ -25,7 +25,8 @@ app.foursquare = app.foursquare || {};
 
         success: function(data) {
           var venue = data.response.venues[0];
-          var info = ko.mapping.fromJS(venue, app.foursquare.FourSquare);
+          var info = ko.mapping.fromJS(venue, app.viewmodel.FourSquare);
+
           place.frSqrInfo(info);
           console.log('Finished FourSquare'); // REMOVE
         },
@@ -38,11 +39,6 @@ app.foursquare = app.foursquare || {};
           // TODO: Write this function
         }
       });
-    },
-
-    FourSquare: function(info) {
-      console.log('FourSquare Constructor'); // REMOVE
-      ko.mapping.fromJS(info, {}, this);
     }
 
   };

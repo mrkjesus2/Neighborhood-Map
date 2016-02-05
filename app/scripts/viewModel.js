@@ -23,7 +23,12 @@ app.viewmodel = {
   WikiPage: function(page) {
     this.content = ko.observable(page.extract);
     this.url = ko.observable(page.fullurl);
-    // return this;
+  },
+
+  FourSquare: function(info) {
+    console.log('FourSquare Constructor'); // REMOVE
+    // Map FourSquare response to observables
+    ko.mapping.fromJS(info, {}, this);
   },
 
   setCurrentPlace: function(place) {
