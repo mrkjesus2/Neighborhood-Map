@@ -10,13 +10,16 @@ app.viewmodel = {
   inputText: ko.observable(''),
   frsqr: null,
 
+/****************/
+/* Constructors */
+/****************/
   Place: function(place, marker) {
     this.name = ko.observable(place.name);
     this.data = place;
-    this.marker = marker;
+    this.marker = app.map.createMarker(this);
     this.show = ko.observable(true);
-    this.wikiInfo = ko.observable(app.wiki.getWiki(this));
-    this.frSqrInfo = ko.observable(app.foursquare.findPlace(this));
+    this.wikiInfo = ko.observable(); // app.wiki.getWiki(this)
+    this.frSqrInfo = ko.observable(); // app.foursquare.findPlace(this)
     console.log('Place Constructor');  // REMOVE
   },
 
@@ -31,8 +34,14 @@ app.viewmodel = {
     ko.mapping.fromJS(info, {}, this);
   },
 
+/********************/
+/* Helper Functions */
+/********************/
   setCurrentPlace: function(place) {
     console.log('setCurrentPlace'); // REMOVE
+    if (app.viewmodel.curPlace().marker.getAnimation()) {
+      app.viewmodel.toggleBounce();
+    }
     app.viewmodel.curPlace(place);
   },
 
@@ -40,9 +49,22 @@ app.viewmodel = {
   clickHandler: function(place) {
     console.log('clickHandler'); // REMOVE
     var plc = place || this;
-    app.viewmodel.setCurrentPlace(plc);
+
+    // Call for data
+    app.wiki.getWiki(plc);
+    app.foursquare.findPlace(plc);
+
+    // Handle map actions
+    app.map.infoWindow.close();
     app.viewmodel.closeDrawer();
-    app.viewmodel.markerSetup(plc);
+    app.viewmodel.setCurrentPlace(plc);
+    app.viewmodel.toggleBounce();
+    // app.viewmodel.markerSetup(plc);
+
+    // Timeout to avoid two calls from success callbacks
+    setTimeout(function() {
+      app.viewmodel.setInfoWindow(plc);
+    }, 200);
   },
 
   placeFilter: function() {
@@ -81,20 +103,22 @@ app.viewmodel = {
     return true;
   },
 
-  markerSetup: function(place) {
-    console.log('markerSetup'); // REMOVE
-    var content = $('#infowindow').html();
-    console.log(content);
-    // Bounce the marker when selected
-    if (this.curMarker) {
-      app.map.toggleBounce();
+  toggleBounce: function() {
+    console.log('Map toggleBounce'); // REMOVE
+    // app.viewmodel.curPlace().marker.setAnimation(null);
+    if (app.viewmodel.curPlace().marker.getAnimation()) {
+      app.viewmodel.curPlace().marker.setAnimation(null);
+    } else {
+      app.viewmodel.curPlace().marker.setAnimation(google.maps.Animation.BOUNCE);
     }
-    this.curMarker = place.marker;
-    app.map.toggleBounce();
+  },
 
-    // Fill the info window
-    app.map.infoWindow.setContent(content);
-    app.map.infoWindow.open(app.map.map, place.marker);
+  setInfoWindow: function(place) {
+    var content = $('#infowindow').html();
+    // setTimeout(function () {
+      app.map.infoWindow.setContent(content);
+      app.map.infoWindow.open(app.map.map, place.marker);
+    // }, 800);
   },
 
   toggleDrawer: function() {
@@ -113,14 +137,9 @@ app.viewmodel = {
 
   init: function() {
     console.log('init'); // REMOVE
-
     var button = document.getElementById('drawer-btn');
-
     button.addEventListener('click', app.viewmodel.toggleDrawer);
 
-    return {
-      button: button,
-    }
   }
 
 };

@@ -7,8 +7,10 @@ app.map = app.map || {};
     // Calls getPlaces and createMarker to fill ViewModel places array
     init: function() {
       this.infoWindow = new google.maps.InfoWindow;
+
       var home = {lat: 39.927677, lng: -75.171909};
       var el = document.getElementById('map-container');
+
       this.map = new google.maps.Map(el, {
         center: home,
         zoom: 14,
@@ -30,11 +32,17 @@ app.map = app.map || {};
         bounds: app.map.map.getBounds(),
         types: ['art_gallery', 'museum', 'park']
       };
+
       // Call the Places API
       placesApi.nearbySearch(request, function(results, status) {
         if (status === 'OK') {
           results.forEach(function(result, idx) {
-            app.map.createMarker(result);
+            // app.map.createMarker(result);
+            var place = new app.viewmodel.Place(result);
+            app.viewmodel.places.push(place);
+            if (idx === 1) {
+              app.viewmodel.curPlace(place);
+            }
           });
         } else {
           // TODO: Add UI error handling
@@ -65,39 +73,27 @@ app.map = app.map || {};
     createMarker: function(place) {
       console.log('Map createMarker'); // REMOVE
       // Location for the Marker
-      var plcloc = place.geometry.location
+      var plcloc = place.data.geometry.location
       // Create the marker
       var marker = new google.maps.Marker({
         animation: google.maps.Animation.DROP,
         attribution: {source: 'mrkjesus2.github.io/Neighborhood-Map'},
-        icon: place.icon,
+        icon: place.data.icon,
         map: app.map.map,
         // optimized: false,  // If problems with animation, uncomment //REMOVE
         place: {
           location: {lat: plcloc.lat(), lng: plcloc.lng()},
-          placeId: place.place_id
+          placeId: place.data.place_id
         },
-        title: place.name
+        title: place.data.name
       });
-
-      // Create the array of places
-      var newPlace = new app.viewmodel.Place(place, marker);
-      app.viewmodel.places.push(newPlace);
-      app.viewmodel.curPlace(newPlace);
 
       google.maps.event.addListener(marker, 'click', function() {
-          app.viewmodel.clickHandler(newPlace);
+          app.viewmodel.clickHandler(place);
       });
+      return marker;
     },
 
-    toggleBounce: function() {
-      console.log('Map toggleBounce'); // REMOVE
-      if (app.viewmodel.curMarker.getAnimation()) {
-        app.viewmodel.curMarker.setAnimation(null);
-      } else {
-        app.viewmodel.curMarker.setAnimation(google.maps.Animation.BOUNCE);
-      }
-    }
   };
 })();
 // // TODO: Add powered by google logo

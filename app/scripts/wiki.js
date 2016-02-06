@@ -25,8 +25,10 @@ app.wiki = app.wiki || {};
           var firstId = Object.keys(data.query.pages)['0'];
           var page = new app.viewmodel.WikiPage(data.query.pages[firstId]);
 
+          // Check to make sure there is worthwhile content
           if (page.content() !== undefined && !app.wiki.ambiguityChk(data, firstId)) {
             place.wikiInfo(page);
+            // app.viewmodel.setInfoWindow(place); // REMOVE ?
           }
           console.log('Finished getWiki'); // REMOVE
         },

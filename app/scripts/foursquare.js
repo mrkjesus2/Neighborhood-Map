@@ -28,6 +28,7 @@ app.foursquare = app.foursquare || {};
           var info = ko.mapping.fromJS(venue, app.viewmodel.FourSquare);
 
           place.frSqrInfo(info);
+          // app.viewmodel.setInfoWindow(place); // REMOVE ?
           console.log('Finished FourSquare'); // REMOVE
         },
 
