@@ -13,11 +13,19 @@ app.viewmodel = {
 /****************/
 /* Constructors */
 /****************/
-  Place: function(place, marker) {
-    this.name = ko.observable(place.name);
-    this.data = place;
-    this.marker = app.map.createMarker(this);
+  Place: function(place) {
     this.show = ko.observable(true);
+
+    // Info returned from map.getPlaces
+    this.name = ko.observable(place.name);
+    this.rating = ko.observable(place.rating);
+    this.open = ko.observable(place.opening_hours); // Don't know that I want
+    this.photos = ko.observableArray(place.photos);
+    this.data = place;
+
+    // Info from elsewhere
+    this.details = ko.observable(); // app.map.getPlaceDetails(this)
+    this.marker = app.map.createMarker(this);
     this.wikiInfo = ko.observable(); // app.wiki.getWiki(this)
     this.frSqrInfo = ko.observable(); // app.foursquare.findPlace(this)
     console.log('Place Constructor');  // REMOVE
@@ -34,9 +42,23 @@ app.viewmodel = {
     ko.mapping.fromJS(info, {}, this);
   },
 
+  PlaceDetails: function(details) {
+    console.log('PlaceDetails') // REMOVE
+    this.address = ko.observable(details.formatted_address);
+    this.phone = ko.observable(details.formatted_phone_number);
+    this.photos = ko.observableArray(details.photos);
+    this.rating = ko.observable(details.rating);
+    this.reviews = ko.observableArray(details.reviews);
+    this.website = ko.observable(details.website);
+  },
+
 /********************/
 /* Helper Functions */
 /********************/
+  getDetails: function(place) {
+    app.map.getPlaceDetails(place);
+  },
+
   setCurrentPlace: function(place) {
     console.log('setCurrentPlace'); // REMOVE
     if (app.viewmodel.curPlace().marker.getAnimation()) {
@@ -53,6 +75,7 @@ app.viewmodel = {
     // Call for data
     app.wiki.getWiki(plc);
     app.foursquare.findPlace(plc);
+    // app.map.getPlaceDetails(plc);
 
     // Handle map actions
     app.map.infoWindow.close();

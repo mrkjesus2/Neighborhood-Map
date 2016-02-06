@@ -6,8 +6,6 @@ app.map = app.map || {};
     // Callback function for Google Maps - Initialize the Map
     // Calls getPlaces and createMarker to fill ViewModel places array
     init: function() {
-      this.infoWindow = new google.maps.InfoWindow;
-
       var home = {lat: 39.927677, lng: -75.171909};
       var el = document.getElementById('map-container');
 
@@ -19,6 +17,9 @@ app.map = app.map || {};
         mapTypeControl: false
       });
       console.log('Map init'); // REMOVE
+
+      this.placesApi = new google.maps.places.PlacesService(app.map.map)
+      this.infoWindow = new google.maps.InfoWindow;
       // Load places once the maps bounds are set
       google.maps.event.addListenerOnce(this.map, 'bounds_changed', this.getPlaces);
     },
@@ -27,14 +28,13 @@ app.map = app.map || {};
     getPlaces: function() {
       console.log('Map getPlaces'); // REMOVE
       // Variables for the request
-      var placesApi = new google.maps.places.PlacesService(app.map.map);
       var request = {
         bounds: app.map.map.getBounds(),
         types: ['art_gallery', 'museum', 'park']
       };
 
       // Call the Places API
-      placesApi.nearbySearch(request, function(results, status) {
+      app.map.placesApi.nearbySearch(request, function(results, status) {
         if (status === 'OK') {
           results.forEach(function(result, idx) {
             // app.map.createMarker(result);
@@ -55,14 +55,14 @@ app.map = app.map || {};
     getPlaceDetails: function(place) {
       console.log('Map getPlaceDetails'); // REMOVE
       // Variables for the request
-      var placesApi = new google.maps.places.PlacesService(app.map.map);
+      // var placesApi = new google.maps.places.PlacesService(app.map.map);
       var request = {
-        placeId: place.place_id
+        placeId: place.data.place_id
       };
       // Call the Places API
-      placesApi.getDetails(request, function(loc, status) {
+      app.map.placesApi.getDetails(request, function(details, status) {
         if (status === 'OK') {
-          return loc;
+          app.viewmodel.PlaceDetails(details);
         } else {
           // TODO: Add UI error handling
           console.log(status);

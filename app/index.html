@@ -40,21 +40,18 @@
 
   <body>
     <div id="container">
-      <!-- Button to open the drawer -->
-     <!--  <a id="map-btn" class="drawer closed" href="#">
-        <span class="btn-icon drawer closed"></span>
-      </a> -->
-
       <!-- <div id="drawer-content"> -->
       <div id="drawer-top" class="drawer closed">
-          <!-- Filter input box -->
-          <p>Filter: <input list="places" data-bind="
+          <p>Filter: <input list="places"
+            data-bind="
               textInput: inputText,
               event: {keydown: placeFilter}">
           </p>
           <!-- List for autocomplete -->
-          <datalist id="places" data-bind="foreach: places">
-              <option data-bind="value: name">
+          <datalist id="places"
+            data-bind="
+              foreach: places">
+            <option data-bind="value: name">
           </datalist>
           <!-- Button to close the drawer -->
           <a id="drawer-btn" class="drawer closed" href="#">
@@ -65,14 +62,33 @@
       <div id="drawer-content" class="drawer closed">
         <!-- List of the places on the map -->
         <ul id="drawer-list"
-          data-bind="foreach: places">
-          <li class="nav-list-item"
-            data-bind="visible: show,
-              text: name,
-              click: $parent.clickHandler">
-          </li>
+          data-bind="
+            foreach: places">
+              <li class="nav-list-item"
+                data-bind="
+                  visible: show,">
+                    <h2 data-bind="
+                      text: name,
+                      click: $parent.clickHandler">
+                    </h2>
+                    <p>
+                      <!-- ko if: rating -->
+                      Rating - <span data-bind="text: rating"></span>
+                      <!-- /ko -->
+                    </p>
+                    <!-- ko if: open() -->
+                    <p data-bind="text: open()['open_now'] ? 'Open' : 'Closed'">
+                    </p>
+                    <!-- /ko -->
+                    <button data-bind="
+                      click: $parent.getDetails,
+                      clickBubble: false">
+                      More Info
+                    </button>
+                    <!-- TODO: Show the detail information when it is retrieved -->
+            </li>
+
         </ul>
-        <!-- <span data-bind="text: curPlace().name()"></span> -->
       </div>
       <!-- </div> -->
       <div id="map-container">
