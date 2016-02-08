@@ -28,10 +28,11 @@ app.viewmodel = {
     this.marker = app.map.createMarker(this);
     this.wikiInfo = ko.observable(); // app.wiki.getWiki(this)
     this.frSqrInfo = ko.observable(); // app.foursquare.findPlace(this)
-    console.log('Place Constructor');  // REMOVE
+    // console.log('Place Constructor');  // REMOVE
   },
 
   WikiPage: function(page) {
+    console.log(this);
     this.content = ko.observable(page.extract);
     this.url = ko.observable(page.fullurl);
   },
@@ -43,13 +44,16 @@ app.viewmodel = {
   },
 
   PlaceDetails: function(details) {
+    // console.log(this);
+    // console.log(details);
+    this.show = ko.observable(true);
+    this.address = ko.observable(details.formatted_address);// || 'Waiting');
+    this.phone = ko.observable(details.formatted_phone_number);// || 'Waiting')
+    this.photos = ko.observableArray(details.photos)// || [];
+    this.rating = ko.observable(details.rating);// || 'Waiting');
+    this.reviews = ko.observableArray(details.reviews)// || [];
+    this.website = ko.observable(details.website);// || 'Waiting');
     console.log('PlaceDetails') // REMOVE
-    this.address = ko.observable(details.formatted_address);
-    this.phone = ko.observable(details.formatted_phone_number);
-    this.photos = ko.observableArray(details.photos);
-    this.rating = ko.observable(details.rating);
-    this.reviews = ko.observableArray(details.reviews);
-    this.website = ko.observable(details.website);
   },
 
 /********************/
@@ -57,6 +61,10 @@ app.viewmodel = {
 /********************/
   getDetails: function(place) {
     app.map.getPlaceDetails(place);
+  },
+
+  hideDetails: function(details) {
+    details.show(false);
   },
 
   setCurrentPlace: function(place) {
@@ -166,6 +174,7 @@ app.viewmodel = {
   }
 
 };
+
 
 app.viewmodel.init();
 ko.applyBindings(app.viewmodel);

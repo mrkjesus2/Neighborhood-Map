@@ -66,27 +66,33 @@
             foreach: places">
               <li class="nav-list-item"
                 data-bind="
-                  visible: show,">
-                    <h2 data-bind="
-                      text: name,
-                      click: $parent.clickHandler">
-                    </h2>
-                    <p>
-                      <!-- ko if: rating -->
-                      Rating - <span data-bind="text: rating"></span>
-                      <!-- /ko -->
-                    </p>
-                    <!-- ko if: open() -->
-                    <p data-bind="text: open()['open_now'] ? 'Open' : 'Closed'">
-                    </p>
-                    <!-- /ko -->
-                    <button data-bind="
-                      click: $parent.getDetails,
-                      clickBubble: false">
-                      More Info
-                    </button>
-                    <!-- TODO: Show the detail information when it is retrieved -->
-            </li>
+                  visible: show,
+                  text: name,
+                  click: $parent.clickHandler">
+              </li>
+              <p>
+              <!-- ko if: rating -->
+                Rating - <span data-bind="text: rating"></span>
+              <!-- /ko -->
+              </p>
+              <!-- ko if: open() -->
+              <p data-bind="text: open()['open_now'] ? 'Open' : 'Closed'">
+              </p>
+              <!-- /ko -->
+              <button data-bind="
+                click: $parent.getDetails">
+                More Info
+              </button>
+            <!-- TODO: Show the detail information when it is retrieved -->
+              <!-- ko if: details() && details().show -->
+              <div id="place-details" data-bind="with: details()">
+                <p data-bind="click: $root.hideDetails">x</p>
+                <p data-bind="text: website"></p>
+                <p data-bind="text: phone"></p>
+                <p data-bind="text: address"></p>
+                <p data-bind="text: reviews"></p>
+              </div>
+              <!-- /ko -->
 
         </ul>
       </div>
@@ -133,7 +139,7 @@
     <script type="text/javascript" src="scripts/foursquare.js"></script>
     <script type="text/javascript" src="scripts/wiki.js"></script>
     <script type="text/javascript" src="scripts/viewModel.js"></script>
-    <script type="text/javascript" src="scripts/view.js"></script>
+
 
     <!-- Google Maps API -->
     <script async

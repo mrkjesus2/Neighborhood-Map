@@ -39,6 +39,7 @@ app.map = app.map || {};
           results.forEach(function(result, idx) {
             // app.map.createMarker(result);
             var place = new app.viewmodel.Place(result);
+            // place.details(new app.viewmodel.PlaceDetails('')); // Not sure about this
             app.viewmodel.places.push(place);
             if (idx === 1) {
               app.viewmodel.curPlace(place);
@@ -61,8 +62,12 @@ app.map = app.map || {};
       };
       // Call the Places API
       app.map.placesApi.getDetails(request, function(details, status) {
+        console.log('status', status);
         if (status === 'OK') {
-          app.viewmodel.PlaceDetails(details);
+          var deets = new app.viewmodel.PlaceDetails(details);
+          place.details(deets);
+          // console.log(deets);
+          // console.log(place.details());
         } else {
           // TODO: Add UI error handling
           console.log(status);
@@ -71,7 +76,7 @@ app.map = app.map || {};
     },
 
     createMarker: function(place) {
-      console.log('Map createMarker'); // REMOVE
+      // console.log('Map createMarker'); // REMOVE
       // Location for the Marker
       var plcloc = place.data.geometry.location
       // Create the marker
@@ -93,7 +98,8 @@ app.map = app.map || {};
       });
       return marker;
     },
-
+    // TODO: Should there be a return obect here (Module thinking>>>)
+    // Would require a variable that indicates doneness?
   };
 })();
 // // TODO: Add powered by google logo
