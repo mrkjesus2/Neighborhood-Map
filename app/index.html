@@ -1,5 +1,4 @@
-<!-- TODO: Before submission - Remove 'demo.css' and 'demo.html' -->
-<!-- All head code from Google's Web Starter Kit -->
+
 <!doctype html>
 <html lang="en">
 
@@ -37,64 +36,52 @@
     <link rel="stylesheet" href="styles/normalize.css">
     <link rel="stylesheet" href="styles/main.css">
   </head>
-
+<!-- TODO: Before submission - Remove 'demo.css' and 'demo.html' -->
+<!-- All head code from Google's Web Starter Kit -->
   <body>
     <div id="container">
       <!-- <div id="drawer-content"> -->
       <div id="drawer-top" class="drawer closed">
-          <p>Filter: <input list="places"
-            data-bind="
-              textInput: inputText,
-              event: {keydown: placeFilter}">
-          </p>
-          <!-- List for autocomplete -->
-          <datalist id="places"
-            data-bind="
-              foreach: places">
-            <option data-bind="value: name">
-          </datalist>
-          <!-- Button to close the drawer -->
-          <a id="drawer-btn" class="drawer closed" href="#">
-            <span class="btn-icon drawer closed"></span>
-          </a>
-        </div>
-
-      <div id="drawer-content" class="drawer closed">
-        <!-- List of the places on the map -->
-        <ul id="drawer-list"
+        <p>Filter: <input list="places"
+          data-bind="
+            textInput: inputText,
+            event: {keydown: placeFilter}">
+        </p>
+        <!-- List for autocomplete -->
+        <datalist id="places"
           data-bind="
             foreach: places">
-              <li class="nav-list-item"
-                data-bind="
-                  visible: show,
-                  text: name,
-                  click: $parent.clickHandler">
-              </li>
-              <p>
-              <!-- ko if: rating -->
-                Rating - <span data-bind="text: rating"></span>
-              <!-- /ko -->
-              </p>
-              <!-- ko if: open() -->
-              <p data-bind="text: open()['open_now'] ? 'Open' : 'Closed'">
-              </p>
-              <!-- /ko -->
-              <button data-bind="
-                click: $parent.getDetails">
-                More Info
-              </button>
-            <!-- TODO: Show the detail information when it is retrieved -->
-              <!-- ko if: details() && details().show -->
-              <div id="place-details" data-bind="with: details()">
-                <p data-bind="click: $root.hideDetails">x</p>
-                <p data-bind="text: website"></p>
-                <p data-bind="text: phone"></p>
-                <p data-bind="text: address"></p>
-                <p data-bind="text: reviews"></p>
-              </div>
-              <!-- /ko -->
+            <!-- Error: Element option without attribute label must not be empty. -->
+          <option data-bind="value: name">
+        </datalist>
+        <!-- Button to close the drawer -->
+        <a id="drawer-btn" class="drawer closed" href="#">
+          <span class="btn-icon drawer closed"></span>
+        </a>
+      </div>
 
+      <div id="drawer-content" class="drawer closed" data-bind="foreach: places">
+        <!-- List of the places on the map -->
+        <ul id="drawer-list">
+          <li class="nav-list-item" data-bind="visible: show,text: name,click: $parent.clickHandler">
+          </li>
         </ul>
+          <p>
+          <!-- ko if: rating -->
+            Rating - <span data-bind="text: rating"></span>
+          <!-- /ko -->
+          </p>
+          <p data-bind="text: open"></p>
+          <button data-bind="click: $parent.getDetails">More Info</button>
+          <!-- ko if: details() && details().show -->
+          <div id="place-details" data-bind="with: details()">
+            <p data-bind="click: $root.hideDetails">x</p>
+            <a data-bind="text: website, attr: {href: website}" target="_blank"></a>
+            <p data-bind="text: phone"></p>
+            <p data-bind="text: address"></p>
+            <p data-bind="text: reviews"></p>
+          </div>
+          <!-- /ko -->
       </div>
       <!-- </div> -->
       <div id="map-container">
@@ -102,29 +89,39 @@
       </div>
     </div>
 
-            <!-- Hidden div used to set infoWindow content-->
+    <!-- TODO: Working on photo modal -->
+    <!-- Modal Window HTML -->
+    <div id="photo-modal">
+      <div id="photo-top-bar"><p>Picture Title</p></div>
+      <div id="photo-pre-btn"><span><</span></div>
+      <div id="photo-container"><img src="app/images/touch/chrome-tuoch-icon-192x192.png"></div>
+      <div id="photo-post-btn"><span>></span></div>
+      <div id="photo-desc"><p>Text about the photo</p></div>
+    </div>
+
+    <!-- Hidden div used to style infoWindow content-->
     <div id="infowindow" data-bind="with: curPlace">
       <h3 data-bind="text: name"></h3>
       <div data-bind="with: wikiInfo">
         <p data-bind="html: content"></p>
-        <a data-bind="attr {href: url}, text: url">Read More</a>
+        <a data-bind="attr: {href: url}" target="_blank">Read More</a>
       </div>
       <!-- ko with: frSqrInfo -->
-        <p data-bind="text: id"></p>
-        <div data-bind="with: hereNow">
-          <p data-bind="text: count"></p>
-          <p data-bind="text: groups"></p>
-          <p data-bind="text: summary"></p>
-        </div>
-        <div data-bind="with: specials">
-          <p data-bind="text: count"></p>
-          <p data-bind="text: items"></p>
-        </div>
-        <div data-bind="with: stats">
-          <p data-bind="text: checkinsCount"></p>
-          <p data-bind="text: tipCount"></p>
-          <p data-bind="text: usersCount"></p>
-        </div>
+      <p data-bind="text: id"></p>
+      <div data-bind="with: hereNow">
+        <p>Here now: <span data-bind="text: count"></span></p>
+        <p> Groups: <span data-bind="text: groups"></span></p>
+        <p> Summary: <span data-bind="text: summary"></span></p>
+      </div>
+      <div data-bind="with: specials">
+        <p> Count: <span data-bind="text: count"></span></p>
+        <p> Items: <span data-bind="text: items"></span></p>
+      </div>
+      <div data-bind="with: stats">
+        <p> Checkins: <span data-bind="text: checkinsCount"></span></p>
+        <p> Tips: <span data-bind="text: tipCount"></span></p>
+        <p> Users: <span data-bind="text: usersCount"></span></p>
+      </div>
       <!-- /ko -->
     </div>
   </body>

@@ -40,7 +40,7 @@ const reload = browserSync.reload;
 
 // Lint JavaScript
 gulp.task('lint', () =>
-  gulp.src(['app/scripts/**/*.js', '!app/scripts/vendor/knockout-3.4.0.js', '!app/scripts/vendor/jquery-2.2.0.js', '!app/scripts/map.js'])
+  gulp.src(['app/scripts/**/*.js', '!app/scripts/vendor/knockout-3.4.0.js', '!app/scripts/vendor/jquery-2.2.0.js', '!app/scripts/vendor/knockout-mapping-2.4.1.js','!app/scripts/map.js'])
     .pipe($.eslint())
     .pipe($.eslint.format())
     .pipe($.if(!browserSync.active, $.eslint.failOnError()))

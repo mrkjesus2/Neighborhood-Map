@@ -19,7 +19,9 @@ app.viewmodel = {
     // Info returned from map.getPlaces
     this.name = ko.observable(place.name);
     this.rating = ko.observable(place.rating);
-    this.open = ko.observable(place.opening_hours); // Don't know that I want
+    this.open = ko.observable(
+      place.opening_hours ? 'Open' : 'Closed' || 'Hours not available'
+    );
     this.photos = ko.observableArray(place.photos);
     this.data = place;
 
@@ -49,11 +51,11 @@ app.viewmodel = {
     this.show = ko.observable(true);
     this.address = ko.observable(details.formatted_address);// || 'Waiting');
     this.phone = ko.observable(details.formatted_phone_number);// || 'Waiting')
-    this.photos = ko.observableArray(details.photos)// || [];
+    this.photos = ko.observableArray(details.photos);// || [];
     this.rating = ko.observable(details.rating);// || 'Waiting');
-    this.reviews = ko.observableArray(details.reviews)// || [];
+    this.reviews = ko.observableArray(details.reviews);// || [];
     this.website = ko.observable(details.website);// || 'Waiting');
-    console.log('PlaceDetails') // REMOVE
+    console.log('PlaceDetails'); // REMOVE
   },
 
 /********************/
@@ -146,10 +148,8 @@ app.viewmodel = {
 
   setInfoWindow: function(place) {
     var content = $('#infowindow').html();
-    // setTimeout(function () {
       app.map.infoWindow.setContent(content);
       app.map.infoWindow.open(app.map.map, place.marker);
-    // }, 800);
   },
 
   toggleDrawer: function() {
@@ -174,7 +174,6 @@ app.viewmodel = {
   }
 
 };
-
 
 app.viewmodel.init();
 ko.applyBindings(app.viewmodel);

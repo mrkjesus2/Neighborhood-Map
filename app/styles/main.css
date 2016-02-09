@@ -16,6 +16,7 @@ li {
   width: 100vw;
   height: 100vh;
   /*display: flex;*/
+  /*overflow: auto;*/
 }
 
 /********************/
@@ -63,19 +64,19 @@ li {
   right: -12vw;
 }
 
-#drawer-btn, #map-btn {
+#drawer-btn {
   position: absolute;
   width: 12vw;
   height: 8vh;
   background-color: #3833bd;
 }
 
-#drawer-btn.closed, #map-btn.closed {
+#drawer-btn.closed {
   transform: translateX(12vs);
   transition: transform .3s ease .4s;
 }
 
-#drawer-btn.open, #map-btn.open {
+#drawer-btn.open {
   transform: translateX(-12vw);
   transition: transform .3s ease;
 }
@@ -142,6 +143,51 @@ li {
   transition: transform .7s ease;
 }
 
+/*********/
+/* Modal */
+/*********/
+#photo-modal {
+  position: absolute;
+  top: 10vh;
+  left: 10vw;
+  width: 80vw;
+  min-height: 50vh;
+  max-height: 80vh;
+  z-index: 1;
+  background-color: grey;
+}
+
+#photo-top-bar {
+  width: 100%;
+  text-align: center;
+}
+
+#photo-pre-btn {
+  float: left;
+  background-color: red;
+  width: 10%;
+}
+
+#photo-post-btn {
+  float: right;
+  background-color: green;
+  text-align: right;
+  width: 10%;
+}
+
+#photo-container {
+  background-color: blue;
+  width: 80%;
+  min-height: 50%;
+  float: left;
+}
+
+#photo-desc {
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
 
 /*************/
 /* Map Stuff */
