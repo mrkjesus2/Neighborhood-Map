@@ -91,12 +91,17 @@
 
     <!-- TODO: Working on photo modal -->
     <!-- Modal Window HTML -->
-    <div id="photo-modal">
+   <div id="photo-modal">
       <div id="photo-top-bar"><p>Picture Title</p></div>
-      <div id="photo-pre-btn"><span><</span></div>
-      <div id="photo-container"><img src="app/images/touch/chrome-tuoch-icon-192x192.png"></div>
-      <div id="photo-post-btn"><span>></span></div>
-      <div id="photo-desc"><p>Text about the photo</p></div>
+      <div id="modal-main-content">
+
+       <img id="photo" data-bind="attr: { src: curPlace().photo().url()({'maxHeight': 600}) }">
+      </div>
+      <div id="photo-desc">
+        <span id="photo-pre-btn" class="photo-btn"><</span>
+        <!-- <p>Text about the photo</p> -->
+        <span id="photo-post-btn" class="photo-btn">></span>
+      </div>
     </div>
 
     <!-- Hidden div used to style infoWindow content-->
@@ -106,6 +111,12 @@
         <p data-bind="html: content"></p>
         <a data-bind="attr: {href: url}" target="_blank">Read More</a>
       </div>
+      <!-- Trying to get places image -->
+      <p>height:<span data-bind="text: photo().height"></span></p>
+      <p>width:<span data-bind="text: photo().width"></span></p>
+      <p>attributions:<span data-bind="text: photo().attributions"></span></p>
+      <p>url:<span data-bind="text: photo().url()({'maxWidth': 100})"></span></p>
+      <!-- <img data-bind="attr: {src: photo().getUrl}"> -->
       <!-- ko with: frSqrInfo -->
       <p data-bind="text: id"></p>
       <div data-bind="with: hereNow">

@@ -14,6 +14,7 @@ app.viewmodel = {
 /* Constructors */
 /****************/
   Place: function(place) {
+    console.log(place.photos);
     this.show = ko.observable(true);
 
     // Info returned from map.getPlaces
@@ -22,7 +23,15 @@ app.viewmodel = {
     this.open = ko.observable(
       place.opening_hours ? 'Open' : 'Closed' || 'Hours not available'
     );
-    this.photos = ko.observableArray(place.photos);
+    if (place.photos) {
+
+    this.photo = ko.observable({
+      url: ko.observable(place.photos[0].getUrl),
+      height: ko.observable(place.photos[0].height),
+      width: ko.observable(place.photos[0].width),
+      attributions: ko.observable(place.photos[0].html_attributions)
+    });
+    }
     this.data = place;
 
     // Info from elsewhere
@@ -31,6 +40,11 @@ app.viewmodel = {
     this.wikiInfo = ko.observable(); // app.wiki.getWiki(this)
     this.frSqrInfo = ko.observable(); // app.foursquare.findPlace(this)
     // console.log('Place Constructor');  // REMOVE
+  },
+
+// TODO: This function probably needs to written for Places API
+  getPhoto: function(place, url, width, height) {
+
   },
 
   WikiPage: function(page) {
