@@ -12,7 +12,7 @@ app.foursquare = app.foursquare || {};
       var loc = place.data.geometry.location;
       // Call the foursquare API
       jQuery.ajax({
-        url: 'https://api.foursquare.com/v2/venues/serch',
+        url: 'https://api.foursquare.com/v2/venues/search',
         data: {
           query: place.name(),
           ll: loc.lat() + ',' + loc.lng(),
@@ -25,7 +25,7 @@ app.foursquare = app.foursquare || {};
         dataType: 'json'
 
       }).done(function(data) {
-        console.log('Foursquare done');
+        // console.log('Foursquare done'); // REMOVE
         var venue = data.response.venues[0];
         var info = ko.mapping.fromJS(venue, app.viewmodel.FourSquare);
 

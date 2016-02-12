@@ -6,7 +6,7 @@ app.wiki = app.wiki || {};
     getWiki: function(place) {
       // console.log('Wiki getWiki'); // REMOVE
       jQuery.ajax({
-        url: 'https://e.wikipedia.org/w/api.php',
+        url: 'https://en.wikipedia.org/w/api.php',
         data: {
           action: 'query',
           prop: 'categories|extracts|info',
