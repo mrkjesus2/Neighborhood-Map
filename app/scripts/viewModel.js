@@ -77,11 +77,15 @@ app.viewmodel = {
 /* Helper Functions */
 /* **************** */
   addError: function(msg) {
-    console.log(this.errorMsg());
-    console.log(msg);
     this.errorMsg = this.errorMsg || ko.observableArray([]);
     this.errorMsg.push(msg);
-    console.log(this.errorMsg());
+    setTimeout(function() {
+      app.viewmodel.clearErrors();
+    }, 2000);
+  },
+
+  clearErrors: function() {
+    this.errorMsg([]);
   },
 
   toggleDetails: function(place) {
@@ -166,7 +170,6 @@ app.viewmodel = {
 
   toggleBounce: function() {
     // console.log('Map toggleBounce'); // REMOVE
-    // app.viewmodel.curPlace().marker.setAnimation(null);
     if (app.viewmodel.curPlace().marker.getAnimation()) {
       app.viewmodel.curPlace().marker.setAnimation(null);
     } else {
@@ -191,7 +194,7 @@ app.viewmodel = {
   closeDrawer: function() {
     // console.log('closeDrawer'); // REMOVE
     // TODO: Test without els
-    var els = document.getElementsByClassName('drawer');
+    // var els = document.getElementsByClassName('drawer');
     if ($('#drawer-content').hasClass('open')) {
       app.viewmodel.toggleDrawer();
     }

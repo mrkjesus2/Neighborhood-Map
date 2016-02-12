@@ -287,13 +287,23 @@ li {
   position: fixed;
   bottom: 0;
   width: 100vw;
-  height: 20vh;
+  height: 30vh;
   background-color: red;
 }
 
 #error-window span {
   float: right;
-  padding: 0 3vw 0 0;
+  padding: 3vh 3vw;
+  font-size: 1.3em;
+  font-weight: 800;
+}
+
+#error-window h4 {
+  margin: 1em 0.5em 0.5em;
+}
+
+#error-window p {
+  margin: 0.5em;
 }
 
 /* In case Google Maps can't be reached */

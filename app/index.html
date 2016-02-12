@@ -66,7 +66,7 @@
         <div data-bind="visible: show">
           <ul id="drawer-list">
             <li class="list-item" data-bind="text: name,
-                                                click: $parent.clickHandler">
+                                            click: $parent.clickHandler">
             </li>
             <div id="list-item-info">
               <p>
@@ -115,9 +115,8 @@
 
     <!-- Error Window HTML -->
     <div id="error-window" data-bind="style: {display: errorMsg().length > 0 ? 'block' : 'none'}">
-      <h3>There was an error retrieving data
-        <span>X</span>
-      </h3>
+        <span data-bind="click: clearErrors">X</span>
+      <h4>There was an error retrieving data</h4>
       <!-- ko foreach: errorMsg -->
       <p data-bind="text: $data"></p>
       <!-- /ko -->
