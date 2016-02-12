@@ -12,7 +12,7 @@ app.foursquare = app.foursquare || {};
       var loc = place.data.geometry.location;
       // Call the foursquare API
       jQuery.ajax({
-        url: 'https://api.foursquare.com/v2/venues/search',
+        url: 'https://api.foursquare.com/v2/venues/serch',
         data: {
           query: place.name(),
           ll: loc.lat() + ',' + loc.lng(),
@@ -21,24 +21,19 @@ app.foursquare = app.foursquare || {};
           v: '20140806',
           limit: '1'
         },
-        dataType: 'json',
+        dataType: 'json'
 
-        success: function(data) {
+      }).done(function(data) {
+          console.log('Foursquare done');
           var venue = data.response.venues[0];
           var info = ko.mapping.fromJS(venue, app.viewmodel.FourSquare);
 
           place.frSqrInfo(info);
-          // app.viewmodel.setInfoWindow(place); // REMOVE ?
+
           console.log('Finished FourSquare'); // REMOVE
-        },
-
-        fail: function() {
-          // TODO: Write this function
-        },
-
-        error: function() {
-          // TODO: Write this function
-        }
+      }).fail(function(data) {
+          var msg = 'Foursquare Error: ' + data.statusText;
+          app.viewmodel.addError(msg);
       });
     }
     // TODO: Should there be a return obect here (Module thinking>>>)

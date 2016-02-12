@@ -9,6 +9,7 @@ app.viewmodel = {
   curPlace: ko.observable(),
   inputText: ko.observable(''),
   frsqr: null,
+  errorMsg: ko.observableArray([]),
 
 /****************/
 /* Constructors */
@@ -60,21 +61,27 @@ app.viewmodel = {
   },
 
   PlaceDetails: function(details) {
-    // console.log(this);
-    // console.log(details);
     this.show = ko.observable(true);
-    this.address = ko.observable(details.formatted_address);// || 'Waiting');
-    this.phone = ko.observable(details.formatted_phone_number);// || 'Waiting')
-    this.photos = ko.observableArray(details.photos);// || [];
-    this.rating = ko.observable(details.rating);// || 'Waiting');
-    this.reviews = ko.observableArray(details.reviews);// || [];
-    this.website = ko.observable(details.website);// || 'Waiting');
+    this.address = ko.observable(details.formatted_address);
+    this.phone = ko.observable(details.formatted_phone_number);
+    this.photos = ko.observableArray(details.photos);
+    this.rating = ko.observable(details.rating);
+    this.reviews = ko.observableArray(details.reviews);
+    this.website = ko.observable(details.website);
     console.log('PlaceDetails'); // REMOVE
   },
 
 /********************/
 /* Helper Functions */
 /********************/
+  addError: function(msg) {
+    console.log(this.errorMsg());
+    console.log(msg);
+    this.errorMsg = this.errorMsg || ko.observableArray([]);
+    this.errorMsg.push(msg);
+    console.log(this.errorMsg());
+  },
+
   toggleDetails: function(place, event) {
     // TODO: Should icon change code live in html
     if (place.details() !== undefined && place.details().show() === true) {

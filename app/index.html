@@ -61,11 +61,11 @@
         </a>
       </div>
 
-      <div id="drawer-content" class="drawer open" data-bind="foreach: places">
+      <div id="drawer-content" class="drawer closed" data-bind="foreach: places">
         <!-- List of the places on the map -->
         <div data-bind="visible: show">
           <ul id="drawer-list">
-            <li class="nav-list-item" data-bind="text: name,
+            <li class="list-item" data-bind="text: name,
                                                 click: $parent.clickHandler">
             </li>
             <div id="list-item-info">
@@ -100,30 +100,36 @@
       </div>
     </div>
 
-    <!-- TODO: Working on photo modal -->
     <!-- Modal Window HTML -->
     <div id="modal">
       <!-- Modal innner content  TODO: This should be restructured -->
       <div id="inner-modal">
         <span id="close-modal" data-bind="click: closeModal">X</span>
         <h3 id="modal-header">There could be text here</p>
-
-
-          <img class="modal-photo" data-bind="attr: { src: curPlace().photo().url()({'maxHeight': 700}) }">
+          <!-- ko if: curPlace().photo() !== 'none' -->
+          <img class="modal-photo" data-bind="attr: { alt: curPlace().name() + 'photo', src: curPlace().photo().url()({'maxHeight': 700}) }">
+          <!-- /ko -->
       </div>
         <!-- TODO: Main trick is requesting image based on viewport -->
-
-
-
-
     </div>
+
+    <!-- Error Window HTML -->
+    <div id="error-window" data-bind="style: {display: errorMsg().length > 0 ? 'block' : 'none'}">
+      <h3>There was an error retrieving data
+        <span>X</span>
+      </h3>
+      <!-- ko foreach: errorMsg -->
+      <p data-bind="text: $data"></p>
+      <!-- /ko -->
+    </div>
+
 
     <!-- Hidden div used to style infoWindow content-->
     <div id="infowindow" data-bind="with: curPlace">
       <div id="info-window-content">
         <h3 data-bind="text: name"></h3>
         <!-- ko if: photo() !== 'none' -->
-        <img id="info-photo" data-bind="attr: {src: photo().url()({'maxHeight': 200, 'mawWidth': 200})}" onclick="app.viewmodel.openModal()">
+        <img id="info-photo" data-bind="attr: {alt: name + 'photo', src: photo().url()({'maxHeight': 200, 'mawWidth': 200})}" onclick="app.viewmodel.openModal()">
         <!-- /ko -->
         <div id="wiki-info" data-bind="with: wikiInfo">
           <span data-bind="html: content"></span>

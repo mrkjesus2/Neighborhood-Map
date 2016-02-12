@@ -44,25 +44,23 @@ app.map = app.map || {};
       app.map.placesApi.nearbySearch(request, function(results, status) {
         if (status === 'OK') {
           results.forEach(function(result, idx) {
-            // app.map.createMarker(result);
             var place = new app.viewmodel.Place(result);
-            // place.details(new app.viewmodel.PlaceDetails('')); // Not sure about this
+
             app.viewmodel.places.push(place);
-            // TODO: This is a problem picture for testing, set idx back to 1 in if statement
             if (idx === 1) {
               console.log("set current place");
               app.viewmodel.curPlace(place);
             }
           });
         } else {
-          // TODO: Add UI error handling
-          console.log(status);
+          console.log('We have a places error');
+          var msg = 'Google Places Error: ' + status;
+          app.viewmodel.addError(msg);
         }
         ko.applyBindings(app.viewmodel);
       });
     },
 
-    // TODO: implement this on click or REMOVE
     getPlaceDetails: function(place) {
       console.log('Map getPlaceDetails'); // REMOVE
       // Variables for the request
@@ -76,11 +74,9 @@ app.map = app.map || {};
         if (status === 'OK') {
           var deets = new app.viewmodel.PlaceDetails(details);
           place.details(deets);
-          // console.log(deets);
-          // console.log(place.details());
         } else {
-          // TODO: Add UI error handling
-          console.log(status);
+          var msg = 'Google Places Error while getting details: ' + status;
+          app.viewmodel.addError(msg);
         }
       });
     },

@@ -12,7 +12,7 @@ ul {
 li {
   list-style-type: none;
   font-size: 1.25em;
-  margin: 0;
+  margin: 3vh 0 0 0;
 }
 
 #container {
@@ -153,12 +153,16 @@ li {
   color: white;
 }
 
+#drawer-list {
+  border-top: 1px solid black;
+}
+
 #drawer-content p {
   margin: .5em;
 }
 
 #drawer-content span {
-  margin: 0 2vw;
+  margin: 0 3vw 0 0;
 }
 
 #drawer-content a {
@@ -273,4 +277,21 @@ li {
 #wiki-info {
   padding: 1vh;
   border-bottom: 1px solid black;
+}
+
+/****************/
+/* Error Window */
+/****************/
+#error-window {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  height: 20vh;
+  background-color: red;
+}
+
+#error-window span {
+  float: right;
+  padding: 0 3vw 0 0;
 }
