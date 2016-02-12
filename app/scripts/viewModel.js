@@ -34,6 +34,7 @@ app.viewmodel = {
       this.photo = ko.observable('none');
     }
     this.data = place;
+    this.detailsIcon = ko.observable('fa fa-chevron-circle-up');
 
     // Info from elsewhere
     this.details = ko.observable(); // app.map.getPlaceDetails(this)
@@ -83,15 +84,12 @@ app.viewmodel = {
   },
 
   toggleDetails: function(place, event) {
-    // TODO: Should icon change code live in html
     if (place.details() !== undefined && place.details().show() === true) {
       place.details().show(false);
-      $(event.target).removeClass();
-      $(event.target).addClass('fa fa-chevron-circle-up');
+      place.detailsIcon('fa fa-chevron-circle-up');
     } else {
       app.map.getPlaceDetails(place);
-      $(event.target).removeClass();
-      $(event.target).addClass('fa fa-chevron-circle-down');
+      place.detailsIcon('fa fa-chevron-circle-down');
     }
   },
 

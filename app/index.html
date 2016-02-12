@@ -74,7 +74,7 @@
                 Rating - <span data-bind="text: rating"></span>
               <!-- /ko -->
                 <span data-bind="text: open"></span>
-                <span data-bind="click: $parent.toggleDetails" class="fa fa-chevron-circle-up"></span>
+                <span data-bind="click: $parent.toggleDetails, css: detailsIcon"></span>
               </p>
             </div>
              <!-- ko if: details() && details().show -->
@@ -96,7 +96,7 @@
       </div>
       <!-- </div> -->
       <div id="map-container">
-        <h1 id="error">There appears to be a problem with Google Maps</h1>
+        <h1 id="maps-error">There appears to be a problem with Google Maps, please try refreshing the page</h1>
       </div>
     </div>
 

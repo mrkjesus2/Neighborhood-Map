@@ -27,6 +27,11 @@ app.map = app.map || {};
         $('#drawer-btn').removeClass('open');
         $('#drawer-btn').addClass('closed');
       });
+
+      // Show error message - if maps can't be reached it will be visible
+      setTimeout(function() {
+        $('#maps-error').css('display', 'inline');
+      }, 5000);
       // Load places once the maps bounds are set
       google.maps.event.addListenerOnce(this.map, 'bounds_changed', this.getPlaces);
     },
@@ -63,12 +68,10 @@ app.map = app.map || {};
 
     getPlaceDetails: function(place) {
       console.log('Map getPlaceDetails'); // REMOVE
-      // Variables for the request
-      // var placesApi = new google.maps.places.PlacesService(app.map.map);
       var request = {
         placeId: place.data.place_id
       };
-      // Call the Places API
+      // Call the Places API, add details to the place
       app.map.placesApi.getDetails(request, function(details, status) {
         console.log('status', status);
         if (status === 'OK') {
@@ -108,4 +111,3 @@ app.map = app.map || {};
     // Would require a variable that indicates doneness?
   };
 })();
-// // TODO: Add powered by google logo
