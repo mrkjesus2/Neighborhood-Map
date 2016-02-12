@@ -19,7 +19,14 @@ app.map = app.map || {};
       console.log('Map init'); // REMOVE
 
       this.placesApi = new google.maps.places.PlacesService(app.map.map)
-      this.infoWindow = new google.maps.InfoWindow;
+      this.infoWindow = new google.maps.InfoWindow({
+        maxWidth: $(window).width() * .7}
+      );
+      // Show the drawer button when infowindow closes
+      google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
+        $('#drawer-btn').removeClass('open');
+        $('#drawer-btn').addClass('closed');
+      });
       // Load places once the maps bounds are set
       google.maps.event.addListenerOnce(this.map, 'bounds_changed', this.getPlaces);
     },
@@ -41,7 +48,9 @@ app.map = app.map || {};
             var place = new app.viewmodel.Place(result);
             // place.details(new app.viewmodel.PlaceDetails('')); // Not sure about this
             app.viewmodel.places.push(place);
+            // TODO: This is a problem picture for testing, set idx back to 1 in if statement
             if (idx === 1) {
+              console.log("set current place");
               app.viewmodel.curPlace(place);
             }
           });
@@ -49,6 +58,7 @@ app.map = app.map || {};
           // TODO: Add UI error handling
           console.log(status);
         }
+        ko.applyBindings(app.viewmodel);
       });
     },
 

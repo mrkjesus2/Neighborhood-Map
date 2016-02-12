@@ -14,23 +14,23 @@ app.viewmodel = {
 /* Constructors */
 /****************/
   Place: function(place) {
-    console.log(place.photos);
     this.show = ko.observable(true);
 
     // Info returned from map.getPlaces
     this.name = ko.observable(place.name);
     this.rating = ko.observable(place.rating);
     this.open = ko.observable(
-      place.opening_hours ? 'Open' : 'Closed' || 'Hours not available'
+      place.opening_hours ? 'Open Now' : 'Closed' || 'Hours not available'
     );
     if (place.photos) {
-
-    this.photo = ko.observable({
-      url: ko.observable(place.photos[0].getUrl),
-      height: ko.observable(place.photos[0].height),
-      width: ko.observable(place.photos[0].width),
-      attributions: ko.observable(place.photos[0].html_attributions)
-    });
+      this.photo = ko.observable({
+        url: ko.observable(place.photos[0].getUrl),
+        height: ko.observable(place.photos[0].height),
+        width: ko.observable(place.photos[0].width),
+        attributions: ko.observable(place.photos[0].html_attributions)
+      } || {});
+    } else {
+      this.photo = ko.observable('none');
     }
     this.data = place;
 
@@ -75,12 +75,17 @@ app.viewmodel = {
 /********************/
 /* Helper Functions */
 /********************/
-  getDetails: function(place) {
-    app.map.getPlaceDetails(place);
-  },
-
-  hideDetails: function(details) {
-    details.show(false);
+  toggleDetails: function(place, event) {
+    // TODO: Should icon change code live in html
+    if (place.details() !== undefined && place.details().show() === true) {
+      place.details().show(false);
+      $(event.target).removeClass();
+      $(event.target).addClass('fa fa-chevron-circle-up');
+    } else {
+      app.map.getPlaceDetails(place);
+      $(event.target).removeClass();
+      $(event.target).addClass('fa fa-chevron-circle-down');
+    }
   },
 
   setCurrentPlace: function(place) {
@@ -111,6 +116,9 @@ app.viewmodel = {
     // Timeout to avoid two calls from success callbacks
     setTimeout(function() {
       app.viewmodel.setInfoWindow(plc);
+      // Hide the drawer button while infowindow is open
+      $('#drawer-btn').removeClass('closed');
+      $('#drawer-btn').addClass('open');
     }, 200);
   },
 
@@ -162,8 +170,9 @@ app.viewmodel = {
 
   setInfoWindow: function(place) {
     var content = $('#infowindow').html();
-      app.map.infoWindow.setContent(content);
-      app.map.infoWindow.open(app.map.map, place.marker);
+
+    app.map.infoWindow.setContent(content);
+    app.map.infoWindow.open(app.map.map, place.marker);
   },
 
   toggleDrawer: function() {
@@ -175,9 +184,18 @@ app.viewmodel = {
   closeDrawer: function() {
     console.log('closeDrawer'); // REMOVE
     var els = document.getElementsByClassName('drawer');
-    if ($(els).hasClass('open')) {
+    if ($('#drawer-content').hasClass('open')) {
       app.viewmodel.toggleDrawer();
     }
+  },
+
+  openModal: function() {
+    $('#modal').css('display', 'initial');
+    console.log('Open Modal');
+  },
+
+  closeModal: function() {
+    $('#modal').css('display', 'none');
   },
 
   init: function() {
@@ -190,4 +208,5 @@ app.viewmodel = {
 };
 
 app.viewmodel.init();
-ko.applyBindings(app.viewmodel);
+// Moved to map.getPlaces to avoid typeErrors on current place
+// ko.applyBindings(app.viewmodel);

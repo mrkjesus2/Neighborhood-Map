@@ -5,11 +5,14 @@ html, body {
   box-sizing: content-box;
 }
 
+ul {
+  padding: 0 0 1vh 1vh;
+}
+
 li {
-  list-style-type: disc;
+  list-style-type: none;
   font-size: 1.25em;
-  color: white;
-  margin: .2em 0;
+  margin: 0;
 }
 
 #container {
@@ -143,63 +146,103 @@ li {
   transition: transform .7s ease;
 }
 
-/*********/
+/******************/
+/* Drawer Content */
+/******************/
+#drawer-content {
+  color: white;
+}
+
+#drawer-content p {
+  margin: .5em;
+}
+
+#drawer-content span {
+  margin: 0 2vw;
+}
+
+#drawer-content a {
+  font-size: 0.8em;
+  color: white;
+}
+
+#place-details {
+  margin-top: 2vh;
+}
+
+#list-item-info span:last-child {
+  float: right;
+  margin: 0 3vw 1vh 3vw;
+  font-size: 1.5em;
+}
+
+.fa-chevron-circle-up {
+  color: rgba(93, 234, 93, 1);
+}
+
+.fa-chevron-circle-down {
+  color: red;
+}
+
+#list-item-info span:last-child:hover {
+  opacity: .7;
+}
+
+#place-address {
+  font-size: .8em;
+}
+
+
+/********
 /* Modal */
 /*********/
-#photo-modal {
+#modal {
+  /* This is about right for now */
+  display: none;
+  position: absolute;
+  z-index: 1;
+/*  overflow: auto;*/ /* In case of out of bounds issues */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+
+}
+
+#inner-modal {
   position: absolute;
   top: 10vh;
   left: 10vw;
   width: 80vw;
-  min-height: 50vh;
-  max-height: 80vh;
-  z-index: 1;
-  background-color: grey;
-  /*opacity: .7;*/
+  height: 80vh;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
-#photo-top-bar {
-  width: 100%;
-  height: 10%;
+#modal-header {
   text-align: center;
+  margin: 2vw 0 0 0;
 }
 
-#modal-main-content {
-  height: 80%;
-}
-
-#photo {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  max-height: 80%;
-  max-width: 80%;
-}
-
-.photo-btn {
-  text-align: center;
-  vertical-align: middle;
-  font-size: 2.5em;
-  width: 10%;
-  height: 100%;
-}
-
-#photo-pre-btn {
-  float: left;
-  background-color: red;
-}
-
-#photo-post-btn {
+#close-modal {
   float: right;
-  background-color: green;
+  margin: 0;
+  padding: 1vw 2vw;
+  border-left: .1em solid black;
+  border-bottom: .1em solid black;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(255, 0, 0, 0.6);
 }
 
-#photo-desc {
-  /*text-align: center;*/
-  width: 100%;
-  height: 10%;
-  position: absolute;
-  bottom: 0;
+#close-modal:hover {
+  background-color: rgba(255, 0, 0, 1);
+}
+
+.modal-photo {
+  max-height: 70vh;
+  max-width: 80vw;
 }
 
 /*************/
@@ -212,4 +255,22 @@ li {
 
 #infowindow {
   display: none;
+}
+
+/***************/
+/* Info Window */
+/***************/
+#info-window-content img {
+  float: right;
+  margin: 1vh 1vh;
+}
+
+#info-window-content img:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+#wiki-info {
+  padding: 1vh;
+  border-bottom: 1px solid black;
 }
