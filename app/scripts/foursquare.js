@@ -1,4 +1,4 @@
-/* global app jQuery */
+/* global app jQuery ko */
 app.foursquare = app.foursquare || {};
 
 (function() {
@@ -8,7 +8,7 @@ app.foursquare = app.foursquare || {};
 
   app.foursquare = {
     findPlace: function(place) {
-      console.log('FourSquare findPlace'); // REMOVE
+      // console.log('FourSquare findPlace'); // REMOVE
       var loc = place.data.geometry.location;
       // Call the foursquare API
       jQuery.ajax({
@@ -16,24 +16,25 @@ app.foursquare = app.foursquare || {};
         data: {
           query: place.name(),
           ll: loc.lat() + ',' + loc.lng(),
-          client_id: CLIENTID,
-          client_secret: CLIENTSECRET,
+          // Disabled lines due to API requirements
+          client_id: CLIENTID, // eslint-disable-line camelcase
+          client_secret: CLIENTSECRET, // eslint-disable-line camelcase
           v: '20140806',
           limit: '1'
         },
         dataType: 'json'
 
       }).done(function(data) {
-          console.log('Foursquare done');
-          var venue = data.response.venues[0];
-          var info = ko.mapping.fromJS(venue, app.viewmodel.FourSquare);
+        console.log('Foursquare done');
+        var venue = data.response.venues[0];
+        var info = ko.mapping.fromJS(venue, app.viewmodel.FourSquare);
 
-          place.frSqrInfo(info);
+        place.frSqrInfo(info);
 
-          console.log('Finished FourSquare'); // REMOVE
+        // console.log('Finished FourSquare'); // REMOVE
       }).fail(function(data) {
-          var msg = 'Foursquare Error: ' + data.statusText;
-          app.viewmodel.addError(msg);
+        var msg = 'Foursquare Error: ' + data.statusText;
+        app.viewmodel.addError(msg);
       });
     }
     // TODO: Should there be a return obect here (Module thinking>>>)

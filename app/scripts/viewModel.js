@@ -1,5 +1,5 @@
 // TODO: Get rid of 'REMOVE' lines
-/* global app ko */
+/* global app ko $ google document */
 
 app.viewmodel = app.viewmodel || {};
 
@@ -11,9 +11,9 @@ app.viewmodel = {
   frsqr: null,
   errorMsg: ko.observableArray([]),
 
-/****************/
+/* ************* */
 /* Constructors */
-/****************/
+/* ************ */
   Place: function(place) {
     this.show = ko.observable(true);
 
@@ -37,15 +37,16 @@ app.viewmodel = {
     this.detailsIcon = ko.observable('fa fa-chevron-circle-up');
 
     // Info from elsewhere
-    this.details = ko.observable(); // app.map.getPlaceDetails(this)
+    this.details = ko.observable();
     this.marker = app.map.createMarker(this);
-    this.wikiInfo = ko.observable(); // app.wiki.getWiki(this)
-    this.frSqrInfo = ko.observable(); // app.foursquare.findPlace(this)
+    this.wikiInfo = ko.observable();
+    this.frSqrInfo = ko.observable();
     // console.log('Place Constructor');  // REMOVE
   },
 
 // TODO: This function probably needs to written for Places API
-  getPhoto: function(place, url, width, height) {
+  // params - place, url, width, height
+  getPhoto: function() {
 
   },
 
@@ -56,7 +57,7 @@ app.viewmodel = {
   },
 
   FourSquare: function(info) {
-    console.log('FourSquare Constructor'); // REMOVE
+    // console.log('FourSquare Constructor'); // REMOVE
     // Map FourSquare response to observables
     ko.mapping.fromJS(info, {}, this);
   },
@@ -69,12 +70,12 @@ app.viewmodel = {
     this.rating = ko.observable(details.rating);
     this.reviews = ko.observableArray(details.reviews);
     this.website = ko.observable(details.website);
-    console.log('PlaceDetails'); // REMOVE
+    // console.log('PlaceDetails'); // REMOVE
   },
 
-/********************/
+/* **************** */
 /* Helper Functions */
-/********************/
+/* **************** */
   addError: function(msg) {
     console.log(this.errorMsg());
     console.log(msg);
@@ -83,7 +84,7 @@ app.viewmodel = {
     console.log(this.errorMsg());
   },
 
-  toggleDetails: function(place, event) {
+  toggleDetails: function(place) {
     if (place.details() !== undefined && place.details().show() === true) {
       place.details().show(false);
       place.detailsIcon('fa fa-chevron-circle-up');
@@ -94,7 +95,7 @@ app.viewmodel = {
   },
 
   setCurrentPlace: function(place) {
-    console.log('setCurrentPlace'); // REMOVE
+    // console.log('setCurrentPlace'); // REMOVE
     if (app.viewmodel.curPlace().marker.getAnimation()) {
       app.viewmodel.toggleBounce();
     }
@@ -103,7 +104,7 @@ app.viewmodel = {
 
   // Called when the marker or list item is clicked
   clickHandler: function(place) {
-    console.log('clickHandler'); // REMOVE
+    // console.log('clickHandler'); // REMOVE
     var plc = place || this;
 
     // Call for data
@@ -128,7 +129,7 @@ app.viewmodel = {
   },
 
   placeFilter: function() {
-    console.log('placeFilter'); // REMOVE
+    // console.log('placeFilter'); // REMOVE
     var self = this;
     // A cushion to allow inputText to change
     setTimeout(function() {
@@ -164,12 +165,13 @@ app.viewmodel = {
   },
 
   toggleBounce: function() {
-    console.log('Map toggleBounce'); // REMOVE
+    // console.log('Map toggleBounce'); // REMOVE
     // app.viewmodel.curPlace().marker.setAnimation(null);
     if (app.viewmodel.curPlace().marker.getAnimation()) {
       app.viewmodel.curPlace().marker.setAnimation(null);
     } else {
-      app.viewmodel.curPlace().marker.setAnimation(google.maps.Animation.BOUNCE);
+      var marker = app.viewmodel.curPlace().marker;
+      marker.setAnimation(google.maps.Animation.BOUNCE);
     }
   },
 
@@ -181,13 +183,14 @@ app.viewmodel = {
   },
 
   toggleDrawer: function() {
-    console.log('toggleDrawer'); // REMOVE
+    // console.log('toggleDrawer'); // REMOVE
     var els = document.getElementsByClassName('drawer');
     $(els).toggleClass('closed open');
   },
 
   closeDrawer: function() {
-    console.log('closeDrawer'); // REMOVE
+    // console.log('closeDrawer'); // REMOVE
+    // TODO: Test without els
     var els = document.getElementsByClassName('drawer');
     if ($('#drawer-content').hasClass('open')) {
       app.viewmodel.toggleDrawer();
@@ -204,12 +207,10 @@ app.viewmodel = {
   },
 
   init: function() {
-    console.log('init'); // REMOVE
+    // console.log('init'); // REMOVE
     var button = document.getElementById('drawer-btn');
     button.addEventListener('click', app.viewmodel.toggleDrawer);
-
   }
-
 };
 
 app.viewmodel.init();
