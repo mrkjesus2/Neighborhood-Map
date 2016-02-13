@@ -166,12 +166,16 @@ li {
 }
 
 #drawer-content a {
-  font-size: 0.8em;
+  font-size: 0.9em;
   color: white;
 }
 
 #place-details {
   margin-top: 2vh;
+}
+
+#place-details p a:last-child {
+  margin: 0 4vw;
 }
 
 #list-item-info span:last-child {
@@ -300,9 +304,16 @@ li {
 
 #wiki-info {
   padding: 1vh;
-  border-bottom: 1px solid black;
+  /*border-bottom: 1px solid black;*/
 }
 
+#foursquare-info {
+  clear: both;
+  border-top: 1px solid black;
+}
+/*#wiki-info span {
+  float: left;
+}*/
 /****************/
 /* Error Window */
 /****************/

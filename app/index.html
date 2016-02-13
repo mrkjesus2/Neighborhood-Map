@@ -87,9 +87,9 @@
                 <a data-bind="if: website, attr: {href: website}" target="_blank">
                   Go to Website
                 </a>
-                <span data-bind="if: reviews, click: $root.openModal">
+                <a href="#" data-bind="if: reviews, click: $root.openModal">
                   See Reviews
-                </span>
+                </a>
               </p>
             </div>
             <!-- /ko -->
@@ -104,13 +104,13 @@
 
     <!-- Modal Window HTML -->
     <div id="modal">
-      <!-- Modal innner content  TODO: This should be restructured -->
       <div id="inner-modal">
         <div id="modal-topbar">
           <span id="close-modal" data-bind="click: closeModal">X</span>
           <h3 id="modal-header" data-bind="text: curPlace().name">There could be text here</h3>
         </div>
       <!-- TODO: Do I really want larger pictures? -->
+      <!-- TODO: Main trick is requesting image based on viewport -->
           <!-- ko if: curPlace().photo() !== 'none' -->
           <!-- <img class="modal-photo" data-bind="attr: { alt: curPlace().name() + 'photo', src: curPlace().photo().url()({'maxHeight': 700}) }"> -->
           <!-- /ko -->
@@ -125,7 +125,6 @@
             </div>
           </div>
       </div>
-        <!-- TODO: Main trick is requesting image based on viewport -->
     </div>
 
     <!-- Error Window HTML -->
@@ -142,14 +141,15 @@
     <div id="infowindow" data-bind="with: curPlace">
       <div id="info-window-content">
         <h3 data-bind="text: name"></h3>
-        <!-- ko if: photo() !== 'none' -->
-        <img id="info-photo" data-bind="attr: {alt: name + 'photo', src: photo().url()({'maxHeight': 200, 'mawWidth': 200})}" onclick="app.viewmodel.openModal()">
-        <!-- /ko -->
         <div id="wiki-info" data-bind="with: wikiInfo">
+          <!-- ko if: $parent.photo() !== 'none' -->
+          <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url()({'maxHeight': 200, 'mawWidth': 200})}" onclick="app.viewmodel.openModal()"> <!-- TODO: Remove openModal call? -->
+        <!-- /ko -->
           <span data-bind="html: content"></span>
           <a data-bind="attr: {href: url}" target="_blank">Read More</a>
         </div>
 
+        <div id="foursquare-info">
         <!-- ko with: frSqrInfo -->
         <div data-bind="with: hereNow">
           <p>Here now: <span data-bind="text: count"></span></p>
@@ -157,7 +157,7 @@
           <p> Summary: <span data-bind="text: summary"></span></p>
         </div>
         <div data-bind="with: specials">
-          <p> Count: <span data-bind="text: count"></span></p>
+          <p> Specials Count: <span data-bind="text: count"></span></p>
           <p> Items: <span data-bind="text: items"></span></p>
         </div>
         <div data-bind="with: stats">
@@ -166,6 +166,7 @@
           <p> Users: <span data-bind="text: usersCount"></span></p>
         </div>
       <!-- /ko -->
+        </div>
       </div>
     </div>
   </body>

@@ -142,7 +142,7 @@ app.viewmodel = {
       // Hide the drawer button while infowindow is open
       $('#drawer-btn').removeClass('closed');
       $('#drawer-btn').addClass('open');
-    }, 200);
+    }, 300);
   },
 
   placeFilter: function() {
@@ -206,8 +206,6 @@ app.viewmodel = {
 
   closeDrawer: function() {
     // console.log('closeDrawer'); // REMOVE
-    // TODO: Test without els
-    // var els = document.getElementsByClassName('drawer');
     if ($('#drawer-content').hasClass('open')) {
       app.viewmodel.toggleDrawer();
     }
