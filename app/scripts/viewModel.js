@@ -51,7 +51,6 @@ app.viewmodel = {
   },
 
   WikiPage: function(page) {
-    console.log(this);
     this.content = ko.observable(page.extract);
     this.url = ko.observable(page.fullurl);
   },
@@ -68,9 +67,22 @@ app.viewmodel = {
     this.phone = ko.observable(details.formatted_phone_number);
     this.photos = ko.observableArray(details.photos);
     this.rating = ko.observable(details.rating);
-    this.reviews = ko.observableArray(details.reviews);
     this.website = ko.observable(details.website);
+    this.reviews = ko.observableArray(new app.viewmodel.Reviews(details.reviews));
     // console.log('PlaceDetails'); // REMOVE
+  },
+
+  Reviews: function(reviews) {
+    var arr = [];
+    reviews.forEach(function(review) {
+      arr.push({
+        author: ko.observable(review.author_name),
+        authorUrl: ko.observable(review.author_url),
+        text: ko.observable(review.text),
+        time: ko.observable(review.time)
+      });
+    });
+    return arr;
   },
 
 /* **************** */
@@ -94,6 +106,7 @@ app.viewmodel = {
       place.detailsIcon('fa fa-chevron-circle-up');
     } else {
       app.map.getPlaceDetails(place);
+      app.viewmodel.setCurrentPlace(place);
       place.detailsIcon('fa fa-chevron-circle-down');
     }
   },

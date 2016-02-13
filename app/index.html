@@ -83,12 +83,14 @@
               <!-- ko if: address -->
               <p id="place-address" data-bind="text: address"></p>
               <!-- /ko -->
-              <!-- ko if: website -->
               <p>
-                <a data-bind="attr: {href: website}" target="_blank">Go to Website</a>
+                <a data-bind="if: website, attr: {href: website}" target="_blank">
+                  Go to Website
+                </a>
+                <span data-bind="if: reviews, click: $root.openModal">
+                  See Reviews
+                </span>
               </p>
-              <!-- /ko -->
-              <!-- <p data-bind="text: reviews"></p> TODO: Object to deal with -->
             </div>
             <!-- /ko -->
           </ul>
@@ -104,11 +106,24 @@
     <div id="modal">
       <!-- Modal innner content  TODO: This should be restructured -->
       <div id="inner-modal">
-        <span id="close-modal" data-bind="click: closeModal">X</span>
-        <h3 id="modal-header">There could be text here</p>
+        <div id="modal-topbar">
+          <span id="close-modal" data-bind="click: closeModal">X</span>
+          <h3 id="modal-header" data-bind="text: curPlace().name">There could be text here</h3>
+        </div>
+      <!-- TODO: Do I really want larger pictures? -->
           <!-- ko if: curPlace().photo() !== 'none' -->
-          <img class="modal-photo" data-bind="attr: { alt: curPlace().name() + 'photo', src: curPlace().photo().url()({'maxHeight': 700}) }">
+          <!-- <img class="modal-photo" data-bind="attr: { alt: curPlace().name() + 'photo', src: curPlace().photo().url()({'maxHeight': 700}) }"> -->
           <!-- /ko -->
+          <div id="modal-reviews" data-bind="with: curPlace().details">
+            <div data-bind="foreach: reviews">
+              <div id="review">
+                <p data-bind="text: text"></p>
+                <p id="author-link">
+                  <a data-bind="text: author, attr: {href: authorUrl}" target="_blank"></a>
+                </p>
+              </div>
+            </div>
+          </div>
       </div>
         <!-- TODO: Main trick is requesting image based on viewport -->
     </div>
