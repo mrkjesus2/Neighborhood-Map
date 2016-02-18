@@ -304,16 +304,34 @@ li {
 
 #wiki-info {
   padding: 1vh;
-  /*border-bottom: 1px solid black;*/
 }
 
 #foursquare-info {
   clear: both;
   border-top: 1px solid black;
 }
-/*#wiki-info span {
-  float: left;
+
+#foursquare-header-info {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+#foursquare-header-info span {
+  margin-right: 1em;
+}
+
+.foursquare-tip {
+  border-bottom: 1px solid grey;
+}
+
+/*.tip {
+  font-size: 1.2em;
 }*/
+
+.tip-author {
+  font-weight: 400;
+}
 /****************/
 /* Error Window */
 /****************/

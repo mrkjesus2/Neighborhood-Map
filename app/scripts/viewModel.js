@@ -41,6 +41,7 @@ app.viewmodel = {
     this.marker = app.map.createMarker(this);
     this.wikiInfo = ko.observable();
     this.frSqrInfo = ko.observable();
+    // this.frSqrInfo.tips = ko.observable();
     // console.log('Place Constructor');  // REMOVE
   },
 
@@ -55,10 +56,15 @@ app.viewmodel = {
     this.url = ko.observable(page.fullurl);
   },
 
-  FourSquare: function(info) {
+  FourSquare: function(info, tips, place) {
     // console.log('FourSquare Constructor'); // REMOVE
-    // Map FourSquare response to observables
-    ko.mapping.fromJS(info, {}, this);
+    // Map FourSquare responses to observables
+    var frSqrInfo = ko.mapping.fromJS(info, {});
+    var frSqrTips = ko.mapping.fromJS(tips, {});
+    // Create a child object for tips response
+    frSqrInfo.tips = frSqrTips;
+    // Assign the info to the place
+    place.frSqrInfo(frSqrInfo);
   },
 
   PlaceDetails: function(details) {

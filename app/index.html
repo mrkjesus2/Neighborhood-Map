@@ -140,7 +140,7 @@
     <!-- Hidden div used to style infoWindow content-->
     <div id="infowindow" data-bind="with: curPlace">
       <div id="info-window-content">
-        <h3 data-bind="text: name"></h3>
+        <h2 data-bind="text: name"></h2>
         <div id="wiki-info" data-bind="with: wikiInfo">
           <!-- ko if: $parent.photo() !== 'none' -->
           <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url()({'maxHeight': 200, 'mawWidth': 200})}" onclick="app.viewmodel.openModal()"> <!-- TODO: Remove openModal call? -->
@@ -150,20 +150,34 @@
         </div>
 
         <div id="foursquare-info">
-        <!-- ko with: frSqrInfo -->
-        <div data-bind="with: hereNow">
-          <p>Here now: <span data-bind="text: count"></span></p>
-          <p> Groups: <span data-bind="text: groups"></span></p>
-          <p> Summary: <span data-bind="text: summary"></span></p>
-        </div>
-        <div data-bind="with: specials">
-          <p> Specials Count: <span data-bind="text: count"></span></p>
-          <p> Items: <span data-bind="text: items"></span></p>
-        </div>
-        <div data-bind="with: stats">
-          <p> Checkins: <span data-bind="text: checkinsCount"></span></p>
-          <p> Tips: <span data-bind="text: tipCount"></span></p>
-          <p> Users: <span data-bind="text: usersCount"></span></p>
+          <!-- ko with: frSqrInfo -->
+          <h3 id="foursquare-heading">Information from FourSquare</h3>
+          <div id="foursquare-header-info">
+            <p>Here now:
+              <span data-bind="text: hereNow.count"></span>
+            <p>
+            <p>Total Checkins:
+              <span data-bind="text: stats.checkinsCount"></span>
+            </p>
+            <p>Total Users:
+              <span data-bind="text: stats.usersCount"></span>
+            </p>
+          </div>
+        <!-- Tips from FourSquare -->
+        <div data-bind="with: tips">
+          <!-- TODO: Show only if tips exist -->
+          <h4>Tips:</h4>
+          <!-- ko foreach: items -->
+          <div class='foursquare-tip'>
+            <p>
+              <span class="tip" data-bind="text: text"></span>  -
+              <span class="tip-author" data-bind="text: user.firstName"></span>
+            </p>
+            <p> Likes:
+              <span data-bind="text: likes.count"></span>
+            </p>
+          </div>
+          <!-- /ko -->
         </div>
       <!-- /ko -->
         </div>

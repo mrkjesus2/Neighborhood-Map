@@ -107,7 +107,5 @@ app.map = app.map || {};
       });
       return marker;
     },
-    // TODO: Should there be a return obect here (Module thinking>>>)
-    // Would require a variable that indicates doneness?
   };
 })();

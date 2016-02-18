@@ -1,4 +1,4 @@
-/* global app jQuery ko */
+/* global app jQuery */
 app.foursquare = app.foursquare || {};
 
 (function() {
@@ -31,8 +31,8 @@ app.foursquare = app.foursquare || {};
         // Best matching venue
         var venue = data.response.venues[0];
 
-        // Callback the API for venue details
-        app.foursquare.getVenueDetails(venue.id, place);
+        // Callback the API for venue tips
+        app.foursquare.getTips(venue, place);
         // console.log('Finished FourSquare'); // REMOVE
       }).fail(function(data) {
         var msg = 'Foursquare Error: ' + data.statusText;
@@ -40,9 +40,9 @@ app.foursquare = app.foursquare || {};
       });
     },
 
-    getVenueDetails: function(venue, place) {
+    getTips: function(venue, place) {
       jQuery.ajax({
-        url: this.baseUrl + venue,
+        url: this.baseUrl + venue.id + '/tips',
         data: {
           // Disabled lines due to API requirements
           client_id: CLIENTID, // eslint-disable-line camelcase
@@ -51,16 +51,43 @@ app.foursquare = app.foursquare || {};
         },
         dataType: 'json'
       }).done(function(data) {
-        var details = data.response.venue;
-        var map = ko.mapping.fromJS(details, app.viewmodel.FourSquare);
+        var tips = data.response.tips;
         // Assign details to place
-        place.frSqrInfo(map);
+        app.viewmodel.FourSquare(venue, tips, place);
       }).fail(function(data) {
-        var msg = 'Foursquare Error: ' + data.statusText;
+        var msg = 'Foursquare Tips Error: ' + data.statusText;
         app.viewmodel.addError(msg);
       });
     }
-    // TODO: Should there be a return obect here (Module thinking>>>)
-    // Would require a variable that indicates doneness?
   };
 })();
+
+// specials: {
+//   count:
+//   items: [{
+//     description:
+//     finePrint:
+//     icon:
+//     id:
+//     interaction: {
+
+//     }
+//     message:
+//     provider:
+//     redemption:
+//     state:
+//     title:
+//     type:
+//     unlocked:
+//   }]
+// }
+
+// tips: {
+//   count:
+//   groups: {
+//     count:
+//     items:
+//     name:
+//     type:
+//   }
+// }

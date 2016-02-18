@@ -50,8 +50,5 @@ app.wiki = app.wiki || {};
         return false;
       }
     }
-
-     // TODO: Should there be a return obect here (Module thinking>>>)
-    // Would require a variable that indicates doneness?
   };
 })();
