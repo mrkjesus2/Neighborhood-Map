@@ -272,11 +272,6 @@ li {
   text-align: right;
 }
 
-.modal-photo {
-  max-height: 70vh;
-  max-width: 80vw;
-}
-
 /*************/
 /* Map Stuff */
 /*************/
@@ -295,11 +290,6 @@ li {
 #info-window-content img {
   float: right;
   margin: 1vh 1vh;
-}
-
-#info-window-content img:hover {
-  opacity: 0.5;
-  cursor: pointer;
 }
 
 #wiki-info {

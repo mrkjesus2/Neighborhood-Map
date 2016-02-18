@@ -109,11 +109,6 @@
           <span id="close-modal" data-bind="click: closeModal">X</span>
           <h3 id="modal-header" data-bind="text: curPlace().name">There could be text here</h3>
         </div>
-      <!-- TODO: Do I really want larger pictures? -->
-      <!-- TODO: Main trick is requesting image based on viewport -->
-          <!-- ko if: curPlace().photo() !== 'none' -->
-          <!-- <img class="modal-photo" data-bind="attr: { alt: curPlace().name() + 'photo', src: curPlace().photo().url()({'maxHeight': 700}) }"> -->
-          <!-- /ko -->
           <div id="modal-reviews" data-bind="with: curPlace().details">
             <div data-bind="foreach: reviews">
               <div id="review">
@@ -141,9 +136,12 @@
     <div id="infowindow" data-bind="with: curPlace">
       <div id="info-window-content">
         <h2 data-bind="text: name"></h2>
+        <!-- TODO: Onclick open the drawer with current location highlighted and details opened -->
+        <a href="#" data-bind="click: $parent.toggleDrawer">Contact Info</a>
         <div id="wiki-info" data-bind="with: wikiInfo">
           <!-- ko if: $parent.photo() !== 'none' -->
-          <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url()({'maxHeight': 200, 'mawWidth': 200})}" onclick="app.viewmodel.openModal()"> <!-- TODO: Remove openModal call? -->
+          <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url()({'maxHeight': 200, 'mawWidth': 200})}">
+          <!-- TODO: Right image size? -->
         <!-- /ko -->
           <span data-bind="html: content"></span>
           <a data-bind="attr: {href: url}" target="_blank">Read More</a>
