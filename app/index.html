@@ -41,12 +41,12 @@
 <!-- All head code from Google's Web Starter Kit -->
   <body>
     <div id="container">
-      <!-- <div id="drawer-content"> -->
       <div id="drawer-top" class="drawer closed">
-        <p>Filter: <input list="places"
-          data-bind="
-            textInput: inputText,
-            event: {input: placeFilter}">
+        <p><span>Filter:</span>
+          <input list="places"
+            data-bind="
+              textInput: inputText,
+              event: {input: placeFilter}">
           <button data-bind="click: resetFilter">Reset</button>
         </p>
         <!-- List for autocomplete -->
@@ -54,7 +54,7 @@
           data-bind="
             foreach: places">
             <!-- Error: Element option without attribute label must not be empty. -->
-          <option data-bind="value: name">
+          <option data-bind="value: name"></option>
         </datalist>
         <!-- Button to close the drawer -->
         <a id="drawer-btn" class="drawer closed" href="#">
@@ -65,11 +65,10 @@
       <div id="drawer-content" class="drawer closed" data-bind="foreach: places">
         <!-- List of the places on the map -->
         <div data-bind="visible: show">
-          <ul id="drawer-list">
-            <li class="list-item" data-bind="text: name,
-                                            click: $parent.clickHandler">
-            </li>
-            <div id="list-item-info">
+            <div id="place-info">
+              <h3 class="place-names" data-bind="text: name,
+                                              click: $parent.clickHandler">
+              </h3>
               <p>
               <!-- ko if: rating -->
                 Rating - <span data-bind="text: rating"></span>
@@ -94,10 +93,9 @@
               </p>
             </div>
             <!-- /ko -->
-          </ul>
         </div>
       </div>
-      <!-- </div> -->
+
       <div id="map-container">
         <h1 id="maps-error">There appears to be a problem with Google Maps, please try refreshing the page</h1>
       </div>
@@ -110,16 +108,16 @@
           <span id="close-modal" data-bind="click: closeModal">X</span>
           <h3 id="modal-header" data-bind="text: curPlace().name">There could be text here</h3>
         </div>
-          <div id="modal-reviews" data-bind="with: curPlace().details">
-            <div data-bind="foreach: reviews">
-              <div id="review">
-                <p data-bind="text: text"></p>
-                <p id="author-link">
-                  <a data-bind="text: author, attr: {href: authorUrl}" target="_blank"></a>
-                </p>
-              </div>
+        <div id="modal-reviews" data-bind="with: curPlace().details">
+          <div data-bind="foreach: reviews">
+            <div id="review">
+              <p data-bind="text: text"></p>
+              <p id="author-link">
+                <a data-bind="text: author, attr: {href: authorUrl}" target="_blank"></a>
+              </p>
             </div>
           </div>
+        </div>
       </div>
     </div>
 
@@ -154,7 +152,7 @@
           <div id="foursquare-header-info">
             <p>Here now:
               <span data-bind="text: hereNow.count"></span>
-            <p>
+            </p>
             <p>Total Checkins:
               <span data-bind="text: stats.checkinsCount"></span>
             </p>
@@ -162,32 +160,31 @@
               <span data-bind="text: stats.usersCount"></span>
             </p>
           </div>
-        <!-- Tips from FourSquare -->
-        <div data-bind="with: tips">
-          <!-- TODO: Show only if tips exist -->
-          <h4>Tips:</h4>
-          <!-- ko foreach: items -->
-          <div class='foursquare-tip'>
-            <p>
-              <span class="tip" data-bind="text: text"></span>  -
-              <span class="tip-author" data-bind="text: user.firstName"></span>
-            </p>
-            <p> Likes:
-              <span data-bind="text: likes.count"></span>
-            </p>
+          <!-- Tips from FourSquare -->
+          <div data-bind="with: tips">
+            <!-- TODO: Show only if tips exist -->
+            <h4>Tips:</h4>
+            <!-- ko foreach: items -->
+            <div class='foursquare-tip'>
+              <p>
+                <span class="tip" data-bind="text: text"></span>  -
+                <span class="tip-author" data-bind="text: user.firstName"></span>
+              </p>
+              <p> Likes:
+                <span data-bind="text: likes.count"></span>
+              </p>
+            </div>
+            <!-- /ko -->
           </div>
           <!-- /ko -->
         </div>
-      <!-- /ko -->
-        </div>
       </div>
     </div>
-  </body>
 
     <!-- Vendor Scripts -->
-    <script src="scripts/vendor/jquery-2.2.0.js"></script>
-    <script src="scripts/vendor/knockout-3.4.0.js"></script>
-    <script src="scripts/vendor/knockout-mapping-2.4.1.js"></script>
+    <script type="text/javascript" src="scripts/vendor/jquery-2.2.0.js"></script>
+    <script type="text/javascript" src="scripts/vendor/knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="scripts/vendor/knockout-mapping-2.4.1.js"></script>
     <!-- My Scripts -->
     <script type="text/javascript" src="scripts/main.js"></script>
     <script type="text/javascript" src="scripts/map.js"></script>
@@ -201,5 +198,6 @@
       src="https://maps.googleapis.com/maps/api/js?v=3&callback=app.map.init&libraries=places">
     </script>
 
+  </body>
     <!-- Built with love using Web Starter Kit -->
 </html>
