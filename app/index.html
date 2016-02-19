@@ -53,7 +53,6 @@
         <datalist id="places"
           data-bind="
             foreach: places">
-            <!-- Error: Element option without attribute label must not be empty. -->
           <option data-bind="value: name"></option>
         </datalist>
         <!-- Button to close the drawer -->
@@ -70,29 +69,30 @@
                                               click: $parent.clickHandler">
               </h3>
               <p>
-              <!-- ko if: rating -->
-                Rating - <span data-bind="text: rating"></span>
-              <!-- /ko -->
+                <span data-bind="if: rating">
+                  Rating -
+                </span>
+                <span data-bind="text: rating"></span>
                 <span data-bind="text: open"></span>
                 <span data-bind="click: $parent.toggleDetails, css: detailsIcon"></span>
               </p>
             </div>
-             <!-- ko if: details() && details().show -->
-            <div id="place-details" data-bind="with: details()">
-              <p data-bind="if: phone">Phone - <span data-bind="text: phone"></span></p>
-              <!-- ko if: address -->
-              <p id="place-address" data-bind="text: address"></p>
-              <!-- /ko -->
-              <p>
-                <a data-bind="if: website, attr: {href: website}" target="_blank">
-                  Go to Website
-                </a>
-                <a href="#" data-bind="if: reviews, click: $root.openModal">
-                  See Reviews
-                </a>
-              </p>
+            <div data-bind="if: details() && details().show">
+              <div id="place-details" data-bind="with: details()">
+                <p data-bind="if: phone">Phone - <span data-bind="text: phone"></span></p>
+                <p data-bind="if: address">
+                  <span class="place-address" data-bind="text: address"></span>
+                </p>
+                <p>
+                  <a data-bind="if: website, attr: {href: website}" target="_blank">
+                    Go to Website
+                  </a>
+                  <a href="#" data-bind="if: reviews, click: $root.openModal">
+                    See Reviews
+                  </a>
+                </p>
+              </div>
             </div>
-            <!-- /ko -->
         </div>
       </div>
 
@@ -123,11 +123,11 @@
 
     <!-- Error Window HTML -->
     <div id="error-window" data-bind="style: {display: errorMsg().length > 0 ? 'block' : 'none'}">
-        <span data-bind="click: clearErrors">X</span>
+      <span data-bind="click: clearErrors">X</span>
       <h4>There was an error retrieving data</h4>
-      <!-- ko foreach: errorMsg -->
-      <p data-bind="text: $data"></p>
-      <!-- /ko -->
+      <div data-bind="foreach: errorMsg">
+        <p data-bind="text: $data"></p>
+      </div>
     </div>
 
 
@@ -138,16 +138,15 @@
         <!-- TODO: Onclick  with current location highlighted and details opened -->
         <p onclick="app.viewmodel.clickContactInfo()">Contact Info</p>
         <div id="wiki-info" data-bind="with: wikiInfo">
-          <!-- ko if: $parent.photo() !== 'none' -->
+          <span data-bind="if: $parent.photo() !== 'none'">
           <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url()({'maxHeight': 200, 'mawWidth': 200})}">
           <!-- TODO: Right image size? -->
-        <!-- /ko -->
+          </span>
           <span data-bind="html: content"></span>
           <a data-bind="attr: {href: url}" target="_blank">Read More</a>
         </div>
 
-        <div id="foursquare-info">
-          <!-- ko with: frSqrInfo -->
+        <div id="foursquare-info" data-bind="with: frSqrInfo">
           <h3 id="foursquare-heading">Information from FourSquare</h3>
           <div id="foursquare-header-info">
             <p>Here now:
@@ -164,32 +163,30 @@
           <div data-bind="with: tips">
             <!-- TODO: Show only if tips exist -->
             <h4>Tips:</h4>
-            <!-- ko foreach: items -->
-            <div class='foursquare-tip'>
-              <p>
-                <span class="tip" data-bind="text: text"></span>  -
-                <span class="tip-author" data-bind="text: user.firstName"></span>
-              </p>
-              <p> Likes:
-                <span data-bind="text: likes.count"></span>
-              </p>
+            <div data-bind="foreach: items">
+              <div class='foursquare-tip'>
+                <p>
+                  <span class="tip" data-bind="text: text"></span>  -
+                  <span class="tip-author" data-bind="text: user.firstName"></span>
+                </p>
+                <p> Likes:
+                  <span data-bind="text: likes.count"></span>
+                </p>
+              </div>
             </div>
-            <!-- /ko -->
           </div>
-          <!-- /ko -->
         </div>
       </div>
     </div>
 
     <!-- Vendor Scripts -->
+
     <!-- Set the useref build block -->
-    <!-- build:js(app/)scripts/vendor/main.min.js -->
+    <!-- build:js(app/)scripts/main.min.js -->
     <script type="text/javascript" src="scripts/vendor/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="scripts/vendor/knockout-3.4.0.min.js"></script>
     <script type="text/javascript" src="scripts/vendor/knockout-mapping-2.4.1.min.js"></script>
-    <!-- endbuild -->
 
-    <!-- build:js(app/)scripts/main.min.js -->
     <script type="text/javascript" src="scripts/main.js"></script>
     <script type="text/javascript" src="scripts/map.js"></script>
     <script type="text/javascript" src="scripts/foursquare.js"></script>

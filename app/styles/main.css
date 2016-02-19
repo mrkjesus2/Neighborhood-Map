@@ -176,6 +176,10 @@ li {
   margin: 0 3vw 0 0;
 }
 
+#drawer-content span:first-child {
+  margin: 0;
+}
+
 #drawer-content a {
   font-size: 0.9em;
   color: white;
@@ -207,7 +211,7 @@ li {
   opacity: .7;
 }
 
-#place-address {
+.place-address {
   font-size: .8em;
 }
 

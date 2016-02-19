@@ -110,12 +110,12 @@ gulp.task('scripts', () =>
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
       //       to be correctly concatenated
-      './app/scripts/main.js',
       './app/scripts/vendor/jquery-2.2.0.min.js',
       './app/scripts/vendor/knockout-3.4.0.min.js',
       './app/scripts/vendor/knockout-mapping-2.4.1.min.js',
-      './app/scripts/foursquare.js',
+      './app/scripts/main.js',
       './app/scripts/map.js',
+      './app/scripts/foursquare.js',
       './app/scripts/wiki.js',
       './app/scripts/viewModel.js'
     ])
@@ -150,7 +150,7 @@ gulp.task('html', () => {
     .pipe($.if('*.css', $.minifyCss()))
 
     // Minify any HTML
-    .pipe($.if('*.html', $.minifyHtml()))
+    // .pipe($.if('*.html', $.minifyHtml()))
     // Output files
     .pipe($.if('*.html', $.size({title: 'html', showFiles: true})))
     .pipe(gulp.dest('dist'));
@@ -202,7 +202,7 @@ gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
     ['lint', 'html', 'scripts', 'images', 'copy'],
-    'generate-service-worker',
+    // 'generate-service-worker',
     cb
   )
 );
