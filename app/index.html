@@ -46,7 +46,8 @@
         <p>Filter: <input list="places"
           data-bind="
             textInput: inputText,
-            event: {keydown: placeFilter}">
+            event: {input: placeFilter}">
+          <button data-bind="click: resetFilter">Reset</button>
         </p>
         <!-- List for autocomplete -->
         <datalist id="places"
@@ -136,8 +137,8 @@
     <div id="infowindow" data-bind="with: curPlace">
       <div id="info-window-content">
         <h2 data-bind="text: name"></h2>
-        <!-- TODO: Onclick open the drawer with current location highlighted and details opened -->
-        <a href="#" data-bind="click: $parent.toggleDrawer">Contact Info</a>
+        <!-- TODO: Onclick  with current location highlighted and details opened -->
+        <p onclick="app.viewmodel.clickContactInfo()">Contact Info</p>
         <div id="wiki-info" data-bind="with: wikiInfo">
           <!-- ko if: $parent.photo() !== 'none' -->
           <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url()({'maxHeight': 200, 'mawWidth': 200})}">

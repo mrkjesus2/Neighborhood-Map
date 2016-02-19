@@ -106,6 +106,14 @@ app.viewmodel = {
     this.errorMsg([]);
   },
 
+  setCurrentPlace: function(place) {
+    // console.log('setCurrentPlace'); // REMOVE
+    if (app.viewmodel.curPlace().marker.getAnimation()) {
+      app.viewmodel.toggleBounce();
+    }
+    app.viewmodel.curPlace(place);
+  },
+
   toggleDetails: function(place) {
     if (place.details() !== undefined && place.details().show() === true) {
       place.details().show(false);
@@ -117,12 +125,13 @@ app.viewmodel = {
     }
   },
 
-  setCurrentPlace: function(place) {
-    // console.log('setCurrentPlace'); // REMOVE
-    if (app.viewmodel.curPlace().marker.getAnimation()) {
-      app.viewmodel.toggleBounce();
-    }
-    app.viewmodel.curPlace(place);
+  clickContactInfo: function(ev, data) {
+    this.inputText(this.curPlace().name());
+    $('#drawer-top input').trigger('input');
+    this.toggleDetails(app.viewmodel.curPlace());
+    app.map.infoWindow.close();
+    this.closeDrawer();
+    this.toggleDrawer();
   },
 
   // Called when the marker or list item is clicked
@@ -187,6 +196,11 @@ app.viewmodel = {
     return true;
   },
 
+  resetFilter: function() {
+    app.viewmodel.inputText('');
+    $('#drawer-top input').trigger('input');
+  },
+
   toggleBounce: function() {
     // console.log('Map toggleBounce'); // REMOVE
     if (app.viewmodel.curPlace().marker.getAnimation()) {
@@ -208,10 +222,18 @@ app.viewmodel = {
     // console.log('toggleDrawer'); // REMOVE
     var els = document.getElementsByClassName('drawer');
     $(els).toggleClass('closed open');
+    // app.viewmodel.inputText('');
   },
 
   closeDrawer: function() {
     // console.log('closeDrawer'); // REMOVE
+    // Reset drawer button if infowindow is open
+    var el = $('#drawer-btn');
+    if (el.hasClass('open')) {
+      el.removeClass('open');
+      el.addClass('closed');
+    }
+    // Close the drawer if it is open
     if ($('#drawer-content').hasClass('open')) {
       app.viewmodel.toggleDrawer();
     }
