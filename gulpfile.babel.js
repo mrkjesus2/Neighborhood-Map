@@ -40,7 +40,7 @@ const reload = browserSync.reload;
 
 // Lint JavaScript
 gulp.task('lint', () =>
-  gulp.src(['app/scripts/**/*.js', '!app/scripts/vendor/knockout-3.4.0.js', '!app/scripts/vendor/jquery-2.2.0.js', '!app/scripts/vendor/knockout-mapping-2.4.1.js','!app/scripts/map.js'])
+  gulp.src(['app/scripts/**/*.js', '!app/scripts/vendor/knockout-3.4.0.min.js', '!app/scripts/vendor/jquery-2.2.0.min.js', '!app/scripts/vendor/knockout-mapping-2.4.1.min.js'])
     .pipe($.eslint())
     .pipe($.eslint.format())
     .pipe($.if(!browserSync.active, $.eslint.failOnError()))
@@ -110,8 +110,14 @@ gulp.task('scripts', () =>
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
       //       to be correctly concatenated
-      './app/scripts/main.js'
-      // Other scripts
+      './app/scripts/main.js',
+      './app/scripts/vendor/jquery-2.2.0.min.js',
+      './app/scripts/vendor/knockout-3.4.0.min.js',
+      './app/scripts/vendor/knockout-mapping-2.4.1.min.js',
+      './app/scripts/foursquare.js',
+      './app/scripts/map.js',
+      './app/scripts/wiki.js',
+      './app/scripts/viewModel.js'
     ])
       .pipe($.newer('.tmp/scripts'))
       .pipe($.sourcemaps.init())

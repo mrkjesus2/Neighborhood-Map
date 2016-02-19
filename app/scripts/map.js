@@ -1,7 +1,7 @@
+/* global app document google $ window ko */
 app.map = app.map || {};
 
 (function() {
-
   app.map = {
     // Callback function for Google Maps - Initialize the Map
     // Calls getPlaces and createMarker to fill ViewModel places array
@@ -16,11 +16,10 @@ app.map = app.map || {};
         maxZoom: 18,
         mapTypeControl: false
       });
-      console.log('Map init'); // REMOVE
-
-      this.placesApi = new google.maps.places.PlacesService(app.map.map)
+      // console.log('Map init'); // REMOVE
+      this.placesApi = new google.maps.places.PlacesService(app.map.map);
       this.infoWindow = new google.maps.InfoWindow({
-        maxWidth: $(window).width() * .7}
+        maxWidth: $(window).width() * 0.7}
       );
       // Show the drawer button when infowindow closes
       google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
@@ -38,7 +37,7 @@ app.map = app.map || {};
 
     // Get a list of places from Google Maps
     getPlaces: function() {
-      console.log('Map getPlaces'); // REMOVE
+      // console.log('Map getPlaces'); // REMOVE
       // Variables for the request
       var request = {
         bounds: app.map.map.getBounds(),
@@ -53,7 +52,7 @@ app.map = app.map || {};
 
             app.viewmodel.places.push(place);
             if (idx === 1) {
-              console.log("set current place");
+              console.log('set current place');
               app.viewmodel.curPlace(place);
             }
           });
@@ -67,7 +66,7 @@ app.map = app.map || {};
     },
 
     getPlaceDetails: function(place) {
-      console.log('Map getPlaceDetails'); // REMOVE
+      // console.log('Map getPlaceDetails'); // REMOVE
       var request = {
         placeId: place.data.place_id
       };
@@ -87,7 +86,7 @@ app.map = app.map || {};
     createMarker: function(place) {
       // console.log('Map createMarker'); // REMOVE
       // Location for the Marker
-      var plcloc = place.data.geometry.location
+      var plcloc = place.data.geometry.location;
       // Create the marker
       var marker = new google.maps.Marker({
         animation: google.maps.Animation.DROP,
@@ -103,9 +102,9 @@ app.map = app.map || {};
       });
 
       google.maps.event.addListener(marker, 'click', function() {
-          app.viewmodel.clickHandler(place);
+        app.viewmodel.clickHandler(place);
       });
       return marker;
-    },
+    }
   };
 })();

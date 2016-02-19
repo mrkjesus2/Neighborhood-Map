@@ -70,7 +70,7 @@ li {
 }
 
 #drawer-btn.closed {
-  transform: translateX(12vw);
+  transform: translateX(12vs);
   transition: transform .3s ease .4s;
 }
 

@@ -56,7 +56,7 @@ app.viewmodel = {
     this.url = ko.observable(page.fullurl);
   },
 
-  FourSquare: function(info, tips, place) {
+  fourSquare: function(info, tips, place) {
     // console.log('FourSquare Constructor'); // REMOVE
     // Map FourSquare responses to observables
     var frSqrInfo = ko.mapping.fromJS(info, {});
@@ -125,7 +125,7 @@ app.viewmodel = {
     }
   },
 
-  clickContactInfo: function(ev, data) {
+  clickContactInfo: function() {
     this.inputText(this.curPlace().name());
     $('#drawer-top input').trigger('input');
     this.toggleDetails(app.viewmodel.curPlace());

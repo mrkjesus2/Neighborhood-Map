@@ -80,9 +80,9 @@
   }
 })();
 
-/* global $ */
+/* global */
 var app = app || {};
 
-$(function() {
-  'use strict';
-});
+// $(function() {
+//   'use strict';
+// });

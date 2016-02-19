@@ -182,16 +182,20 @@
     </div>
 
     <!-- Vendor Scripts -->
-    <script type="text/javascript" src="scripts/vendor/jquery-2.2.0.js"></script>
-    <script type="text/javascript" src="scripts/vendor/knockout-3.4.0.js"></script>
-    <script type="text/javascript" src="scripts/vendor/knockout-mapping-2.4.1.js"></script>
-    <!-- My Scripts -->
+    <!-- Set the useref build block -->
+    <!-- build:js(app/)scripts/vendor/main.min.js -->
+    <script type="text/javascript" src="scripts/vendor/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="scripts/vendor/knockout-3.4.0.min.js"></script>
+    <script type="text/javascript" src="scripts/vendor/knockout-mapping-2.4.1.min.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js(app/)scripts/main.min.js -->
     <script type="text/javascript" src="scripts/main.js"></script>
     <script type="text/javascript" src="scripts/map.js"></script>
     <script type="text/javascript" src="scripts/foursquare.js"></script>
     <script type="text/javascript" src="scripts/wiki.js"></script>
     <script type="text/javascript" src="scripts/viewModel.js"></script>
-
+    <!-- endbuild -->
 
     <!-- Google Maps API -->
     <script async
