@@ -8,7 +8,8 @@ why
 Explain Usage
 Mostly Straightforward, why is it the way it is
 
-
+Warnings
+ko comments deleted in build
 
 
 

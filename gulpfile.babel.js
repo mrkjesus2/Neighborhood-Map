@@ -150,7 +150,7 @@ gulp.task('html', () => {
     .pipe($.if('*.css', $.minifyCss()))
 
     // Minify any HTML
-    // .pipe($.if('*.html', $.minifyHtml()))
+    .pipe($.if('*.html', $.minifyHtml()))
     // Output files
     .pipe($.if('*.html', $.size({title: 'html', showFiles: true})))
     .pipe(gulp.dest('dist'));
@@ -202,7 +202,8 @@ gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
     ['lint', 'html', 'scripts', 'images', 'copy'],
-    // 'generate-service-worker',
+    /* I disabled the service worker */
+    'generate-service-worker',
     cb
   )
 );
@@ -243,10 +244,10 @@ gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
     ],
     staticFileGlobs: [
       // Add/remove glob patterns to match your directory setup.
-      `${rootDir}/images/**/*`,
-      `${rootDir}/scripts/**/*.js`,
-      `${rootDir}/styles/**/*.css`,
-      `${rootDir}/*.{html,json}`
+      '${rootDir}/images/**/*',
+      '${rootDir}/scripts/**/*.js',
+      '${rootDir}/styles/**/*.css',
+      '${rootDir}/*.{html,json}'
     ],
     // Translates a static file path to the relative URL that it's served from.
     stripPrefix: path.join(rootDir, path.sep)
