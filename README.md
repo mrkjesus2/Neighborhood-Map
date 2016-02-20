@@ -1,5 +1,19 @@
-Installation Instructions
-clone repo, node, npm, gulp, etc(?)
+# About
+
+This is an app built with knockout.js using the Google Maps, FourSquare,
+Wikipedia, and Google Places API's. It shows parks, museums, and galleries
+that are around my neighborhood as well as interesting information aobut
+those places.
+
+I used Web Starter Kit for the build tools, but mainly because browser-sync
+is awesome!
+
+# Installation Instructions
+1. Make sure Node.js is installed
+2. Gulp?
+3. git clone the repo
+4. npm install
+
 
 Explain Choices
 Why web starter kit(link), why no bootstrap(), why no sass(),
