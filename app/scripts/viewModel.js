@@ -170,7 +170,7 @@ app.viewmodel = {
         var matches = self.places().filter(function(place) {
           var name = place.name().toLowerCase();
           var input = self.inputText().toLowerCase();
-          return name.indexOf(input) !== -1;
+          return name.indexOf(input) === 0;
         });
 
         // Set markers and list items to hidden
