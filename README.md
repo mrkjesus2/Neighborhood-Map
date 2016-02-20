@@ -17,9 +17,9 @@ is awesome!
 >4. Run npm install (installs development dependencies)
 
 ### Most useful commands
-> gulp - Build the app
-> gulp serve - Run server with source files (http://localhost:3000)
-> gulp serve:dist - Run server with build files (http://localhost:3000)
+* gulp - Build the app
+* gulp serve - Run server with source files (http://localhost:3000)
+* gulp serve:dist - Run server with build files (http://localhost:3000)
 
 ### Warnings
 * Build deletes HTML comments, be careful with knockout bindings
