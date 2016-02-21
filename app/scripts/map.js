@@ -1,4 +1,4 @@
-/* global app document google $ window ko */
+/* global app document google $ window ko localStorage */
 app.map = app.map || {};
 
 (function() {
@@ -35,33 +35,81 @@ app.map = app.map || {};
       google.maps.event.addListenerOnce(this.map, 'bounds_changed', this.getPlaces);
     },
 
+    createPlaces: function(places) {
+      places.forEach(function(place, idx) {
+        var plc = new app.viewmodel.Place(place);
+
+        app.viewmodel.places.push(plc);
+        if (idx === 1) {
+          console.log('set current place');
+          app.viewmodel.curPlace(plc);
+        }
+      });
+    },
+
+    // Likely against TOS, but figure it's fine for educational purposes
+    storePlaces: function(places) {
+      localStorage.setItem('places', JSON.stringify(places));
+    },
+
+    retrievePlaces: function() {
+      var places = JSON.parse(localStorage.places);
+      places.forEach(function(place) {
+        var lat = place.geometry.location.lat;
+        var lng = place.geometry.location.lng;
+        // Make lat/lng into functions to match API results
+        place.geometry.location.lat = function() {
+          return lat;
+        };
+        place.geometry.location.lng = function() {
+          return lng;
+        };
+      });
+      return places;
+    },
     // Get a list of places from Google Maps
     getPlaces: function() {
       // console.log('Map getPlaces'); // REMOVE
-      // Variables for the request
-      var request = {
-        bounds: app.map.map.getBounds(),
-        types: ['art_gallery', 'museum', 'park']
-      };
-
-      // Call the Places API
-      app.map.placesApi.nearbySearch(request, function(results, status) {
-        if (status === 'OK') {
-          results.forEach(function(result, idx) {
-            var place = new app.viewmodel.Place(result);
-
-            app.viewmodel.places.push(place);
-            if (idx === 1) {
-              console.log('set current place');
-              app.viewmodel.curPlace(place);
-            }
-          });
-        } else {
-          console.log('We have a places error');
-          var msg = 'Google Places Error: ' + status;
-          app.viewmodel.addError(msg);
-        }
+      if (localStorage.places) {
+        console.log('Creating places from storage');
+        app.map.createPlaces(app.map.retrievePlaces());
         ko.applyBindings(app.viewmodel);
+      } else {
+        // Variables for the request
+        var request = {
+          bounds: app.map.map.getBounds(),
+          types: ['art_gallery', 'museum', 'park']
+        };
+
+        // Call the Places API
+        app.map.placesApi.nearbySearch(request, function(results, status) {
+          console.log('Calling Places API');
+          if (status === 'OK') {
+            // console.log(results[0]);
+            app.map.setPhotoUrls(results);
+            app.map.storePlaces(results);
+            app.map.createPlaces(results);
+          } else {
+            console.log('We have a places error');
+            var msg = 'Google Places Error: ' + status;
+            app.viewmodel.addError(msg);
+          }
+          ko.applyBindings(app.viewmodel);
+        });
+      }
+    },
+
+    setPhotoUrls: function(places) {
+      places.forEach(function(place) {
+        // console.log(place.photos);
+        if (place.photos) {
+          // TODO: Right image size?
+          var url = place.photos[0].getUrl({maxWidth: 200,
+                                            maxHeight: 200});
+          console.log(typeof url);
+          place.photos[0].url = url;
+          // console.log(place.photos[0]);
+        }
       });
     },
 

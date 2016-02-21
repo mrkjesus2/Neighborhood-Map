@@ -25,7 +25,7 @@ app.viewmodel = {
     );
     if (place.photos) {
       this.photo = ko.observable({
-        url: ko.observable(place.photos[0].getUrl),
+        url: ko.observable(place.photos[0].url),
         height: ko.observable(place.photos[0].height),
         width: ko.observable(place.photos[0].width),
         attributions: ko.observable(place.photos[0].html_attributions)
@@ -43,12 +43,6 @@ app.viewmodel = {
     this.frSqrInfo = ko.observable();
     // this.frSqrInfo.tips = ko.observable();
     // console.log('Place Constructor');  // REMOVE
-  },
-
-// TODO: This function probably needs to written for Places API
-  // params - place, url, width, height
-  getPhoto: function() {
-
   },
 
   WikiPage: function(page) {
