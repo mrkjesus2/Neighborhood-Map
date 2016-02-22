@@ -4,30 +4,44 @@
 
 This is an app built with knockout.js using the Google Maps, FourSquare,
 Wikipedia, and Google Places API's. It shows parks, museums, and galleries
-that are around my neighborhood as well as interesting information aobut
+that are around my neighborhood as well as interesting information about
 those places.
 
 I used Web Starter Kit for the build tools, but mainly because browser-sync
-is awesome!
+is awesome! Have all of your phones, tablets, computers and any other browser enabled devices you own open to the development server and see what I mean!
+
+
+> This is merely an educational project that I wrote while completing udacity.com's front-end nanodegree. If you are interested in talking to me about this code, I welcome all inquiries. 
 
 ## Installation Instructions
->1. Make sure [Node.js](https://nodejs.org/) is installed
->2. Gulp?
->3. Clone the [repo](https://github.com/mrkjesus2/Neighborhood-Map)
->4. Run npm install (installs development dependencies)
+##### Quick Start
+- Clone the [repo](https://github.com/mrkjesus2/Neighborhood-Map)
+- Navigate to the app folder in the cloned repo
+- Run a local server and you can load the app from source code in the browser
 
-### Most useful commands
-* gulp - Build the app
-* gulp serve - Run server with source files (http://localhost:3000)
-* gulp serve:dist - Run server with build files (http://localhost:3000)
+##### or
+- Run the app [here](http://mrkjesus2.github.io/Neigborhood-Map)
 
-### Warnings
+##### Full Implementation
+1. Clone the [repo](https://github.com/mrkjesus2/Neighborhood-Map)
+2. Make sure [Node.js](https://nodejs.org/) is installed
+3. Run npm install gulp
+4. Run npm install (installs development dependencies)
+
+
+## The more you know
+#### Most useful commands
++ `gulp` - Build the app to dist folder
++ `gulp serve` - Run server with source files (http://localhost:3000)
++ `gulp serve:dist` - Build and run server with build files (http://localhost:3001)
+
+#### Warnings
 * Build deletes HTML comments, be careful with knockout bindings
 
-### Further Information
+#### Further Information (in Repo file structure)
 * docs/commands.md
 * docs/deploy.md
-* WKS-README.md
+* WSK-README.md
 
 
 
