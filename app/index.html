@@ -37,20 +37,18 @@
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/main.css">
   </head>
-
 <!-- All head code from Google's Web Starter Kit -->
+
   <body>
     <div id="container">
       <div id="drawer-top" class="drawer closed">
         <p id="filter"><span ></span>
-          <input list="places"
-            data-bind="
-              textInput: inputText,
-              event: {input: placeFilter}">
+          <!-- Filter and filter reset -->
+          <input list="places" data-bind=" textInput: inputText, event: {input: placeFilter}">
           <button id="reset" data-bind="click: resetFilter">Reset</button>
         </p>
         <!-- List for autocomplete -->
-        <datalist id="places" data-bind="foreach: places">
+        <datalist data-bind="foreach: places">
           <option data-bind="value: name"></option>
         </datalist>
         <!-- Button to close the drawer -->
@@ -63,9 +61,7 @@
         <!-- List of the places on the map -->
         <div data-bind="visible: show">
             <div id="place-info">
-              <h3 class="place-names" data-bind="text: name,
-                                              click: $parent.clickHandler">
-              </h3>
+              <h3 data-bind="text: name, click: $parent.clickHandler"></h3>
               <p>
                 <span data-bind="if: rating">
                   Rating -
@@ -77,7 +73,10 @@
             </div>
             <div data-bind="if: details() && details().show">
               <div id="place-details" data-bind="with: details()">
-                <p data-bind="if: phone">Phone - <span data-bind="text: phone"></span></p>
+                <p data-bind="if: phone">
+                  Phone -
+                  <span data-bind="text: phone"></span>
+                </p>
                 <p data-bind="if: address">
                   <span class="place-address" data-bind="text: address"></span>
                 </p>
@@ -104,7 +103,9 @@
       <div id="inner-modal">
         <div id="modal-topbar">
           <span id="close-modal" data-bind="click: closeModal">X</span>
-          <h3 id="modal-header" data-bind="text: curPlace().name">There could be text here</h3>
+          <h3 id="modal-header" data-bind="text: curPlace().name">
+            There could be text here
+          </h3>
         </div>
         <div id="modal-reviews" data-bind="with: curPlace().details">
           <div data-bind="foreach: reviews">
@@ -133,19 +134,21 @@
     <div id="infowindow" data-bind="with: curPlace">
       <div id="info-window-content">
         <h2 data-bind="text: name"></h2>
-        <!-- TODO: Onclick  with current location highlighted and details opened -->
-        <a href="#" onclick="app.viewmodel.clickContactInfo()">Contact Info</a>
+        <a href="#" onclick="app.viewmodel.clickContactInfo()">
+          Contact Info
+        </a>
         <div id="wiki-info" data-bind="with: wikiInfo">
           <span data-bind="if: $parent.photo() !== 'none'">
-          <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url}">
-          <!-- TODO: Right image size? -->
+            <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url}">
           </span>
           <span data-bind="html: content"></span>
-          <a data-bind="attr: {href: url}" target="_blank">Read More</a>
+          <a data-bind="attr: {href: url}" target="_blank">
+            Read More
+          </a>
         </div>
 
         <div id="foursquare-info" data-bind="with: frSqrInfo">
-          <h3 id="foursquare-heading">Information from FourSquare</h3>
+          <h3>Information from FourSquare</h3>
           <div id="foursquare-header-info">
             <p>Here now:
               <span data-bind="text: hereNow.count"></span>
@@ -159,7 +162,6 @@
           </div>
           <!-- Tips from FourSquare -->
           <div data-bind="with: tips">
-            <!-- TODO: Show only if tips exist -->
             <h4>Tips:</h4>
             <div data-bind="foreach: items">
               <div class='foursquare-tip'>
@@ -167,7 +169,8 @@
                   <span class="tip" data-bind="text: text"></span>  -
                   <span class="tip-author" data-bind="text: user.firstName"></span>
                 </p>
-                <p> Likes:
+                <p>
+                  Likes:
                   <span data-bind="text: likes.count"></span>
                 </p>
               </div>

@@ -4,7 +4,6 @@ app.wiki = app.wiki || {};
 (function() {
   app.wiki = {
     getWiki: function(place) {
-      // console.log('Wiki getWiki'); // REMOVE
       jQuery.ajax({
         url: 'https://en.wikipedia.org/w/api.php',
         data: {
@@ -30,7 +29,6 @@ app.wiki = app.wiki || {};
         !app.wiki.ambiguityChk(data, firstId)) {
           place.wikiInfo(page);
         }
-        // console.log('Finished getWiki'); // REMOVE
       }).fail(function(data) {
         var msg = 'Wikipedia Error: ' + data.statusText;
         app.viewmodel.addError(msg);
@@ -39,7 +37,6 @@ app.wiki = app.wiki || {};
 
     // Check for a disambiguity page(ie. no info - only links)
     ambiguityChk: function(data, id) {
-      // console.log('Wiki ambiguityChk'); // REMOVE
       var categories = data.query.pages[id].categories;
 
       for (var category in categories) {

@@ -1,4 +1,3 @@
-// TODO: Get rid of 'REMOVE' lines
 /* global app ko $ google document */
 
 app.viewmodel = app.viewmodel || {};
@@ -41,8 +40,6 @@ app.viewmodel = {
     this.marker = app.map.createMarker(this);
     this.wikiInfo = ko.observable();
     this.frSqrInfo = ko.observable();
-    // this.frSqrInfo.tips = ko.observable();
-    // console.log('Place Constructor');  // REMOVE
   },
 
   WikiPage: function(page) {
@@ -51,7 +48,6 @@ app.viewmodel = {
   },
 
   fourSquare: function(info, tips, place) {
-    // console.log('FourSquare Constructor'); // REMOVE
     // Map FourSquare responses to observables
     var frSqrInfo = ko.mapping.fromJS(info, {});
     var frSqrTips = ko.mapping.fromJS(tips, {});
@@ -69,7 +65,6 @@ app.viewmodel = {
     this.rating = ko.observable(details.rating);
     this.website = ko.observable(details.website);
     this.reviews = ko.observableArray(new app.viewmodel.Reviews(details.reviews));
-    // console.log('PlaceDetails'); // REMOVE
   },
 
   Reviews: function(reviews) {
@@ -101,7 +96,6 @@ app.viewmodel = {
   },
 
   setCurrentPlace: function(place) {
-    // console.log('setCurrentPlace'); // REMOVE
     if (app.viewmodel.curPlace().marker.getAnimation()) {
       app.viewmodel.toggleBounce();
     }
@@ -130,7 +124,6 @@ app.viewmodel = {
 
   // Called when the marker or list item is clicked
   clickHandler: function(place) {
-    // console.log('clickHandler'); // REMOVE
     var plc = place || this;
 
     // Call for data
@@ -155,7 +148,6 @@ app.viewmodel = {
   },
 
   placeFilter: function() {
-    // console.log('placeFilter'); // REMOVE
     var self = this;
     // A cushion to allow inputText to change
     setTimeout(function() {
@@ -179,6 +171,7 @@ app.viewmodel = {
           place.show(true);
         });
       } else {
+        // Set all place markers on the map
         self.places().forEach(function(place) {
           place.marker.setMap(app.map.map);
           place.show(true);
@@ -186,23 +179,13 @@ app.viewmodel = {
       }
     }, 100);
 
-    // Must return true to allow default behavior(Filling the input box)
+    // Must return true to allow default behavior (Filling the input box)
     return true;
   },
 
   resetFilter: function() {
     app.viewmodel.inputText('');
     $('#drawer-top input').trigger('input');
-  },
-
-  toggleBounce: function() {
-    // console.log('Map toggleBounce'); // REMOVE
-    if (app.viewmodel.curPlace().marker.getAnimation()) {
-      app.viewmodel.curPlace().marker.setAnimation(null);
-    } else {
-      var marker = app.viewmodel.curPlace().marker;
-      marker.setAnimation(google.maps.Animation.BOUNCE);
-    }
   },
 
   setInfoWindow: function(place) {
@@ -212,15 +195,22 @@ app.viewmodel = {
     app.map.infoWindow.open(app.map.map, place.marker);
   },
 
+  // Strictly view related (create a separate file if there is more)
+  toggleBounce: function() {
+    if (app.viewmodel.curPlace().marker.getAnimation()) {
+      app.viewmodel.curPlace().marker.setAnimation(null);
+    } else {
+      var marker = app.viewmodel.curPlace().marker;
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  },
+
   toggleDrawer: function() {
-    // console.log('toggleDrawer'); // REMOVE
     var els = document.getElementsByClassName('drawer');
     $(els).toggleClass('closed open');
-    // app.viewmodel.inputText('');
   },
 
   closeDrawer: function() {
-    // console.log('closeDrawer'); // REMOVE
     // Reset drawer button if infowindow is open
     var el = $('#drawer-btn');
     if (el.hasClass('open')) {
@@ -233,6 +223,11 @@ app.viewmodel = {
     }
   },
 
+  showDrawerBtn: function() {
+    $('#drawer-btn').removeClass('open');
+    $('#drawer-btn').addClass('closed');
+  },
+
   openModal: function() {
     $('#modal').css('display', 'initial');
     console.log('Open Modal');
@@ -243,12 +238,9 @@ app.viewmodel = {
   },
 
   init: function() {
-    // console.log('init'); // REMOVE
     var button = document.getElementById('drawer-btn');
     button.addEventListener('click', app.viewmodel.toggleDrawer);
   }
 };
 
 app.viewmodel.init();
-// Moved to map.getPlaces to avoid typeErrors on current place
-// ko.applyBindings(app.viewmodel);

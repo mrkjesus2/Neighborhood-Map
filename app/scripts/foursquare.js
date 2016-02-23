@@ -11,7 +11,6 @@ app.foursquare = app.foursquare || {};
     version: '20140806',
 
     findPlace: function(place) {
-      // console.log('FourSquare findPlace'); // REMOVE
       var loc = place.data.geometry.location;
       // Call the foursquare API
       jQuery.ajax({
@@ -31,9 +30,8 @@ app.foursquare = app.foursquare || {};
         // Best matching venue
         var venue = data.response.venues[0];
 
-        // Callback the API for venue tips
+        // Call the API again for venue tips
         app.foursquare.getTips(venue, place);
-        // console.log('Finished FourSquare'); // REMOVE
       }).fail(function(data) {
         var msg = 'Foursquare Error: ' + data.statusText;
         app.viewmodel.addError(msg);
@@ -61,33 +59,3 @@ app.foursquare = app.foursquare || {};
     }
   };
 })();
-
-// specials: {
-//   count:
-//   items: [{
-//     description:
-//     finePrint:
-//     icon:
-//     id:
-//     interaction: {
-
-//     }
-//     message:
-//     provider:
-//     redemption:
-//     state:
-//     title:
-//     type:
-//     unlocked:
-//   }]
-// }
-
-// tips: {
-//   count:
-//   groups: {
-//     count:
-//     items:
-//     name:
-//     type:
-//   }
-// }

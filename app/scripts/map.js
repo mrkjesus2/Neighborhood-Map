@@ -22,10 +22,7 @@ app.map = app.map || {};
         maxWidth: $(window).width() * 0.7}
       );
       // Show the drawer button when infowindow closes
-      google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
-        $('#drawer-btn').removeClass('open');
-        $('#drawer-btn').addClass('closed');
-      });
+      google.maps.event.addListener(this.infoWindow, 'closeclick', app.viewmodel.showDrawerBtn);
 
       // Show error message - if maps can't be reached it will be visible
       setTimeout(function() {
@@ -41,7 +38,7 @@ app.map = app.map || {};
 
         app.viewmodel.places.push(plc);
         if (idx === 1) {
-          console.log('set current place');
+          console.log('set current place'); //REMOVE
           app.viewmodel.curPlace(plc);
         }
       });
@@ -67,6 +64,7 @@ app.map = app.map || {};
       });
       return places;
     },
+
     // Get a list of places from Google Maps
     getPlaces: function() {
       // console.log('Map getPlaces'); // REMOVE
@@ -85,7 +83,6 @@ app.map = app.map || {};
         app.map.placesApi.nearbySearch(request, function(results, status) {
           console.log('Calling Places API');
           if (status === 'OK') {
-            // console.log(results[0]);
             app.map.setPhotoUrls(results);
             app.map.storePlaces(results);
             app.map.createPlaces(results);
@@ -101,20 +98,15 @@ app.map = app.map || {};
 
     setPhotoUrls: function(places) {
       places.forEach(function(place) {
-        // console.log(place.photos);
         if (place.photos) {
-          // TODO: Right image size?
           var url = place.photos[0].getUrl({maxWidth: 200,
-                                            maxHeight: 200});
-          console.log(typeof url);
+                                            maxHeight: 300});
           place.photos[0].url = url;
-          // console.log(place.photos[0]);
         }
       });
     },
 
     getPlaceDetails: function(place) {
-      // console.log('Map getPlaceDetails'); // REMOVE
       var request = {
         placeId: place.data.place_id
       };
@@ -132,7 +124,6 @@ app.map = app.map || {};
     },
 
     createMarker: function(place) {
-      // console.log('Map createMarker'); // REMOVE
       // Location for the Marker
       var plcloc = place.data.geometry.location;
       // Create the marker
@@ -141,7 +132,6 @@ app.map = app.map || {};
         attribution: {source: 'mrkjesus2.github.io/Neighborhood-Map'},
         icon: place.data.icon,
         map: app.map.map,
-        // optimized: false,  // If problems with animation, uncomment //REMOVE
         place: {
           location: {lat: plcloc.lat(), lng: plcloc.lng()},
           placeId: place.data.place_id
