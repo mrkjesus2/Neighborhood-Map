@@ -64,7 +64,9 @@ app.viewmodel = {
     this.photos = ko.observableArray(details.photos);
     this.rating = ko.observable(details.rating);
     this.website = ko.observable(details.website);
-    this.reviews = ko.observableArray(new app.viewmodel.Reviews(details.reviews));
+    this.reviews = ko.observableArray(
+      new app.viewmodel.Reviews(details.reviews)
+    );
   },
 
   Reviews: function(reviews) {

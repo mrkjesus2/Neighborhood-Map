@@ -4,7 +4,6 @@ app.map = app.map || {};
 (function() {
   app.map = {
     // Callback function for Google Maps - Initialize the Map
-    // Calls getPlaces and createMarker to fill ViewModel places array
     init: function() {
       var home = {lat: 39.927677, lng: -75.171909};
       var el = document.getElementById('map-container');
@@ -16,20 +15,23 @@ app.map = app.map || {};
         maxZoom: 18,
         mapTypeControl: false
       });
-      // console.log('Map init'); // REMOVE
       this.placesApi = new google.maps.places.PlacesService(app.map.map);
       this.infoWindow = new google.maps.InfoWindow({
         maxWidth: $(window).width() * 0.7}
       );
       // Show the drawer button when infowindow closes
-      google.maps.event.addListener(this.infoWindow, 'closeclick', app.viewmodel.showDrawerBtn);
+      google.maps.event.addListener(
+        this.infoWindow, 'closeclick', app.viewmodel.showDrawerBtn
+      );
 
-      // Show error message - if maps can't be reached it will be visible
+      // Show error message - if maps can't be reached, will be visible
       setTimeout(function() {
         $('#maps-error').css('display', 'inline');
       }, 5000);
       // Load places once the maps bounds are set
-      google.maps.event.addListenerOnce(this.map, 'bounds_changed', this.getPlaces);
+      google.maps.event.addListenerOnce(
+        this.map, 'bounds_changed', this.getPlaces
+      );
     },
 
     createPlaces: function(places) {
@@ -38,7 +40,6 @@ app.map = app.map || {};
 
         app.viewmodel.places.push(plc);
         if (idx === 1) {
-          console.log('set current place'); //REMOVE
           app.viewmodel.curPlace(plc);
         }
       });
@@ -67,7 +68,6 @@ app.map = app.map || {};
 
     // Get a list of places from Google Maps
     getPlaces: function() {
-      // console.log('Map getPlaces'); // REMOVE
       if (localStorage.places) {
         console.log('Creating places from storage');
         app.map.createPlaces(app.map.retrievePlaces());

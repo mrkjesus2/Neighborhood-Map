@@ -2,13 +2,13 @@
 # The humans responsible & technology colophon
 
 # TEAM
-
+  Mark -- The be all end all as far is this is concerned -- nope
   <name> -- <role> -- <twitter>
 
 # THANKS
 
-  <name>
+  Udacity for the project specs
 
 # TECHNOLOGY COLOPHON
 
-  HTML5, CSS3
+  HTML5, CSS3, KNOCKOUT.JS, JQUERY, GULP, WEB STARTER KIT
