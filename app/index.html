@@ -42,12 +42,12 @@
   <body>
     <div id="container">
       <div id="drawer-top" class="drawer closed">
-        <p><span>Filter:</span>
+        <p id="filter"><span ></span>
           <input list="places"
             data-bind="
               textInput: inputText,
               event: {input: placeFilter}">
-          <button data-bind="click: resetFilter">Reset</button>
+          <button id="reset" data-bind="click: resetFilter">Reset</button>
         </p>
         <!-- List for autocomplete -->
         <datalist id="places" data-bind="foreach: places">
