@@ -134,7 +134,7 @@
       <div id="info-window-content">
         <h2 data-bind="text: name"></h2>
         <!-- TODO: Onclick  with current location highlighted and details opened -->
-        <p onclick="app.viewmodel.clickContactInfo()">Contact Info</p>
+        <a href="#" onclick="app.viewmodel.clickContactInfo()">Contact Info</a>
         <div id="wiki-info" data-bind="with: wikiInfo">
           <span data-bind="if: $parent.photo() !== 'none'">
           <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url}">
