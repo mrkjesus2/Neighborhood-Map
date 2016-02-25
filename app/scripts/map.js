@@ -19,6 +19,7 @@ app.map = app.map || {};
       this.infoWindow = new google.maps.InfoWindow({
         maxWidth: $(window).width() * 0.7}
       );
+
       // Show the drawer button when infowindow closes
       google.maps.event.addListener(
         this.infoWindow, 'closeclick', app.viewmodel.showDrawerBtn
@@ -69,11 +70,12 @@ app.map = app.map || {};
 
     // Get a list of places from Google Maps
     getPlaces: function() {
-      if (localStorage.places) {
+      if (localStorage.places && app.map.sameBoundsCheck()) {
         console.log('Creating places from storage');
         app.map.createPlaces(app.map.retrievePlaces());
         ko.applyBindings(app.viewmodel);
       } else {
+        localStorage.setItem('bounds', JSON.stringify(app.map.map.getBounds()));
         // Variables for the request
         var request = {
           bounds: app.map.map.getBounds(),
@@ -95,6 +97,11 @@ app.map = app.map || {};
           ko.applyBindings(app.viewmodel);
         });
       }
+    },
+
+    sameBoundsCheck: function() {
+        var oldBounds = JSON.parse(localStorage.bounds);
+        return app.map.map.getBounds().equals(oldBounds);
     },
 
     setPhotoUrls: function(places) {
@@ -127,11 +134,16 @@ app.map = app.map || {};
     createMarker: function(place) {
       // Location for the Marker
       var plcloc = place.data.geometry.location;
+      // Set icon and icon size
+      var image = {
+        url: place.data.icon,
+        scaledSize: new google.maps.Size(50, 50)
+      };
       // Create the marker
       var marker = new google.maps.Marker({
         animation: google.maps.Animation.DROP,
         attribution: {source: 'mrkjesus2.github.io/Neighborhood-Map'},
-        icon: place.data.icon,
+        icon: image,
         map: app.map.map,
         place: {
           location: {lat: plcloc.lat(), lng: plcloc.lng()},
