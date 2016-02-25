@@ -24,6 +24,7 @@ app.map = app.map || {};
         this.infoWindow, 'closeclick', app.viewmodel.showDrawerBtn
       );
 
+// TODO: Handle with knockout
       // Show error message - if maps can't be reached, will be visible
       setTimeout(function() {
         $('#maps-error').css('display', 'inline');

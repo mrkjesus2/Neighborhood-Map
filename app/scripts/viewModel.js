@@ -140,6 +140,7 @@ app.viewmodel = {
     app.viewmodel.toggleBounce();
     // app.viewmodel.markerSetup(plc);
 
+// TODO: Handle with knockout
     // Timeout to avoid two calls from success callbacks
     setTimeout(function() {
       app.viewmodel.setInfoWindow(plc);
