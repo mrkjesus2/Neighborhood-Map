@@ -55,7 +55,8 @@
         </datalist>
         <!-- Button to close the drawer -->
         <!-- Leave this id for now -->
-        <a id="drawer-btn" class="drawer-btn drawer closed" href="#">
+        <a id="drawer-btn" class="drawer-btn drawer closed" href="#"
+          data-bind="click: app.viewmodel.toggleDrawer">
           <span class="btn-icon drawer closed"></span>
         </a>
       </div>
@@ -97,8 +98,7 @@
       </div>
 
       <div id="map-container" class="map-container">
-        <!-- Leave this id for now REMOVE-->
-        <h1 id="maps-error">There appears to be a problem with Google Maps, please try refreshing the page</h1>
+        <h1 class="maps-error" data-bind="text: mapError"></h1>
       </div>
     </div>
 

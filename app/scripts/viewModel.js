@@ -3,6 +3,7 @@
 app.viewmodel = app.viewmodel || {};
 
 app.viewmodel = {
+  mapError:ko.observable(),
   places: ko.observableArray(),
   curMarker: null,
   curPlace: ko.observable(),
@@ -236,14 +237,9 @@ app.viewmodel = {
     console.log('Open Modal');
   },
 
-  closeModal: function() {
+  closeModal: function(ev, data) {
+    console.log(ev, data);
+    console.log(data.toElement);
     $('#modal').css('display', 'none');
   },
-
-  init: function() {
-    var button = document.getElementById('drawer-btn');
-    button.addEventListener('click', app.viewmodel.toggleDrawer);
-  }
 };
-
-app.viewmodel.init();

@@ -25,10 +25,10 @@ app.map = app.map || {};
         this.infoWindow, 'closeclick', app.viewmodel.showDrawerBtn
       );
 
-// TODO: Handle with knockout
       // Show error message - if maps can't be reached, will be visible
       setTimeout(function() {
-        $('#maps-error').css('display', 'inline');
+        console.log('Setting error message');
+        app.viewmodel.mapError('There appears to be a problem with Google Maps, please try refreshing the page');
       }, 5000);
       // Load places once the maps bounds are set
       google.maps.event.addListenerOnce(

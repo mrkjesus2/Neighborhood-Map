@@ -288,6 +288,10 @@ li {
   height: 100vh;
 }
 
+.maps-error {
+  padding-top: 20vh;
+}
+
 #infowindow {
   display: none;
 }
@@ -356,7 +360,7 @@ li {
 
 /* In case Google Maps can't be reached */
 #maps-error {
-  display: none;
+  z-index: 99;
 }
 
 /*****************/
