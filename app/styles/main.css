@@ -16,7 +16,7 @@ li {
   margin: 3vh 0 0 0;
 }
 
-#container {
+.container {
   width: 100vw;
   height: 100vh;
 }
@@ -24,8 +24,8 @@ li {
 /********************/
 /* Drawer Container */
 /********************/
-#drawer-top,
-#drawer-content {
+.drawer-top,
+.drawer-content {
   width: 75vw;
   max-width: 350px;
   left: 0;
@@ -33,12 +33,12 @@ li {
   background-color: #3833bd;
 }
 
-#drawer-top {
+.drawer-top {
   height: 10vh;
   position: fixed;
 }
 
-#drawer-content {
+.drawer-content {
   position: absolute;
   top: 10vh;
   overflow-y: auto;
@@ -48,23 +48,23 @@ li {
 /************************/
 /* Drawer Icon Container*/
 /************************/
-#drawer-btn {
+.drawer-btn {
   top: 0;
   right: -12vw;
 }
 
-#drawer-btn {
+.drawer-btn {
   position: absolute;
   width: 12vw;
   height: 8vh;
   background-color: #3833bd;
 }
 
-#drawer-btn.closed {
+.drawer-btn.closed {
   transition: transform .3s ease .4s;
 }
 
-#drawer-btn.open {
+.drawer-btn.open {
   transform: translateX(-12vw);
   transition: transform .3s ease;
 }
@@ -139,56 +139,56 @@ li {
 /******************/
 /* Drawer Top Bar */
 /******************/
-#drawer-top span {
+.drawer-top span {
   color: white;
   padding-left: 1vw;
 }
 
-#drawer-top input {
+.drawer-top input {
   width: 40%;
 }
 
 /******************/
 /* Drawer Content */
 /******************/
-#drawer-content {
+.drawer-content {
   color: white;
 }
 
-#place-info {
+.place-info {
   border-top: 1px solid black;
 }
 
-#place-info h3 {
+.place-info h3 {
   padding-left: 1vw;
 }
 
-#drawer-content p {
+.drawer-content p {
   margin: .5em;
 }
 
-#drawer-content span {
+.drawer-content span {
   margin: 0 3vw 0 0;
 }
 
-#drawer-content span:first-child {
+.drawer-content span:first-child {
   margin: 0;
 }
 
-#drawer-content a {
+.drawer-content a {
   font-size: 0.9em;
   color: white;
 }
 
-#place-details {
+.place-details {
   margin-top: 2vh;
 }
 
-#place-details p a:last-child {
+.place-details p a:last-child {
   margin: 0 4vw;
 }
 
-#place-info span:last-child {
+.place-info span:last-child {
   float: right;
   margin: 0 3vw 1vh 3vw;
   font-size: 1.5em;
@@ -202,7 +202,7 @@ li {
   color: red;
 }
 
-#place-info span:last-child:hover {
+.place-info span:last-child:hover {
   opacity: .7;
 }
 
@@ -214,7 +214,7 @@ li {
 /*********/
 /* Modal */
 /*********/
-#modal {
+.modal {
   display: none;
   position: absolute;
   z-index: 1;
@@ -226,7 +226,7 @@ li {
 
 }
 
-#inner-modal {
+.inner-modal {
   position: absolute;
   overflow: auto;
   top: 10vh;
@@ -236,20 +236,20 @@ li {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-#modal-topbar {
+.modal-topbar {
   position: fixed;
   height: 10vh;
   width: 80%;
   background-color: white;
 }
 
-#modal-header {
+.modal-header {
   text-align: center;
   margin: 0;
   padding: 1vh 0 1vh;
 }
 
-#close-modal {
+.close-modal {
   float: right;
   margin: 0;
   padding: 1vh 2vw;
@@ -260,30 +260,30 @@ li {
   background-color: rgba(255, 0, 0, 0.6);
 }
 
-#close-modal:hover {
+.close-modal:hover {
   background-color: rgba(255, 0, 0, 1);
 }
 
-#modal-reviews {
+.modal-reviews {
   margin: 11vh 4vw 0;
 }
 
-#review {
+.review {
   margin: 0 0 6vh;
 }
 
-#review p {
+.review p {
   margin: .5em 0;
 }
 
-#author-link {
+.author-link {
   text-align: right;
 }
 
 /*************/
 /* Map Stuff */
 /*************/
-#map-container {
+.map-container {
   width: 100vw;
   height: 100vh;
 }
@@ -295,27 +295,27 @@ li {
 /***************/
 /* Info Window */
 /***************/
-#info-window-content img {
+.info-window-content img {
   float: right;
   margin: 1vh 1vh;
 }
 
-#wiki-info {
+.wiki-info {
   padding: 1vh;
 }
 
-#foursquare-info {
+.foursquare-info {
   clear: both;
   border-top: 1px solid black;
 }
 
-#foursquare-header-info {
+.foursquare-header-info {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
 
-#foursquare-header-info span {
+.foursquare-header-info span {
   margin-right: 1em;
 }
 
@@ -330,7 +330,7 @@ li {
 /****************/
 /* Error Window */
 /****************/
-#error-window {
+.error-window {
   display: none;
   position: fixed;
   bottom: 0;
@@ -339,18 +339,18 @@ li {
   background-color: red;
 }
 
-#error-window span {
+.error-window span {
   float: right;
   padding: 3vh 3vw;
   font-size: 1.3em;
   font-weight: 800;
 }
 
-#error-window h4 {
+.error-window h4 {
   margin: 1em 0.5em 0.5em;
 }
 
-#error-window p {
+.error-window p {
   margin: 0.5em;
 }
 
@@ -363,24 +363,24 @@ li {
 /* Media Queries */
 /*****************/
 @media only screen and (max-width: 324px) {
-  #reset {
+  .reset {
     width: 17vw;
     padding: 0;
     font-size: .8em;
     margin: 0;
   }
 
-  #filter input {
+  .filter input {
     width: 37vw;
   }
 
-  #place-info span:last-child {
+  .place-info span:last-child {
     margin: 0;
   }
 }
 
 @media only screen and (min-width: 325px) {
-  #filter:before {
+  .filter:before {
     content: "Filter: ";
     color: white;
     padding-left: 1vw;
@@ -393,61 +393,56 @@ li {
     width: 36px;
   }
 
-  #drawer-btn {
+  .drawer-btn {
     width: 51px;
     right: -51px;
   }
 
-  #drawer-btn.open {
+  .drawer-btn.open {
     transform: translateX(-51px);
     transition: transform .3s ease;
   }
 }
 
 @media only screen and (max-width: 774px) {
-  #drawer-top.closed,
-  #drawer-content.closed {
+  .drawer-top.closed,
+  .drawer-content.closed {
     transform: translateX(-100%);
     transition: transform .2s ease;
   }
 
-  #drawer-top.open,
-  #drawer-content.open {
+  .drawer-top.open,
+  .drawer-content.open {
     transform: translateX(0);
     transition: transform .75s ease .1s;
   }
 }
 
 @media only screen and (min-width: 775px) {
-  #map-container {
+  .map-container {
     width: calc(100vw - 350px);
     position: absolute;
     right: 0;
   }
 
-  #drawer-btn {
+  .drawer-btn {
     display: none;
   }
 
-  #drawer-top.closed,
-  #drawer-content.closed {
-    display: none;
-  }
-
-  #inner-modal,
-  #modal-topbar {
+  .inner-modal,
+  .modal-topbar {
     max-width: 680px;
   }
 }
 
 @media only screen and (min-width: 1000px) {
-  #place-info span:last-child {
+  .place-info span:last-child {
     margin: 0;
   }
 }
 
 @media only screen and (max-height: 525px) and (orientation: landscape) {
-  #drawer-btn {
+  .drawer-btn {
     height: 13vh;
   }
 
@@ -468,28 +463,28 @@ li {
 }
 
 @media only screen and (max-height: 450px) and (orientation: landscape) {
-  #drawer-top {
+  .drawer-top {
     height: 15vh;
   }
 
-  #filter {
+  .filter {
     margin-top: 0.3em;
   }
-  #drawer-content {
+  .drawer-content {
     top: 15vh;
   }
 }
 
 @media only screen and (orientation: landscape) {
-  #modal-topbar {
+  .modal-topbar {
     height: 11vh;
   }
 
-  #modal-reviews {
+  .modal-reviews {
     margin-top: 14vh;
   }
 
-  #close-modal {
+  .close-modal {
     font-weight: 800;
     font-size: 7vh
   }

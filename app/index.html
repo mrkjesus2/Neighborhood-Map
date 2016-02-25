@@ -40,27 +40,30 @@
 <!-- All head code from Google's Web Starter Kit -->
 
   <body>
-    <div id="container">
-      <div id="drawer-top" class="drawer closed">
-        <p id="filter"><span ></span>
+    <div class="container">
+      <!-- leave this id for now -->
+      <div id="drawer-top" class="drawer-top drawer closed">
+        <p class="filter"><span ></span>
           <!-- Filter and filter reset -->
           <input list="places" data-bind=" textInput: inputText, event: {input: placeFilter}">
-          <button id="reset" data-bind="click: resetFilter">Reset</button>
+          <button class="reset" data-bind="click: resetFilter">Reset</button>
         </p>
         <!-- List for autocomplete -->
+        <!-- id="places" can't leave REMOVE -->
         <datalist id="places" data-bind="foreach: places">
           <option data-bind="value: name"></option>
         </datalist>
         <!-- Button to close the drawer -->
-        <a id="drawer-btn" class="drawer closed" href="#">
+        <!-- Leave this id for now -->
+        <a id="drawer-btn" class="drawer-btn drawer closed" href="#">
           <span class="btn-icon drawer closed"></span>
         </a>
       </div>
-
-      <div id="drawer-content" class="drawer closed" data-bind="foreach: places">
+      <!-- Leave this id for now -->
+      <div id="drawer-content" class="drawer-content drawer closed" data-bind="foreach: places">
         <!-- List of the places on the map -->
         <div data-bind="visible: show">
-            <div id="place-info">
+            <div class="place-info">
               <h3 data-bind="text: name, click: $parent.clickHandler"></h3>
               <p>
                 <span data-bind="if: rating">
@@ -72,7 +75,7 @@
               </p>
             </div>
             <div data-bind="if: details() && details().show">
-              <div id="place-details" data-bind="with: details()">
+              <div class="place-details" data-bind="with: details()">
                 <p data-bind="if: phone">
                   Phone -
                   <span data-bind="text: phone"></span>
@@ -93,25 +96,27 @@
         </div>
       </div>
 
-      <div id="map-container">
+      <div id="map-container" class="map-container">
+        <!-- Leave this id for now REMOVE-->
         <h1 id="maps-error">There appears to be a problem with Google Maps, please try refreshing the page</h1>
       </div>
     </div>
 
     <!-- Modal Window HTML -->
-    <div id="modal">
-      <div id="inner-modal">
-        <div id="modal-topbar">
-          <span id="close-modal" data-bind="click: closeModal">X</span>
-          <h3 id="modal-header" data-bind="text: curPlace().name">
+    <!-- Leave this id for now REMOVE-->
+    <div id="modal" class="modal">
+      <div class="inner-modal">
+        <div class="modal-topbar">
+          <span class="close-modal" data-bind="click: closeModal">X</span>
+          <h3 class="modal-header" data-bind="text: curPlace().name">
             There could be text here
           </h3>
         </div>
-        <div id="modal-reviews" data-bind="with: curPlace().details">
+        <div class="modal-reviews" data-bind="with: curPlace().details">
           <div data-bind="foreach: reviews">
-            <div id="review">
+            <div class="review">
               <p data-bind="text: text"></p>
-              <p id="author-link">
+              <p class="author-link">
                 <a data-bind="text: author, attr: {href: authorUrl}" target="_blank"></a>
               </p>
             </div>
@@ -121,7 +126,7 @@
     </div>
 
     <!-- Error Window HTML -->
-    <div id="error-window" data-bind="style: {display: errorMsg().length > 0 ? 'block' : 'none'}">
+    <div class="error-window" data-bind="style: {display: errorMsg().length > 0 ? 'block' : 'none'}">
       <span data-bind="click: clearErrors">X</span>
       <h4>There was an error retrieving data</h4>
       <div data-bind="foreach: errorMsg">
@@ -132,14 +137,14 @@
 
     <!-- Hidden div used to style infoWindow content-->
     <div id="infowindow" data-bind="with: curPlace">
-      <div id="info-window-content">
+      <div class="info-window-content">
         <h2 data-bind="text: name"></h2>
         <a href="#" onclick="app.viewmodel.clickContactInfo()">
           Contact Info
         </a>
-        <div id="wiki-info" data-bind="with: wikiInfo">
+        <div class="wiki-info" data-bind="with: wikiInfo">
           <span data-bind="if: $parent.photo() !== 'none'">
-            <img id="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url}">
+            <img class="info-photo" data-bind="attr: {alt: $parent.name + 'photo', src: $parent.photo().url}">
           </span>
           <span data-bind="html: content"></span>
           <a data-bind="attr: {href: url}" target="_blank">
@@ -147,9 +152,9 @@
           </a>
         </div>
 
-        <div id="foursquare-info" data-bind="with: frSqrInfo">
+        <div class="foursquare-info" data-bind="with: frSqrInfo">
           <h3>Information from FourSquare</h3>
-          <div id="foursquare-header-info">
+          <div class="foursquare-header-info">
             <p>Here now:
               <span data-bind="text: hereNow.count"></span>
             </p>
