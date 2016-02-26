@@ -42,7 +42,8 @@
   <body>
     <div class="container">
       <!-- leave this id for now -->
-      <div id="drawer-top" class="drawer-top drawer closed">
+      <div id="drawer-top" class="drawer-top drawer closed"
+        data-bind="css: {open: drawerOpen() === true}">
         <p class="filter"><span ></span>
           <!-- Filter and filter reset -->
           <input list="places" data-bind=" textInput: inputText, event: {input: placeFilter}">
@@ -56,12 +57,13 @@
         <!-- Button to close the drawer -->
         <!-- Leave this id for now -->
         <a id="drawer-btn" class="drawer-btn drawer closed" href="#"
-          data-bind="click: app.viewmodel.toggleDrawer">
-          <span class="btn-icon drawer closed"></span>
+          data-bind="css: {open: infoWindow() === true || drawerOpen() === true}, click: toggleDrawer">
+          <span class="btn-icon drawer closed"
+          data-bind="css: {open: infoWindow() === true || drawerOpen() === true}"></span>
         </a>
       </div>
       <!-- Leave this id for now -->
-      <div id="drawer-content" class="drawer-content drawer closed" data-bind="foreach: places">
+      <div id="drawer-content" class="drawer-content drawer closed" data-bind="foreach: places, css: {open: drawerOpen() === true}">
         <!-- List of the places on the map -->
         <div data-bind="visible: show">
             <div class="place-info">
@@ -88,7 +90,7 @@
                   <a data-bind="if: website, attr: {href: website}" target="_blank">
                     Go to Website
                   </a>
-                  <a href="#" data-bind="if: reviews, click: $root.openModal">
+                  <a href="#" data-bind="if: reviews, click: $root.setModal.bind($data)">
                     See Reviews
                   </a>
                 </p>
@@ -104,10 +106,10 @@
 
     <!-- Modal Window HTML -->
     <!-- Leave this id for now REMOVE-->
-    <div id="modal" class="modal">
+    <div id="modal" class="modal" data-bind="style: {display: showModal() ? 'initial' : 'none'}">
       <div class="inner-modal">
         <div class="modal-topbar">
-          <span class="close-modal" data-bind="click: closeModal">X</span>
+          <span class="close-modal" data-bind="click: showModal(false)">X</span>
           <h3 class="modal-header" data-bind="text: curPlace().name">
             There could be text here
           </h3>

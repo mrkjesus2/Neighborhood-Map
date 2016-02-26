@@ -3,13 +3,16 @@
 app.viewmodel = app.viewmodel || {};
 
 app.viewmodel = {
-  mapError:ko.observable(),
+  mapError: ko.observable(),
   places: ko.observableArray(),
   curMarker: null,
   curPlace: ko.observable(),
   inputText: ko.observable(''),
   frsqr: null,
   errorMsg: ko.observableArray([]),
+  infoWindow: ko.observable(false),
+  drawerOpen: ko.observable(false),
+  showModal: ko.observable(false),
 
 /* ************* */
 /* Constructors */
@@ -121,7 +124,6 @@ app.viewmodel = {
     $('#drawer-top input').trigger('input');
     this.toggleDetails(app.viewmodel.curPlace());
     app.map.infoWindow.close();
-    this.closeDrawer();
     this.toggleDrawer();
   },
 
@@ -132,22 +134,18 @@ app.viewmodel = {
     // Call for data
     app.wiki.getWiki(plc);
     app.foursquare.findPlace(plc);
-    // app.map.getPlaceDetails(plc);
 
     // Handle map actions
     app.map.infoWindow.close();
-    app.viewmodel.closeDrawer();
+    if (app.viewmodel.drawerOpen()) {
+      app.viewmodel.toggleDrawer();
+    }
     app.viewmodel.setCurrentPlace(plc);
     app.viewmodel.toggleBounce();
-    // app.viewmodel.markerSetup(plc);
 
-// TODO: Handle with knockout
     // Timeout to avoid two calls from success callbacks
     setTimeout(function() {
       app.viewmodel.setInfoWindow(plc);
-      // Hide the drawer button while infowindow is open
-      $('#drawer-btn').removeClass('closed');
-      $('#drawer-btn').addClass('open');
     }, 300);
   },
 
@@ -197,6 +195,8 @@ app.viewmodel = {
 
     app.map.infoWindow.setContent(content);
     app.map.infoWindow.open(app.map.map, place.marker);
+    // Hide the drawer button while infowindow is open
+    app.viewmodel.infoWindow(true);
   },
 
   // Strictly view related (create a separate file if there is more)
@@ -210,36 +210,10 @@ app.viewmodel = {
   },
 
   toggleDrawer: function() {
-    var els = document.getElementsByClassName('drawer');
-    $(els).toggleClass('closed open');
+    app.viewmodel.drawerOpen(!app.viewmodel.drawerOpen());
   },
 
-  closeDrawer: function() {
-    // Reset drawer button if infowindow is open
-    var el = $('#drawer-btn');
-    if (el.hasClass('open')) {
-      el.removeClass('open');
-      el.addClass('closed');
-    }
-    // Close the drawer if it is open
-    if ($('#drawer-content').hasClass('open')) {
-      app.viewmodel.toggleDrawer();
-    }
-  },
-
-  showDrawerBtn: function() {
-    $('#drawer-btn').removeClass('open');
-    $('#drawer-btn').addClass('closed');
-  },
-
-  openModal: function() {
-    $('#modal').css('display', 'initial');
-    console.log('Open Modal');
-  },
-
-  closeModal: function(ev, data) {
-    console.log(ev, data);
-    console.log(data.toElement);
-    $('#modal').css('display', 'none');
+  setModal: function() {
+    app.viewmodel.showModal(!app.viewmodel.showModal());
   },
 };

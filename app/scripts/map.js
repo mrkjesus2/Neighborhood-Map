@@ -21,13 +21,12 @@ app.map = app.map || {};
       );
 
       // Show the drawer button when infowindow closes
-      google.maps.event.addListener(
-        this.infoWindow, 'closeclick', app.viewmodel.showDrawerBtn
-      );
+      google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
+        app.viewmodel.infoWindow(false)
+      });
 
       // Show error message - if maps can't be reached, will be visible
       setTimeout(function() {
-        console.log('Setting error message');
         app.viewmodel.mapError('There appears to be a problem with Google Maps, please try refreshing the page');
       }, 5000);
       // Load places once the maps bounds are set
@@ -100,8 +99,8 @@ app.map = app.map || {};
     },
 
     sameBoundsCheck: function() {
-        var oldBounds = JSON.parse(localStorage.bounds);
-        return app.map.map.getBounds().equals(oldBounds);
+      var oldBounds = JSON.parse(localStorage.bounds);
+      return app.map.map.getBounds().equals(oldBounds);
     },
 
     setPhotoUrls: function(places) {
