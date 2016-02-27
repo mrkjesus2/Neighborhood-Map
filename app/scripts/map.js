@@ -101,8 +101,11 @@ app.map = app.map || {};
     },
 
     sameBoundsCheck: function() {
-      var oldBounds = JSON.parse(localStorage.bounds);
-      return app.map.map.getBounds().equals(oldBounds);
+      if (localStorage.bounds) {
+        var oldBounds = JSON.parse(localStorage.bounds);
+        return app.map.map.getBounds().equals(oldBounds);
+      }
+      return false;
     },
 
     setPhotoUrls: function(places) {
