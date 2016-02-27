@@ -1,10 +1,11 @@
-/* global app ko $ google document */
+/* global app ko $ google document Awesomplete */
 
 app.viewmodel = app.viewmodel || {};
 
 app.viewmodel = {
   mapError: ko.observable(),
   places: ko.observableArray(),
+  placeList: [],
   curMarker: null,
   curPlace: ko.observable(),
   inputText: ko.observable(''),
@@ -121,9 +122,10 @@ app.viewmodel = {
 
   clickContactInfo: function() {
     this.inputText(this.curPlace().name());
-    $('#drawer-top input').trigger('input');
+    app.viewmodel.placeFilter();
     this.toggleDetails(app.viewmodel.curPlace());
     app.map.infoWindow.close();
+    app.viewmodel.infoWindow(false);
     this.toggleDrawer();
   },
 
@@ -142,52 +144,61 @@ app.viewmodel = {
     }
     app.viewmodel.setCurrentPlace(plc);
     app.viewmodel.toggleBounce();
+  },
 
-    // Timeout to avoid two calls from success callbacks
-    setTimeout(function() {
-      app.viewmodel.setInfoWindow(plc);
-    }, 300);
+  findPlaceByName: function(name) {
+    var places = app.viewmodel.places();
+    for (var i = places.length - 1; i >= 0; i--) {
+      if (places[i].name() === name) {
+        return places[i];
+      }
+    }
+    return false;
   },
 
   placeFilter: function() {
     var self = this;
-    // A cushion to allow inputText to change
-    setTimeout(function() {
-      // Get the matching places
-      if (self.inputText()) {
-        var matches = self.places().filter(function(place) {
-          var name = place.name().toLowerCase();
-          var input = self.inputText().toLowerCase();
-          return name.indexOf(input) === 0;
-        });
 
-        // Set markers and list items to hidden
-        self.places().forEach(function(place) {
-          place.marker.setMap(null);
-          place.show(false);
-        });
+    if (self.inputText()) {
+      var matches = self.places().filter(function(place) {
+        var name = place.name().toLowerCase();
+        var input = self.inputText().toLowerCase();
+        return name.indexOf(input) >= 0;
+      });
 
-        // Add remaining places to the map and list
-        matches.forEach(function(place) {
-          place.marker.setMap(app.map.map);
-          place.show(true);
-        });
-      } else {
-        // Set all place markers on the map
-        self.places().forEach(function(place) {
-          place.marker.setMap(app.map.map);
-          place.show(true);
-        });
-      }
-    }, 100);
+      // Set markers and list items to hidden
+      self.places().forEach(function(place) {
+        place.marker.setMap(null);
+        place.show(false);
+      });
 
-    // Must return true to allow default behavior (Filling the input box)
+      // Add remaining places to the map and list
+      matches.forEach(function(place) {
+        place.marker.setMap(app.map.map);
+        place.show(true);
+      });
+    } else {
+      // Set all place markers on the map
+      self.places().forEach(function(place) {
+        place.marker.setMap(app.map.map);
+        place.show(true);
+      });
+    }
+
     return true;
   },
 
   resetFilter: function() {
     app.viewmodel.inputText('');
-    $('#drawer-top input').trigger('input');
+    app.viewmodel.placeFilter();
+    // Close details which are open
+    var places = this.places();
+    for (var i = places.length - 1; i >= 0; i--) {
+      if (places[i].details() && places[i].details().show()) {
+        places[i].details().show(false);
+        places[i].detailsIcon('fa fa-chevron-circle-up');
+      }
+    }
   },
 
   setInfoWindow: function(place) {
@@ -199,7 +210,6 @@ app.viewmodel = {
     app.viewmodel.infoWindow(true);
   },
 
-  // Strictly view related (create a separate file if there is more)
   toggleBounce: function() {
     if (app.viewmodel.curPlace().marker.getAnimation()) {
       app.viewmodel.curPlace().marker.setAnimation(null);
@@ -216,4 +226,20 @@ app.viewmodel = {
   setModal: function() {
     app.viewmodel.showModal(!app.viewmodel.showModal());
   },
+
+  autocomplete: function() {
+    var input = document.getElementById('place-input');
+    var awesomplete = new Awesomplete(input);
+    awesomplete.list = app.viewmodel.placeList;
+
+    input.addEventListener('awesomplete-selectcomplete', function() {
+      var place = app.viewmodel.findPlaceByName(this.value);
+      console.log(place);
+      app.viewmodel.setCurrentPlace(place);
+      app.viewmodel.toggleDetails(place);
+      app.viewmodel.inputText(this.value);
+      app.viewmodel.placeFilter();
+    });
+  }
 };
+

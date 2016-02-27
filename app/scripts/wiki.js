@@ -28,6 +28,7 @@ app.wiki = app.wiki || {};
         if (page.content() !== undefined &&
         !app.wiki.ambiguityChk(data, firstId)) {
           place.wikiInfo(page);
+          app.viewmodel.setInfoWindow(place);
         }
       }).fail(function(data) {
         var msg = 'Wikipedia Error: ' + data.statusText;

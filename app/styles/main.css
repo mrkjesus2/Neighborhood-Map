@@ -29,13 +29,13 @@ li {
   width: 75vw;
   max-width: 350px;
   left: 0;
-  z-index: 1;
   background-color: #3833bd;
 }
 
 .drawer-top {
   height: 10vh;
   position: fixed;
+  z-index: 3
 }
 
 .drawer-content {
@@ -43,6 +43,7 @@ li {
   top: 10vh;
   overflow-y: auto;
   height: 90vh;
+  z-index: 1;
 }
 
 /************************/
@@ -144,9 +145,12 @@ li {
   padding-left: 1vw;
 }
 
-.drawer-top input {
-  width: 40%;
+.filter input {
+  width: 35vw;
 }
+/*.drawer-top input {
+  width: 35vw;
+}*/
 
 /******************/
 /* Drawer Content */
@@ -217,7 +221,7 @@ li {
 .modal {
   display: none;
   position: absolute;
-  z-index: 1;
+  z-index: 5;
   top: 0;
   left: 0;
   width: 100vw;
@@ -358,11 +362,6 @@ li {
   margin: 0.5em;
 }
 
-/* In case Google Maps can't be reached */
-#maps-error {
-  z-index: 99;
-}
-
 /*****************/
 /* Media Queries */
 /*****************/
@@ -389,6 +388,10 @@ li {
     color: white;
     padding-left: 1vw;
   }
+
+  .filter input {
+    width: 30vw;
+  }
 }
 
 @media only screen and (min-width: 425px) {
@@ -406,9 +409,16 @@ li {
     transform: translateX(-51px);
     transition: transform .3s ease;
   }
+  .awesomplete {
+    width: 50%;
+  }
+
+  .filter input {
+    width: 95%;
+  }
 }
 
-@media only screen and (max-width: 774px) {
+@media only screen and (max-width: 799px) {
   .drawer-top.closed,
   .drawer-content.closed {
     transform: translateX(-100%);
@@ -422,7 +432,7 @@ li {
   }
 }
 
-@media only screen and (min-width: 775px) {
+@media only screen and (min-width: 800px) {
   .map-container {
     width: calc(100vw - 350px);
     position: absolute;
@@ -437,11 +447,19 @@ li {
   .modal-topbar {
     max-width: 680px;
   }
+
+  div.gm-style-iw {
+    width: 80%;
+  }
 }
 
 @media only screen and (min-width: 1000px) {
   .place-info span:last-child {
     margin: 0;
+  }
+
+  div.gm-style-iw {
+    height: 60vh;
   }
 }
 

@@ -22,7 +22,7 @@ app.map = app.map || {};
 
       // Show the drawer button when infowindow closes
       google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
-        app.viewmodel.infoWindow(false)
+        app.viewmodel.infoWindow(false);
       });
 
       // Show error message - if maps can't be reached, will be visible
@@ -40,10 +40,12 @@ app.map = app.map || {};
         var plc = new app.viewmodel.Place(place);
 
         app.viewmodel.places.push(plc);
+        app.viewmodel.placeList.push(plc.name());
         if (idx === 1) {
           app.viewmodel.curPlace(plc);
         }
       });
+      app.viewmodel.autocomplete();
     },
 
     // Likely against TOS, but figure it's fine for educational purposes
@@ -119,7 +121,6 @@ app.map = app.map || {};
       };
       // Call the Places API, add details to the place
       app.map.placesApi.getDetails(request, function(details, status) {
-        console.log('status', status);
         if (status === 'OK') {
           var deets = new app.viewmodel.PlaceDetails(details);
           place.details(deets);
