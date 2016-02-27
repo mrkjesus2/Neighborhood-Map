@@ -101,11 +101,25 @@
     </div>
 
     <!-- Modal Window HTML -->
+<<<<<<< HEAD
     <div class="modal" data-bind="style: {display: showModal() ? 'initial' : 'none'}">
       <div class="inner-modal">
         <div class="modal-topbar">
           <span class="close-modal" data-bind="click: showModal(false)">X</span>
           <h3 class="modal-header" data-bind="text: curPlace().name">
+||||||| merged common ancestors
+    <div id="modal">
+      <div id="inner-modal">
+        <div id="modal-topbar">
+          <span id="close-modal" data-bind="click: closeModal">X</span>
+          <h3 id="modal-header" data-bind="text: curPlace().name">
+=======
+    <div class="modal" data-bind="style: {display: showModal() ? 'initial' : 'none'}">
+      <div class="inner-modal">
+        <div class="modal-topbar">
+          <span class="close-modal" data-bind="click: setModal">X</span>
+          <h3 class="modal-header" data-bind="text: curPlace().name">
+>>>>>>> dev
             There could be text here
           </h3>
         </div>

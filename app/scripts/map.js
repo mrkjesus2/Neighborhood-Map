@@ -100,11 +100,23 @@ app.map = app.map || {};
       }
     },
 
+<<<<<<< HEAD
     sameBoundsCheck: function() {
       var oldBounds = JSON.parse(localStorage.bounds);
       return app.map.map.getBounds().equals(oldBounds);
     },
 
+||||||| merged common ancestors
+=======
+    sameBoundsCheck: function() {
+      if (localStorage.bounds) {
+        var oldBounds = JSON.parse(localStorage.bounds);
+        return app.map.map.getBounds().equals(oldBounds);
+      }
+      return false;
+    },
+
+>>>>>>> dev
     setPhotoUrls: function(places) {
       places.forEach(function(place) {
         if (place.photos) {

@@ -113,6 +113,7 @@ gulp.task('scripts', () =>
       './app/scripts/vendor/jquery-2.2.0.min.js',
       './app/scripts/vendor/knockout-3.4.0.min.js',
       './app/scripts/vendor/knockout-mapping-2.4.1.min.js',
+      './app/scripts/awesomplete.js',
       './app/scripts/main.js',
       './app/scripts/map.js',
       './app/scripts/foursquare.js',
