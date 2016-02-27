@@ -1,14 +1,19 @@
-/* global app ko $ google document */
+/* global app ko $ google document Awesomplete */
 
 app.viewmodel = app.viewmodel || {};
 
 app.viewmodel = {
+  mapError: ko.observable(),
   places: ko.observableArray(),
+  placeList: [],
   curMarker: null,
   curPlace: ko.observable(),
   inputText: ko.observable(''),
   frsqr: null,
   errorMsg: ko.observableArray([]),
+  infoWindow: ko.observable(false),
+  drawerOpen: ko.observable(false),
+  showModal: ko.observable(false),
 
 /* ************* */
 /* Constructors */
@@ -117,10 +122,10 @@ app.viewmodel = {
 
   clickContactInfo: function() {
     this.inputText(this.curPlace().name());
-    $('#drawer-top input').trigger('input');
+    app.viewmodel.placeFilter();
     this.toggleDetails(app.viewmodel.curPlace());
     app.map.infoWindow.close();
-    this.closeDrawer();
+    app.viewmodel.infoWindow(false);
     this.toggleDrawer();
   },
 
@@ -131,63 +136,69 @@ app.viewmodel = {
     // Call for data
     app.wiki.getWiki(plc);
     app.foursquare.findPlace(plc);
-    // app.map.getPlaceDetails(plc);
 
     // Handle map actions
     app.map.infoWindow.close();
-    app.viewmodel.closeDrawer();
+    if (app.viewmodel.drawerOpen()) {
+      app.viewmodel.toggleDrawer();
+    }
     app.viewmodel.setCurrentPlace(plc);
     app.viewmodel.toggleBounce();
-    // app.viewmodel.markerSetup(plc);
+  },
 
-    // Timeout to avoid two calls from success callbacks
-    setTimeout(function() {
-      app.viewmodel.setInfoWindow(plc);
-      // Hide the drawer button while infowindow is open
-      $('#drawer-btn').removeClass('closed');
-      $('#drawer-btn').addClass('open');
-    }, 300);
+  findPlaceByName: function(name) {
+    var places = app.viewmodel.places();
+    for (var i = places.length - 1; i >= 0; i--) {
+      if (places[i].name() === name) {
+        return places[i];
+      }
+    }
+    return false;
   },
 
   placeFilter: function() {
     var self = this;
-    // A cushion to allow inputText to change
-    setTimeout(function() {
-      // Get the matching places
-      if (self.inputText()) {
-        var matches = self.places().filter(function(place) {
-          var name = place.name().toLowerCase();
-          var input = self.inputText().toLowerCase();
-          return name.indexOf(input) === 0;
-        });
 
-        // Set markers and list items to hidden
-        self.places().forEach(function(place) {
-          place.marker.setMap(null);
-          place.show(false);
-        });
+    if (self.inputText()) {
+      var matches = self.places().filter(function(place) {
+        var name = place.name().toLowerCase();
+        var input = self.inputText().toLowerCase();
+        return name.indexOf(input) >= 0;
+      });
 
-        // Add remaining places to the map and list
-        matches.forEach(function(place) {
-          place.marker.setMap(app.map.map);
-          place.show(true);
-        });
-      } else {
-        // Set all place markers on the map
-        self.places().forEach(function(place) {
-          place.marker.setMap(app.map.map);
-          place.show(true);
-        });
-      }
-    }, 100);
+      // Set markers and list items to hidden
+      self.places().forEach(function(place) {
+        place.marker.setMap(null);
+        place.show(false);
+      });
 
-    // Must return true to allow default behavior (Filling the input box)
+      // Add remaining places to the map and list
+      matches.forEach(function(place) {
+        place.marker.setMap(app.map.map);
+        place.show(true);
+      });
+    } else {
+      // Set all place markers on the map
+      self.places().forEach(function(place) {
+        place.marker.setMap(app.map.map);
+        place.show(true);
+      });
+    }
+
     return true;
   },
 
   resetFilter: function() {
     app.viewmodel.inputText('');
-    $('#drawer-top input').trigger('input');
+    app.viewmodel.placeFilter();
+    // Close details which are open
+    var places = this.places();
+    for (var i = places.length - 1; i >= 0; i--) {
+      if (places[i].details() && places[i].details().show()) {
+        places[i].details().show(false);
+        places[i].detailsIcon('fa fa-chevron-circle-up');
+      }
+    }
   },
 
   setInfoWindow: function(place) {
@@ -195,9 +206,10 @@ app.viewmodel = {
 
     app.map.infoWindow.setContent(content);
     app.map.infoWindow.open(app.map.map, place.marker);
+    // Hide the drawer button while infowindow is open
+    app.viewmodel.infoWindow(true);
   },
 
-  // Strictly view related (create a separate file if there is more)
   toggleBounce: function() {
     if (app.viewmodel.curPlace().marker.getAnimation()) {
       app.viewmodel.curPlace().marker.setAnimation(null);
@@ -208,41 +220,26 @@ app.viewmodel = {
   },
 
   toggleDrawer: function() {
-    var els = document.getElementsByClassName('drawer');
-    $(els).toggleClass('closed open');
+    app.viewmodel.drawerOpen(!app.viewmodel.drawerOpen());
   },
 
-  closeDrawer: function() {
-    // Reset drawer button if infowindow is open
-    var el = $('#drawer-btn');
-    if (el.hasClass('open')) {
-      el.removeClass('open');
-      el.addClass('closed');
-    }
-    // Close the drawer if it is open
-    if ($('#drawer-content').hasClass('open')) {
-      app.viewmodel.toggleDrawer();
-    }
+  setModal: function() {
+    app.viewmodel.showModal(!app.viewmodel.showModal());
   },
 
-  showDrawerBtn: function() {
-    $('#drawer-btn').removeClass('open');
-    $('#drawer-btn').addClass('closed');
-  },
+  autocomplete: function() {
+    var input = document.getElementById('place-input');
+    var awesomplete = new Awesomplete(input);
+    awesomplete.list = app.viewmodel.placeList;
 
-  openModal: function() {
-    $('#modal').css('display', 'initial');
-    console.log('Open Modal');
-  },
-
-  closeModal: function() {
-    $('#modal').css('display', 'none');
-  },
-
-  init: function() {
-    var button = document.getElementById('drawer-btn');
-    button.addEventListener('click', app.viewmodel.toggleDrawer);
+    input.addEventListener('awesomplete-selectcomplete', function() {
+      var place = app.viewmodel.findPlaceByName(this.value);
+      console.log(place);
+      app.viewmodel.setCurrentPlace(place);
+      app.viewmodel.toggleDetails(place);
+      app.viewmodel.inputText(this.value);
+      app.viewmodel.placeFilter();
+    });
   }
 };
 
-app.viewmodel.init();

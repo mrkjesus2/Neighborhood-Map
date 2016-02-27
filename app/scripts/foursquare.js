@@ -52,6 +52,7 @@ app.foursquare = app.foursquare || {};
         var tips = data.response.tips;
         // Assign details to place
         app.viewmodel.fourSquare(venue, tips, place);
+        app.viewmodel.setInfoWindow(place);
       }).fail(function(data) {
         var msg = 'Foursquare Tips Error: ' + data.statusText;
         app.viewmodel.addError(msg);

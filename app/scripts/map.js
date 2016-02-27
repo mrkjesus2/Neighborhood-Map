@@ -19,14 +19,15 @@ app.map = app.map || {};
       this.infoWindow = new google.maps.InfoWindow({
         maxWidth: $(window).width() * 0.7}
       );
+
       // Show the drawer button when infowindow closes
-      google.maps.event.addListener(
-        this.infoWindow, 'closeclick', app.viewmodel.showDrawerBtn
-      );
+      google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
+        app.viewmodel.infoWindow(false);
+      });
 
       // Show error message - if maps can't be reached, will be visible
       setTimeout(function() {
-        $('#maps-error').css('display', 'inline');
+        app.viewmodel.mapError('There appears to be a problem with Google Maps, please try refreshing the page');
       }, 5000);
       // Load places once the maps bounds are set
       google.maps.event.addListenerOnce(
@@ -39,10 +40,12 @@ app.map = app.map || {};
         var plc = new app.viewmodel.Place(place);
 
         app.viewmodel.places.push(plc);
+        app.viewmodel.placeList.push(plc.name());
         if (idx === 1) {
           app.viewmodel.curPlace(plc);
         }
       });
+      app.viewmodel.autocomplete();
     },
 
     // Likely against TOS, but figure it's fine for educational purposes
@@ -68,11 +71,12 @@ app.map = app.map || {};
 
     // Get a list of places from Google Maps
     getPlaces: function() {
-      if (localStorage.places) {
+      if (localStorage.places && app.map.sameBoundsCheck()) {
         console.log('Creating places from storage');
         app.map.createPlaces(app.map.retrievePlaces());
         ko.applyBindings(app.viewmodel);
       } else {
+        localStorage.setItem('bounds', JSON.stringify(app.map.map.getBounds()));
         // Variables for the request
         var request = {
           bounds: app.map.map.getBounds(),
@@ -96,6 +100,11 @@ app.map = app.map || {};
       }
     },
 
+    sameBoundsCheck: function() {
+      var oldBounds = JSON.parse(localStorage.bounds);
+      return app.map.map.getBounds().equals(oldBounds);
+    },
+
     setPhotoUrls: function(places) {
       places.forEach(function(place) {
         if (place.photos) {
@@ -112,7 +121,6 @@ app.map = app.map || {};
       };
       // Call the Places API, add details to the place
       app.map.placesApi.getDetails(request, function(details, status) {
-        console.log('status', status);
         if (status === 'OK') {
           var deets = new app.viewmodel.PlaceDetails(details);
           place.details(deets);
@@ -126,11 +134,16 @@ app.map = app.map || {};
     createMarker: function(place) {
       // Location for the Marker
       var plcloc = place.data.geometry.location;
+      // Set icon and icon size
+      var image = {
+        url: place.data.icon,
+        scaledSize: new google.maps.Size(50, 50)
+      };
       // Create the marker
       var marker = new google.maps.Marker({
         animation: google.maps.Animation.DROP,
         attribution: {source: 'mrkjesus2.github.io/Neighborhood-Map'},
-        icon: place.data.icon,
+        icon: image,
         map: app.map.map,
         place: {
           location: {lat: plcloc.lat(), lng: plcloc.lng()},
