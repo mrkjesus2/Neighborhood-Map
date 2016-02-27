@@ -100,7 +100,6 @@ app.map = app.map || {};
       }
     },
 
-
     sameBoundsCheck: function() {
       if (localStorage.bounds) {
         var oldBounds = JSON.parse(localStorage.bounds);
