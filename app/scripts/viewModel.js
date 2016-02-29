@@ -1,4 +1,4 @@
-/* global app ko $ google document Awesomplete */
+/* global app ko google document Awesomplete */
 
 app.viewmodel = app.viewmodel || {};
 
@@ -19,6 +19,7 @@ app.viewmodel = {
 /* Constructors */
 /* ************ */
   Place: function(place) {
+    console.log('Place constructor'); // REMOVE
     this.show = ko.observable(true);
 
     // Info returned from map.getPlaces
@@ -48,11 +49,13 @@ app.viewmodel = {
   },
 
   WikiPage: function(page) {
+    console.log('WikiPage Constructor'); // REMOVE
     this.content = ko.observable(page.extract);
     this.url = ko.observable(page.fullurl);
   },
 
   fourSquare: function(info, tips, place) {
+    console.log('fourSquare constructor'); // REMOVE
     // Map FourSquare responses to observables
     var frSqrInfo = ko.mapping.fromJS(info, {});
     var frSqrTips = ko.mapping.fromJS(tips, {});
@@ -63,6 +66,7 @@ app.viewmodel = {
   },
 
   PlaceDetails: function(details) {
+    console.log('PlaceDeatails constructor'); // REMOVE
     this.show = ko.observable(true);
     this.address = ko.observable(details.formatted_address);
     this.phone = ko.observable(details.formatted_phone_number);
@@ -75,6 +79,7 @@ app.viewmodel = {
   },
 
   Reviews: function(reviews) {
+    console.log('Reviews constructor'); // REMOVE
     var arr = [];
     reviews.forEach(function(review) {
       arr.push({
@@ -91,6 +96,7 @@ app.viewmodel = {
 /* Helper Functions */
 /* **************** */
   addError: function(msg) {
+    console.log('addError'); // REMOVE
     this.errorMsg = this.errorMsg || ko.observableArray([]);
     this.errorMsg.push(msg);
     setTimeout(function() {
@@ -99,10 +105,12 @@ app.viewmodel = {
   },
 
   clearErrors: function() {
+    console.log('clearErrors'); // REMOVE
     this.errorMsg([]);
   },
 
   setCurrentPlace: function(place) {
+    console.log('setCurrentPlace'); // REMOVE
     if (app.viewmodel.curPlace().marker.getAnimation()) {
       app.viewmodel.toggleBounce();
     }
@@ -110,6 +118,7 @@ app.viewmodel = {
   },
 
   toggleDetails: function(place) {
+    console.log('toggleDetails'); // REMOVE
     if (place.details() !== undefined && place.details().show() === true) {
       place.details().show(false);
       place.detailsIcon('fa fa-chevron-circle-up');
@@ -121,6 +130,7 @@ app.viewmodel = {
   },
 
   clickContactInfo: function() {
+    console.log('clickContactInfo'); // REMOVE
     this.inputText(this.curPlace().name());
     app.viewmodel.placeFilter();
     this.toggleDetails(app.viewmodel.curPlace());
@@ -131,14 +141,20 @@ app.viewmodel = {
 
   // Called when the marker or list item is clicked
   clickHandler: function(place) {
+    console.log('clickHandler'); // REMOVE
     var plc = place || this;
+
+    // Open infoWindow on list click
+    if (app.viewmodel.infoWindow() === false) {
+      app.viewmodel.infoWindow(true);
+      app.map.createInfoWindow(plc);
+    }
 
     // Call for data
     app.wiki.getWiki(plc);
     app.foursquare.findPlace(plc);
 
     // Handle map actions
-    app.map.infoWindow.close();
     if (app.viewmodel.drawerOpen()) {
       app.viewmodel.toggleDrawer();
     }
@@ -147,6 +163,7 @@ app.viewmodel = {
   },
 
   findPlaceByName: function(name) {
+    console.log('findPlaceByName'); // REMOVE
     var places = app.viewmodel.places();
     for (var i = places.length - 1; i >= 0; i--) {
       if (places[i].name() === name) {
@@ -157,6 +174,7 @@ app.viewmodel = {
   },
 
   placeFilter: function() {
+    console.log('placeFilter'); // REMOVE
     var self = this;
 
     if (self.inputText()) {
@@ -189,6 +207,7 @@ app.viewmodel = {
   },
 
   resetFilter: function() {
+    console.log('resetFilter'); // REMOVE
     app.viewmodel.inputText('');
     app.viewmodel.placeFilter();
     // Close details which are open
@@ -201,16 +220,18 @@ app.viewmodel = {
     }
   },
 
-  setInfoWindow: function(place) {
-    var content = $('#infowindow').html();
+  // setInfoWindow: function(place) {
+    // console.log('setInfoWindow'); // REMOVE
+  //   var content = $('#infowindow').html();
 
-    app.map.infoWindow.setContent(content);
-    app.map.infoWindow.open(app.map.map, place.marker);
-    // Hide the drawer button while infowindow is open
-    app.viewmodel.infoWindow(true);
-  },
+  //   app.map.infoWindow.setContent(content);
+  //   app.map.infoWindow.open(app.map.map, place.marker);
+  //   // Hide the drawer button while infowindow is open
+  //   app.viewmodel.infoWindow(true);
+  // },
 
   toggleBounce: function() {
+    console.log('toggleBounce'); // REMOVE
     if (app.viewmodel.curPlace().marker.getAnimation()) {
       app.viewmodel.curPlace().marker.setAnimation(null);
     } else {
@@ -220,14 +241,17 @@ app.viewmodel = {
   },
 
   toggleDrawer: function() {
+    console.log('toggleDrawer'); // REMOVE
     app.viewmodel.drawerOpen(!app.viewmodel.drawerOpen());
   },
 
   setModal: function() {
+    console.log('setModal'); // REMOVE
     app.viewmodel.showModal(!app.viewmodel.showModal());
   },
 
   autocomplete: function() {
+    console.log('autocomplete'); // REMOVE
     var input = document.getElementById('place-input');
     var awesomplete = new Awesomplete(input);
     awesomplete.list = app.viewmodel.placeList;

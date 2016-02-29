@@ -7,38 +7,46 @@ app.foursquare = app.foursquare || {};
   var CLIENTSECRET = 'RGEF2DNONIR0AN2GHSIIMGZWLT0IH5JSJCJ5AGFAJ2WZDGLH';
 
   app.foursquare = {
-    baseUrl: 'https://api.foursquare.com/v2/venues/',
+    baseUrl: 'https://api.foursquare.com/v2/venus/',
     version: '20140806',
 
     findPlace: function(place) {
-      var loc = place.data.geometry.location;
-      // Call the foursquare API
-      jQuery.ajax({
-        url: this.baseUrl + 'search',
-        data: {
-          query: place.name(),
-          ll: loc.lat() + ',' + loc.lng(),
-          // Disabled lines due to API requirements
-          client_id: CLIENTID, // eslint-disable-line camelcase
-          client_secret: CLIENTSECRET, // eslint-disable-line camelcase
-          v: this.version,
-          limit: '1'
-        },
-        dataType: 'json'
+      console.log('findPlace'); // REMOVE
+      if (place.frSqrInfo()) {
+        console.log(place.frSqrInfo());
+      } else {
+        console.log('no fourSquare data');
+        var loc = place.data.geometry.location;
+        // Call the foursquare API
+        jQuery.ajax({
+          url: this.baseUrl + 'search',
+          data: {
+            query: place.name(),
+            ll: loc.lat() + ',' + loc.lng(),
+            // Disabled lines due to API requirements
+            client_id: CLIENTID, // eslint-disable-line camelcase
+            client_secret: CLIENTSECRET, // eslint-disable-line camelcase
+            v: this.version,
+            limit: '1'
+          },
+          dataType: 'json'
 
-      }).done(function(data) {
-        // Best matching venue
-        var venue = data.response.venues[0];
+        }).done(function(data) {
+          // Best matching venue
+          var venue = data.response.venues[0];
 
-        // Call the API again for venue tips
-        app.foursquare.getTips(venue, place);
-      }).fail(function(data) {
-        var msg = 'Foursquare Error: ' + data.statusText;
-        app.viewmodel.addError(msg);
-      });
+          // Call the API again for venue tips
+          app.foursquare.getTips(venue, place);
+        }).fail(function(data) {
+          var msg = 'Foursquare Error: ' + data.statusText;
+          app.viewmodel.addError(msg);
+          console.log(msg);
+        });
+      }
     },
 
     getTips: function(venue, place) {
+      console.log('getTips'); // REMOVE
       jQuery.ajax({
         url: this.baseUrl + venue.id + '/tips',
         data: {
@@ -52,7 +60,7 @@ app.foursquare = app.foursquare || {};
         var tips = data.response.tips;
         // Assign details to place
         app.viewmodel.fourSquare(venue, tips, place);
-        app.viewmodel.setInfoWindow(place);
+        // app.viewmodel.setInfoWindow(place);
       }).fail(function(data) {
         var msg = 'Foursquare Tips Error: ' + data.statusText;
         app.viewmodel.addError(msg);
