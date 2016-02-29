@@ -16,14 +16,14 @@ app.map = app.map || {};
         mapTypeControl: false
       });
       this.placesApi = new google.maps.places.PlacesService(app.map.map);
-      this.infoWindow = new google.maps.InfoWindow({
-        maxWidth: $(window).width() * 0.7}
-      );
+      // this.infoWindow = new google.maps.InfoWindow({
+      //   maxWidth: $(window).width() * 0.7}
+      // );
 
       // Show the drawer button when infowindow closes
-      google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
-        app.viewmodel.infoWindow(false);
-      });
+      // google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
+      //   app.viewmodel.infoWindow(false);
+      // });
 
       // Show error message - if maps can't be reached, will be visible
       setTimeout(function() {
@@ -33,6 +33,27 @@ app.map = app.map || {};
       google.maps.event.addListenerOnce(
         this.map, 'bounds_changed', this.getPlaces
       );
+    },
+
+    createInfoWindow: function(place) {
+      var content = '<div id="test">\
+                    <h3 data-bind="text: app.viewmodel.curPlace().name()"></h3>\
+                    </div>';
+      console.log(!this.infoWindow);
+      if (!this.infoWindow) {
+        console.log('!this.infowindow');
+        this.infoWindow = new google.maps.InfoWindow({
+          content: content
+        });
+
+        google.maps.event.addListener(this.infoWindow, 'domready', function() {
+          ko.applyBindings(app.viewmodel, document.getElementById('test'));
+        });
+      }
+
+      this.infoWindow.open(app.map.map, place.marker); // work this out
+      app.viewmodel.curPlace(place);
+      // set content with observables here?
     },
 
     createPlaces: function(places) {
@@ -156,7 +177,8 @@ app.map = app.map || {};
       });
 
       google.maps.event.addListener(marker, 'click', function() {
-        app.viewmodel.clickHandler(place);
+        // app.viewmodel.clickHandler(place);
+        app.map.createInfoWindow(place); // test
       });
       return marker;
     }
