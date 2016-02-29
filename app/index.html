@@ -98,42 +98,42 @@
       <div id="map-container" class="map-container">
         <h1 class="maps-error" data-bind="text: mapError"></h1>
       </div>
-    </div>
 
-    <!-- Modal Window HTML -->
-    <div class="modal" data-bind="style: {display: showModal() ? 'initial' : 'none'}">
-      <div class="inner-modal">
-        <div class="modal-topbar">
-          <span class="close-modal" data-bind="click: setModal">X</span>
-          <h3 class="modal-header" data-bind="text: curPlace().name">
-            There could be text here
-          </h3>
-        </div>
-        <div class="modal-reviews" data-bind="with: curPlace().details">
-          <div data-bind="foreach: reviews">
-            <div class="review">
-              <p data-bind="text: text"></p>
-              <p class="author-link">
-                <a data-bind="text: author, attr: {href: authorUrl}" target="_blank"></a>
-              </p>
+      <!-- Modal Window HTML -->
+      <div class="modal" data-bind="style: {display: showModal() ? 'initial' : 'none'}">
+        <div class="inner-modal">
+          <div class="modal-topbar">
+            <span class="close-modal" data-bind="click: setModal">X</span>
+            <h3 class="modal-header" data-bind="text: curPlace().name">
+              There could be text here
+            </h3>
+          </div>
+          <div class="modal-reviews" data-bind="with: curPlace().details">
+            <div data-bind="foreach: reviews">
+              <div class="review">
+                <p data-bind="text: text"></p>
+                <p class="author-link">
+                  <a data-bind="text: author, attr: {href: authorUrl}" target="_blank"></a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Error Window HTML -->
-    <div class="error-window" data-bind="style: {display: errorMsg().length > 0 ? 'block' : 'none'}">
-      <span data-bind="click: clearErrors">X</span>
-      <h4>There was an error retrieving data</h4>
-      <div data-bind="foreach: errorMsg">
-        <p data-bind="text: $data"></p>
+      <!-- Error Window HTML -->
+      <div class="error-window" data-bind="style: {display: errorMsg().length > 0 ? 'block' : 'none'}">
+        <span data-bind="click: clearErrors">X</span>
+        <h4>There was an error retrieving data</h4>
+        <div data-bind="foreach: errorMsg">
+          <p data-bind="text: $data"></p>
+        </div>
       </div>
-    </div>
 
 
-    <!-- Hidden div used to style infoWindow content-->
-    <div id="infowindow" data-bind="with: curPlace">
+    <!-- InfoWindow Template -->
+    <script type="text/html" id="infowindow">
       <div class="info-window-content">
         <h2 data-bind="text: name"></h2>
         <a href="#" onclick="app.viewmodel.clickContactInfo()">
@@ -179,8 +179,8 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
+    </script>
 
     <!-- Vendor Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
