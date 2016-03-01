@@ -11,7 +11,7 @@ app.foursquare = app.foursquare || {};
     version: '20140806',
 
     findPlace: function(place) {
-      console.log('findPlace'); // REMOVE
+      // console.log('findPlace'); // REMOVE
       if (!place.frSqrInfo()) {
         console.log('Getting FourSquare');
 
@@ -44,7 +44,7 @@ app.foursquare = app.foursquare || {};
     },
 
     getTips: function(venue, place) {
-      console.log('getTips'); // REMOVE
+      // console.log('getTips'); // REMOVE
       jQuery.ajax({
         url: this.baseUrl + venue.id + '/tips',
         data: {
@@ -58,7 +58,10 @@ app.foursquare = app.foursquare || {};
         var tips = data.response.tips;
         // Assign details to place
         app.viewmodel.fourSquare(venue, tips, place);
-        // app.viewmodel.setInfoWindow(place);
+
+        // Hacky workaround due to binding in infoWindow
+        // Makes sure the infoWindow doesn't display offscreen
+        app.map.infoWindow.open(app.map.map, place.marker);
       }).fail(function(data) {
         var msg = 'Foursquare Tips Error: ' + data.statusText;
         app.viewmodel.addError(msg);

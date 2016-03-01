@@ -5,7 +5,7 @@ app.wiki = app.wiki || {};
   app.wiki = {
     getWiki: function(place) {
       if (!place.wikiInfo()) {
-        console.log('getWiki'); // REMOVE
+        // console.log('getWiki'); // REMOVE
 
         jQuery.ajax({
           url: 'https://en.wikipedia.org/w/api.php',
@@ -31,7 +31,10 @@ app.wiki = app.wiki || {};
           if (page.content() !== undefined &&
           !app.wiki.ambiguityChk(data, firstId)) {
             place.wikiInfo(page);
-            // app.viewmodel.setInfoWindow(place);
+
+            // Hacky workaround due to binding in infoWindow
+            // Makes sure the infoWindow doesn't display offscreen
+            app.map.infoWindow.open(app.map.map, place.marker);
           }
         }).fail(function(data) {
           var msg = 'Wikipedia Error: ' + data.statusText;
@@ -42,7 +45,7 @@ app.wiki = app.wiki || {};
 
     // Check for a disambiguity page(ie. no info - only links)
     ambiguityChk: function(data, id) {
-      console.log('ambiguityChk'); // REMOVE
+      // console.log('ambiguityChk'); // REMOVE
       var categories = data.query.pages[id].categories;
 
       for (var category in categories) {
