@@ -64,7 +64,7 @@ app.map = app.map || {};
         app.viewmodel.infoWindow(true);
 
         app.viewmodel.clickHandler(place);
-  // TODO: Likely need a listener on 'content_changed' or 'position_changed' that adjusts the window(centers infowindow)
+  // TODO: REALLY HAS TO BE DONE Likely need a listener on 'content_changed' or 'position_changed' that adjusts the window(centers infowindow)
         // Handle when the infoWindow exists
       } else {
         console.log('Info Window Else Statement'); // REMOVE
