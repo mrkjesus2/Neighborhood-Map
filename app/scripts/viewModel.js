@@ -144,22 +144,24 @@ app.viewmodel = {
     console.log('clickHandler'); // REMOVE
     var plc = place || this;
 
-    // Open infoWindow on list click
-    if (app.viewmodel.infoWindow() === false) {
-      app.viewmodel.infoWindow(true);
+    // Create the infow window if need when the list is clicked
+    if (!app.map.infoWindow) {
+      console.log('not infoWindow');
       app.map.createInfoWindow(plc);
-    }
+    // or open the info window on the markekr
+    } else {
+      app.map.infoWindow.open(app.map.map, plc.marker)
+      // Call for data
+      app.wiki.getWiki(plc);
+      app.foursquare.findPlace(plc);
 
-    // Call for data
-    app.wiki.getWiki(plc);
-    app.foursquare.findPlace(plc);
-
-    // Handle map actions
-    if (app.viewmodel.drawerOpen()) {
-      app.viewmodel.toggleDrawer();
+      // Handle map actions
+      if (app.viewmodel.drawerOpen()) {
+        app.viewmodel.toggleDrawer();
+      }
+      app.viewmodel.setCurrentPlace(plc);
+      app.viewmodel.toggleBounce();
     }
-    app.viewmodel.setCurrentPlace(plc);
-    app.viewmodel.toggleBounce();
   },
 
   findPlaceByName: function(name) {

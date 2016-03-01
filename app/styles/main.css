@@ -339,7 +339,7 @@ li {
 /* Error Window */
 /****************/
 .error-window {
-  /*display: none;*/
+  display: none;
   position: fixed;
   bottom: 0;
   width: 100vw;

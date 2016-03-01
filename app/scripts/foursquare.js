@@ -7,15 +7,14 @@ app.foursquare = app.foursquare || {};
   var CLIENTSECRET = 'RGEF2DNONIR0AN2GHSIIMGZWLT0IH5JSJCJ5AGFAJ2WZDGLH';
 
   app.foursquare = {
-    baseUrl: 'https://api.foursquare.com/v2/venus/',
+    baseUrl: 'https://api.foursquare.com/v2/venues/',
     version: '20140806',
 
     findPlace: function(place) {
       console.log('findPlace'); // REMOVE
-      if (place.frSqrInfo()) {
-        console.log(place.frSqrInfo());
-      } else {
-        console.log('no fourSquare data');
+      if (!place.frSqrInfo()) {
+        console.log('Getting FourSquare');
+
         var loc = place.data.geometry.location;
         // Call the foursquare API
         jQuery.ajax({
@@ -40,7 +39,6 @@ app.foursquare = app.foursquare || {};
         }).fail(function(data) {
           var msg = 'Foursquare Error: ' + data.statusText;
           app.viewmodel.addError(msg);
-          console.log(msg);
         });
       }
     },

@@ -39,31 +39,38 @@ app.map = app.map || {};
 
       if (!this.infoWindow) {
         console.log('Initializing infoWindow'); // REMOVE
-        var infoWindowLoaded = false;
+
+        var infoWindowLoaded;
+
         this.infoWindow = new google.maps.InfoWindow({
           maxWidth: $(window).width() * 0.7,
           content: content
         });
 
+        // Apply bindings once the window is attached to DOM
         google.maps.event.addListener(this.infoWindow, 'domready', function() {
           if (!infoWindowLoaded) {
             ko.applyBindings(app.viewmodel, $('#test')[0]);
             infoWindowLoaded = true;
           }
         });
-        // TODO: Likely need a listener on 'content_changed' or 'position_changed' that adjusts the window(centers infowindow)
+
+        // Show the drawer button when infowindow closes
+        google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
+          app.viewmodel.infoWindow(false);
+        });
+
+        // Hide the drawer button while window is open
+        app.viewmodel.infoWindow(true);
+
+        app.viewmodel.clickHandler(place);
+  // TODO: Likely need a listener on 'content_changed' or 'position_changed' that adjusts the window(centers infowindow)
+        // Handle when the infoWindow exists
+      } else {
+        console.log('Info Window Else Statement'); // REMOVE
+        this.infoWindow.open(app.map.map, place.marker);
+        app.viewmodel.clickHandler(place);
       }
-
-      this.infoWindow.open(app.map.map, place.marker); // work this out
-      app.viewmodel.clickHandler(place);
-
-      // Hide the drawer button while window is open
-      app.viewmodel.infoWindow(true);
-
-      // Show the drawer button when infowindow closes
-      google.maps.event.addListener(this.infoWindow, 'closeclick', function() {
-        app.viewmodel.infoWindow(false);
-      });
     },
 
     createPlaces: function(places) {

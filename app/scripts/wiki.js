@@ -4,11 +4,8 @@ app.wiki = app.wiki || {};
 (function() {
   app.wiki = {
     getWiki: function(place) {
-      console.log('getWiki'); // REMOVE
-      if (place.wikiInfo()) {
-        console.log(place.wikiInfo());
-      } else {
-        console.log('No wiki info');
+      if (!place.wikiInfo()) {
+        console.log('getWiki'); // REMOVE
 
         jQuery.ajax({
           url: 'https://en.wikipedia.org/w/api.php',
