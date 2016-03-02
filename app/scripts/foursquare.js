@@ -11,7 +11,6 @@ app.foursquare = app.foursquare || {};
     version: '20140806',
 
     findPlace: function(place) {
-      // console.log('findPlace'); // REMOVE
       if (!place.frSqrInfo()) {
         console.log('Getting FourSquare');
 
@@ -43,7 +42,6 @@ app.foursquare = app.foursquare || {};
     },
 
     getTips: function(venue, place) {
-      // console.log('getTips'); // REMOVE
       jQuery.ajax({
         url: this.baseUrl + venue.id + '/tips',
         data: {

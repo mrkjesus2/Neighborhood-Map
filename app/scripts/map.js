@@ -5,7 +5,6 @@ app.map = app.map || {};
   app.map = {
     // Callback function for Google Maps - Initialize the Map
     init: function() {
-      // console.log('map.init'); // REMOVE
       var home = {lat: 39.927677, lng: -75.171909};
       var el = document.getElementById('map-container');
 
@@ -26,7 +25,6 @@ app.map = app.map || {};
 
     // with a little help from 'http://jsfiddle.net/G6MXd/4/'
     createInfoWindow: function(place) {
-      // console.log('createInfoWindow'); // REMOVE
       var content =
         '<div id="test"' +
           'data-bind="template: {name: \'infowindow\', data: curPlace}">' +
@@ -34,11 +32,9 @@ app.map = app.map || {};
 
       //  Set up infoWindow if it doesn't exist
       if (this.infoWindow) {
-        // console.log('Initializing infoWindow'); // REMOVE
         this.infoWindow.open(app.map.map, place.marker);
         app.viewmodel.clickHandler(place);
       } else {
-        // console.log('Info Window Else Statement'); // REMOVE
         var infoWindowLoaded;
 
         this.infoWindow = new google.maps.InfoWindow({
@@ -67,7 +63,6 @@ app.map = app.map || {};
     },
 
     createPlaces: function(places) {
-      // console.log('createPlaces'); // REMOVE
       places.forEach(function(place, idx) {
         var plc = new app.viewmodel.Place(place);
 
@@ -82,12 +77,10 @@ app.map = app.map || {};
 
     // Likely against TOS, but figure it's fine for educational purposes
     storePlaces: function(places) {
-      // console.log('storePlaces'); // REMOVE
       localStorage.setItem('places', JSON.stringify(places));
     },
 
     retrievePlaces: function() {
-      // console.log('retrievePlaces'); // REMOVE
       var places = JSON.parse(localStorage.places);
       places.forEach(function(place) {
         var lat = place.geometry.location.lat;
@@ -105,7 +98,6 @@ app.map = app.map || {};
 
     // Get a list of places from Google Maps
     getPlaces: function() {
-      // console.log('getPlaces'); // REMOVE
       if (localStorage.places && app.map.sameBoundsCheck()) {
         console.log('Creating places from storage');
         app.map.createPlaces(app.map.retrievePlaces());
@@ -126,7 +118,6 @@ app.map = app.map || {};
             app.map.storePlaces(results);
             app.map.createPlaces(results);
           } else {
-            console.log('We have a places error');
             var msg = 'Google Places Error: ' + status;
             app.viewmodel.addError(msg);
           }
@@ -136,7 +127,6 @@ app.map = app.map || {};
     },
 
     sameBoundsCheck: function() {
-      // console.log('sameBoundsCheck'); // REMOVE
       if (localStorage.bounds) {
         var oldBounds = JSON.parse(localStorage.bounds);
         return app.map.map.getBounds().equals(oldBounds);
@@ -145,7 +135,6 @@ app.map = app.map || {};
     },
 
     setPhotoUrls: function(places) {
-      // console.log('setPhotoUrls'); // REMOVE
       places.forEach(function(place) {
         if (place.photos) {
           var url = place.photos[0].getUrl({maxWidth: 200,
@@ -156,7 +145,6 @@ app.map = app.map || {};
     },
 
     getPlaceDetails: function(place) {
-      // console.log('getPlaceDetails'); // REMOVE
       var request = {
         placeId: place.data.place_id
       };
@@ -173,7 +161,6 @@ app.map = app.map || {};
     },
 
     createMarker: function(place) {
-      // console.log('createMarker'); // REMOVE
       // Location for the Marker
       var plcloc = place.data.geometry.location;
       // Set icon and icon size

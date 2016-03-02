@@ -5,7 +5,6 @@ app.wiki = app.wiki || {};
   app.wiki = {
     getWiki: function(place) {
       if (!place.wikiInfo()) {
-        // console.log('getWiki'); // REMOVE
 
         jQuery.ajax({
           url: 'https://en.wikipedia.org/w/api.php',
@@ -44,7 +43,6 @@ app.wiki = app.wiki || {};
 
     // Check for a disambiguity page(ie. no info - only links)
     ambiguityChk: function(data, id) {
-      // console.log('ambiguityChk'); // REMOVE
       var categories = data.query.pages[id].categories;
 
       for (var category in categories) {
