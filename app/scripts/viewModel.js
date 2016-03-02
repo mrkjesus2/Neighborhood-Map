@@ -1,4 +1,4 @@
-/* global app ko google document Awesomplete */
+/* global app ko google document Awesomplete window $ */
 
 app.viewmodel = app.viewmodel || {};
 
@@ -144,13 +144,9 @@ app.viewmodel = {
     // console.log('clickHandler'); // REMOVE
     var plc = place || this;
 
-    // Create the infow window if need when the list is clicked
-    if (!app.map.infoWindow) {
-      console.log('not infoWindow');
-      app.map.createInfoWindow(plc);
-    // or open the info window on the markekr
-    } else {
-      app.map.infoWindow.open(app.map.map, plc.marker)
+    if (app.map.infoWindow) {
+      // Open the info window on the markekr
+      app.map.infoWindow.open(app.map.map, plc.marker);
       app.viewmodel.infoWindow(true);
       // Call for data
       app.wiki.getWiki(plc);
@@ -162,6 +158,10 @@ app.viewmodel = {
       }
       app.viewmodel.setCurrentPlace(plc);
       app.viewmodel.toggleBounce();
+    // Create the info window when the list is clicked
+    } else {
+      console.log('not infoWindow');
+      app.map.createInfoWindow(plc);
     }
   },
 
@@ -260,7 +260,7 @@ app.viewmodel = {
   },
 
   init: function() {
-    console.log('Init'); // REMOVE
+    // console.log('Init'); // REMOVE
     // Display error if Google Maps wasn't loaded
     window.addEventListener('load', function() {
       if (typeof google === 'undefined') {

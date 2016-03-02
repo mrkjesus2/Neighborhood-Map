@@ -28,14 +28,17 @@ app.map = app.map || {};
     createInfoWindow: function(place) {
       // console.log('createInfoWindow'); // REMOVE
       var content =
-        '<div id="test"\
-          data-bind="template: {name: \'infowindow\', data: curPlace}">\
-        </div>';
+        '<div id="test"' +
+          'data-bind="template: {name: \'infowindow\', data: curPlace}">' +
+        '</div>';
 
       //  Set up infoWindow if it doesn't exist
-      if (!this.infoWindow) {
-        console.log('Initializing infoWindow'); // REMOVE
-
+      if (this.infoWindow) {
+        // console.log('Initializing infoWindow'); // REMOVE
+        this.infoWindow.open(app.map.map, place.marker);
+        app.viewmodel.clickHandler(place);
+      } else {
+        // console.log('Info Window Else Statement'); // REMOVE
         var infoWindowLoaded;
 
         this.infoWindow = new google.maps.InfoWindow({
@@ -58,13 +61,6 @@ app.map = app.map || {};
 
         // Hide the drawer button while window is open
         app.viewmodel.infoWindow(true);
-
-        app.viewmodel.clickHandler(place);
-
-      // Handle when the infoWindow exists
-      } else {
-        console.log('Info Window Else Statement'); // REMOVE
-        this.infoWindow.open(app.map.map, place.marker);
 
         app.viewmodel.clickHandler(place);
       }
@@ -199,8 +195,7 @@ app.map = app.map || {};
       });
 
       google.maps.event.addListener(marker, 'click', function() {
-        // app.viewmodel.clickHandler(place);
-        app.map.createInfoWindow(place); // test
+        app.map.createInfoWindow(place);
       });
       return marker;
     }

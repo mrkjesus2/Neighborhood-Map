@@ -29,7 +29,6 @@ app.foursquare = app.foursquare || {};
             limit: '1'
           },
           dataType: 'json'
-
         }).done(function(data) {
           // Best matching venue
           var venue = data.response.venues[0];
