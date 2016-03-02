@@ -32,6 +32,7 @@ app.map = app.map || {};
           data-bind="template: {name: \'infowindow\', data: curPlace}">\
         </div>';
 
+      //  Set up infoWindow if it doesn't exist
       if (!this.infoWindow) {
         console.log('Initializing infoWindow'); // REMOVE
 
@@ -60,7 +61,7 @@ app.map = app.map || {};
 
         app.viewmodel.clickHandler(place);
 
-        // Handle when the infoWindow exists
+      // Handle when the infoWindow exists
       } else {
         console.log('Info Window Else Statement'); // REMOVE
         this.infoWindow.open(app.map.map, place.marker);

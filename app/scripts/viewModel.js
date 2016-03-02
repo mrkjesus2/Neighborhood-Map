@@ -223,16 +223,6 @@ app.viewmodel = {
     }
   },
 
-  // setInfoWindow: function(place) {
-    // console.log('setInfoWindow'); // REMOVE
-  //   var content = $('#infowindow').html();
-
-  //   app.map.infoWindow.setContent(content);
-  //   app.map.infoWindow.open(app.map.map, place.marker);
-  //   // Hide the drawer button while infowindow is open
-  //   app.viewmodel.infoWindow(true);
-  // },
-
   toggleBounce: function() {
     // console.log('toggleBounce'); // REMOVE
     if (app.viewmodel.curPlace().marker.getAnimation()) {

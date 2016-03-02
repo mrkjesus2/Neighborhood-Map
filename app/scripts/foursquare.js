@@ -59,7 +59,6 @@ app.foursquare = app.foursquare || {};
         // Assign details to place
         app.viewmodel.fourSquare(venue, tips, place);
 
-        // Hacky workaround due to binding in infoWindow
         // Makes sure the infoWindow doesn't display offscreen
         app.map.infoWindow.open(app.map.map, place.marker);
       }).fail(function(data) {

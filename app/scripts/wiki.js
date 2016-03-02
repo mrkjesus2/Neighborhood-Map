@@ -32,7 +32,6 @@ app.wiki = app.wiki || {};
           !app.wiki.ambiguityChk(data, firstId)) {
             place.wikiInfo(page);
 
-            // Hacky workaround due to binding in infoWindow
             // Makes sure the infoWindow doesn't display offscreen
             app.map.infoWindow.open(app.map.map, place.marker);
           }
