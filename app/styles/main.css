@@ -148,9 +148,6 @@ li {
 .filter input {
   width: 35vw;
 }
-/*.drawer-top input {
-  width: 35vw;
-}*/
 
 /******************/
 /* Drawer Content */
@@ -345,6 +342,7 @@ li {
   width: 100vw;
   height: 30vh;
   background-color: red;
+  z-index: 9;
 }
 
 .error-window span {
