@@ -1,4 +1,5 @@
 /* global app ko google document Awesomplete window $ */
+// TODO: Fix bug in autocomplete (infowindow breaks when clicking place), consider using, user's location and a custom zoom level for place results
 
 app.viewmodel = app.viewmodel || {};
 
