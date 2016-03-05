@@ -20,7 +20,7 @@ is awesome! Have all of your phones, tablets, computers and any other browser en
 - Run a local server and you can load the app from source code in the browser
 
 ##### or
-- Run the app [here](http://mrkjesus2.github.io/Neigborhood-Map)
+- Run the app [here](http://mrkjesus2.github.io/Neighborhood-Map/)
 
 ##### Full Implementation
 1. Clone the [repo](https://github.com/mrkjesus2/Neighborhood-Map)
